@@ -1,0 +1,11 @@
+.App{
+    display:flex;
+    flex-direction:column;
+    border: solid red 3px;
+    justify-content: center;
+}
+#Title{
+    text-align:center;
+    font-size: 5em;
+    padding:0.1em;
+}
