@@ -4,14 +4,30 @@ import "./Swipe.css";
 class Swipe extends Component {
     constructor(props){
         super(props);
-
+        this.state={
+            status:"LOADING"
+        };
+    }
+    componentDidMount(){
+        this.loadMovie();
+    }
+    loadMovie(){
+        this.props.dataInstance.getMovie()
+            .then(result=>this.setState({status:"LOADED",movie:result}))
+            .catch(()=>this.setState({status:"ERROR"}));
     }
     render(){
+        switch(this.state.status){
+            case "LOADING":
+                break;
+
+        }
+
         return (
             <div className="Swipe">
                 <div className="Movie-box">
                     <image className="Movie-image">
-                        this is image
+                        
                     </image>
                     <p className="Title">
                         This is title

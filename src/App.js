@@ -23,7 +23,7 @@ class App extends Component{
                 </div>
              
                 <Route exact path="/" 
-                    render ={()=> <Swipe/>}
+                    render ={()=> <Swipe dataInstance={dataInstance}/>}
                 />
             </div>
         );
