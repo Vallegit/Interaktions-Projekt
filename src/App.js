@@ -11,9 +11,15 @@ class App extends Component{
     render(){
         return (
             <div className="App">
-                <h1 id="Title">
-                    Movie Swipe
-                </h1>
+                <div className="Top-Bar">
+                    <h1 id="Title">
+                        Movie Swipe
+                    </h1>
+                    <button className="menu">
+                        Menu
+                    </button>
+                </div>
+             
                 <Route exact path="/" 
                     render ={()=> <Swipe/>}
                 />
