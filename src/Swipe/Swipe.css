@@ -1,8 +1,10 @@
 .Swipe{
+    order:3;
     display: flex;
     flex-direction:row;
     justify-content: center;
     flex: 1 0 auto;
+    flex-flow:row wrap;
 }
 .Movie-box{
     order:2;
@@ -14,13 +16,25 @@
     
 }
 .good{
-    order:4;
+    order:3;
     background-color:green;
     border:solid white 2px;
     border-radius:100%;
     flex:0 0 50px;
     height:50px;
     align-self:center;
+    margin-left:30px
+
+}
+.good:hover{
+    order:3;
+    background-color:rgba(0, 128, 0, 0.473);
+    border:solid white 2px;
+    border-radius:100%;
+    flex:0 0 50px;
+    height:50px;
+    align-self:center;
+    margin-left:30px
 
 }
 .bad{
@@ -31,7 +45,26 @@
     flex:0 0 50px;
     height:50px;
     align-self:center;
+    margin-right: 30px;
+}
+.bad:hover{
+    order:1;
+    background-color:rgba(139, 0, 0, 0.685);
+    border:solid white 2px;
+    border-radius:100%;
+    flex:0 0 50px;
+    height:50px;
+    align-self:center;
+    margin-right: 30px;
 }
 .remove{
-    order:3;
+    order:4;
+    background-color:grey;
+    border:solid white 2px;
+    border-radius:100%;
+    flex:0 0 50px;
+    height:50px;
+    align-self:center;
+    
+    
 }

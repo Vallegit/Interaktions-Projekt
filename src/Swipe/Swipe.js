@@ -29,7 +29,6 @@ class Swipe extends Component {
                 <button className="good"></button>
                 <button className="bad"></button>
                 <button className="remove"></button>
-                <div className="menu"></div>
             </div>
         )
     }
