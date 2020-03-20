@@ -11,6 +11,7 @@ class Data {
     getMovie(){
         req = unirest("GET", "https://" + ApiConfig.ENDPOINT)
         return (req
+
             .query({
                 "t": "loadvideo",
                 "q": "60029591",
