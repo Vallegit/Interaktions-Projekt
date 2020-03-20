@@ -5,21 +5,20 @@ var req;
 
 class Data {
     constructor(){
+        this.getMovie();
     }
     
     getMovie(){
-        req = unirest("GET", "https://" + ApiConfig.ENDPOINT);
-        req
+        req = unirest("GET", "https://" + ApiConfig.ENDPOINT)
+        return (req
+
             .query({
                 "t": "loadvideo",
                 "q": "60029591",
                 "api_key": ApiConfig.API_KEY
             })
-            .end(function (res) {
-                if (res.error) throw new Error(res.error);
-                console.log(res.body);
-            });
-            // MOVIE IMAGE URL = https://image.tmdb.org/t/p/original
+        );
+        // MOVIE IMAGE URL = https://image.tmdb.org/t/p/original
     }
 }
 
