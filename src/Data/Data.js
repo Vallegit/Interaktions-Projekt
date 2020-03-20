@@ -5,11 +5,10 @@ var req;
 
 class Data {
     constructor(){
-        this.getMovie();
     }
     
-    getMovie(){
-        req = unirest("GET", "https://" + ApiConfig.ENDPOINT)
+    getMovie(id){
+        req = unirest("GET", "https://" + ApiConfig.ENDPOINT + id)
         return (req
 
             .query({
