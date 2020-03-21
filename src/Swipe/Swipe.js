@@ -14,10 +14,10 @@ class Swipe extends Component {
     }
     loadMovie = () => {
         dataInstance
-            .getMovie()
+            .getMovie(550)
             .end(result => {
                 if(result.error)this.setState({status: "ERROR"})
-                else this.setState({status: "LOADED", movie: result})});
+                else this.setState({status: "LOADED", movie: result.body})});
     }
     render(){
         switch(this.state.status){
@@ -25,6 +25,7 @@ class Swipe extends Component {
                 break;
             
             case "LOADED":
+                console.log(this.state.movie);
                 break;
 
             default:
