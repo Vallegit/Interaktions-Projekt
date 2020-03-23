@@ -9,7 +9,7 @@ class Swipe extends Component {
         };
     }
     componentDidMount(){
-        this.loadMovie();
+       // this.loadMovie();
     }
     loadMovie(){
         this.props.dataInstance.getMovie()
@@ -26,25 +26,31 @@ class Swipe extends Component {
         return (
             <div className="Swipe">
                 <div className="Movie-box">
-                    <image className="Movie-image">
-                        
+                    <image id="movieImage">
+                        HotStuff.png
                     </image>
-                    <p className="Title">
-                        This is title
+                    <p id="movieTitle">
+                        Story of my life
                     </p>
-                    <p>
-                        This is year
+                    <p id="year">
+                        1996
                     </p>
-                    <p>
-                        This is director
+                    <p id="director">
+                        Valerius Maximus
                     </p>
-                    <p className="Description">
-                        This text describes the current movie.
+                    <p id="description">
+                        Story about the greatest man that ever lived.
                     </p>
                 </div>
-                <button className="good"></button>
-                <button className="bad"></button>
-                <button className="remove"></button>
+                <button className="good">
+                    <span className="tooltip" id="tooltipGood">Like this movie</span>
+                </button>
+                <button className="bad">
+                    <span className="tooltip" id="tooltipBad">Dislike this movie</span>
+                </button>
+                <div className="break"></div>
+                <button className="remove">
+                    <span className="tooltip" id="tooltipRemove">Don't vote</span>X</button>
             </div>
         )
     }
