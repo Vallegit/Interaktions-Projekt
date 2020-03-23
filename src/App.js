@@ -13,7 +13,6 @@ class App extends Component{
     }
 
     render(){
-        console.log(dataInstance.getMovie());
         return (
             <div className="App">
                 <div className="Top-Bar">

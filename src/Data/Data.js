@@ -5,20 +5,19 @@ var req;
 
 class Data {
     constructor(){
-        req = unirest("GET", "https://" + ApiConfig.ENDPOINT)
     }
     
-    getMovie(){
-        req
+    getMovie(id){
+        req = unirest("GET", "https://" + ApiConfig.ENDPOINT + id)
+        return (req
+
             .query({
                 "t": "loadvideo",
                 "q": "60029591",
                 "api_key": ApiConfig.API_KEY
             })
-            .end(function (res) {
-                if (res.error) throw new Error(res.error);
-                console.log(res.body);
-            });
+        );
+        // MOVIE IMAGE URL = https://image.tmdb.org/t/p/original
     }
 }
 

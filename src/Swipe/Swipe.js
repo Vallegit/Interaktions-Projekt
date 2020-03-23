@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import dataInstance from "../Data/Data";
 import "./Swipe.css";
 
 class Swipe extends Component {
@@ -11,16 +12,24 @@ class Swipe extends Component {
     componentDidMount(){
        // this.loadMovie();
     }
-    loadMovie(){
-        this.props.dataInstance.getMovie()
-            .then(result=>this.setState({status:"LOADED",movie:result}))
-            .catch(()=>this.setState({status:"ERROR"}));
+    loadMovie = () => {
+        dataInstance
+            .getMovie(550)
+            .end(result => {
+                if(result.error)this.setState({status: "ERROR"})
+                else this.setState({status: "LOADED", movie: result.body})});
     }
     render(){
         switch(this.state.status){
             case "LOADING":
                 break;
+            
+            case "LOADED":
+                console.log(this.state.movie);
+                break;
 
+            default:
+                break;
         }
 
         return (
