@@ -10,22 +10,47 @@ class Swipe extends Component {
         };
     }
     componentDidMount(){
-       // this.loadMovie();
+       this.loadMovie();
     }
     loadMovie = () => {
         dataInstance
-            .getMovie(550)
+            .getMovie(1960)// 200 - star trek, 240 - godfather, 280 - terminator, 330 - jurassic park, 350 - Devil n prada 550 - fight club
             .end(result => {
                 if(result.error)this.setState({status: "ERROR"})
                 else this.setState({status: "LOADED", movie: result.body})});
     }
+
     render(){
+        let posterUrl="https://image.tmdb.org/t/p/original";
+        let MovieBox=null;
+        let backgroundImage=null;
         switch(this.state.status){
             case "LOADING":
+                MovieBox=<div className="Movie-box">
+                            <h1>Loading</h1>
+                        </div>
                 break;
             
             case "LOADED":
+                backgroundImage = {
+                    backgroundImage: `url(${posterUrl+this.state.movie.backdrop_path})`,
+                    backgroundSize: '100%'
+                    };
                 console.log(this.state.movie);
+                MovieBox= <div className="Movie-box">
+                                <img src={posterUrl+this.state.movie.poster_path} id="movieImage"/>
+
+                                <p id="movieTitle">{this.state.movie.original_title}</p>
+
+                                <p id="year">{this.state.movie.release_date}</p>
+
+                                <p id="director">{this.state.movie.genres.map(gen=>{return gen.name+" "})}</p>
+
+                                <p id="description">{this.state.movie.overview}</p>
+
+                                <p id="rating">Rating: {this.state.movie.vote_average}</p>
+                        </div>
+                console.log(backgroundImage);        
                 break;
 
             default:
@@ -33,24 +58,8 @@ class Swipe extends Component {
         }
 
         return (
-            <div className="Swipe">
-                <div className="Movie-box">
-                    <image id="movieImage">
-                        HotStuff.png
-                    </image>
-                    <p id="movieTitle">
-                        Story of my life
-                    </p>
-                    <p id="year">
-                        1996
-                    </p>
-                    <p id="director">
-                        Valerius Maximus
-                    </p>
-                    <p id="description">
-                        Story about the greatest man that ever lived.
-                    </p>
-                </div>
+            <div style={backgroundImage} className="Swipe">
+                {MovieBox}
                 <button className="good">
                     <span className="tooltip" id="tooltipGood">Like this movie</span>
                 </button>
