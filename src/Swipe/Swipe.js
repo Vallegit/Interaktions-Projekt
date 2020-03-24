@@ -6,7 +6,7 @@ class Swipe extends Component {
     constructor(props){
         super(props);
         this.state={
-            status:"LOADING",
+            status:"LOADING MOVIES",
             index: 0,
             page: 1
         };
@@ -16,11 +16,10 @@ class Swipe extends Component {
     }
     loadMovies = () => {
         dataInstance
-            .getTopMovies()// 200 - star trek, 240 - godfather, 280 - terminator, 330 - jurassic park, 350 - Devil n prada 550 - fight club
+            .getTopMovies(this.state.page)// 200 - star trek, 240 - godfather, 280 - terminator, 330 - jurassic park, 350 - Devil n prada 550 - fight club
             .end(result => {
                 if(result.error)this.setState({status: "ERROR"})
-                else this.setState({movies: result.body.results})
-                this.loadCurrentMovie()});
+                else this.setState({status: "LOADING CURRENT MOVIE", movies: result.body.results})});
     }
 
     loadCurrentMovie = () => {
@@ -28,14 +27,18 @@ class Swipe extends Component {
             .getMovie(this.state.movies[this.state.index].id)
             .end(result => {
                 if(result.error)this.setState({status: "ERROR"})
-                else this.setState({status: "LOADED", currentMovie: result.body})});
-        if(this.state.index === 19)this.setState({
-            index: 0,
-            page: this.state.page + 1
-        });
-        else this.setState({
-            index: this.state.index + 1 
-        })
+                else this.setState({status: "LOADED", currentMovie: result.body})
+                if(this.state.index === 19){
+                    this.setState({
+                        index: 0,
+                        page: this.state.page + 1
+                    });
+                    this.loadMovies();
+                }
+                else this.setState({
+                    index: this.state.index + 1 
+                })
+            });
     }
 
     render(){
@@ -43,10 +46,18 @@ class Swipe extends Component {
         let MovieBox=null;
         let backgroundImage=null;
         switch(this.state.status){
-            case "LOADING":
-                MovieBox=<div className="Movie-box">
-                            <div className="Loader"></div>
-                        </div>
+
+            case "LOADING MOVIES":
+                MovieBox =  <div className="Movie-box">
+                                <div className="Loader"></div>
+                            </div>
+                break;
+
+            case "LOADING CURRENT MOVIE":
+                this.loadCurrentMovie();
+                MovieBox =  <div className="Movie-box">
+                                <div className="Loader"></div>
+                            </div>
                 break;
             
             case "LOADED":
@@ -54,7 +65,6 @@ class Swipe extends Component {
                     backgroundImage: `url(${posterUrl+this.state.currentMovie.backdrop_path})`,
                     backgroundSize: '100%'
                     };
-                console.log(this.state.movies);
                 MovieBox= <div className="Movie-box">
                                 <img src={posterUrl+this.state.currentMovie.poster_path} id="movieImage" alt="movie poster"/>
 
