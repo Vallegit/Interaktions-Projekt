@@ -45,7 +45,7 @@ class Swipe extends Component {
         switch(this.state.status){
             case "LOADING":
                 MovieBox=<div className="Movie-box">
-                            <h1>Loading</h1>
+                            <div className="Loader"></div>
                         </div>
                 break;
             
@@ -70,7 +70,13 @@ class Swipe extends Component {
                         </div>       
                 break;
 
-            default:
+            default: 
+            MovieBox= 
+            <div className="Movie-box">
+                <span className="Error-box" >
+                    Big error, contact the helpdesk for more info.
+                </span>
+            </div>
                 break;
         }
 
