@@ -3,14 +3,10 @@ import { Route } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./App.css";
 import Swipe from "./Swipe/Swipe";
-import dataInstance from "./Data/Data";
 import Match from "./Match/Match";
 import Detail from "./Match/Match";
 
 class App extends Component{
-    constructor(){
-        super();
-    }
 
     render(){
         return (
@@ -23,23 +19,23 @@ class App extends Component{
                         <button className="menuBtn">Menu</button>
                         <div className="menuContent">
                             <Link to="/matches" className="matchesLink" >
-                                <a href="#">Matches</a>
+                                Matches
                             </Link>
-                            <a href="#">Logout</a>
+                            <a>Logout</a>
                         </div>
                     </div>
                 </div>
              
                 <Route exact path="/" 
-                    render ={()=> <Swipe dataInstance={dataInstance}/>}
+                    render ={()=> <Swipe/>}
                 />
                 <Route
                     path="/matches"
-                    render={()=> <Match dataInstance={dataInstance}/>}
+                    render={()=> <Match/>}
                 />
                  <Route
                     path="/details"
-                    render={()=> <Detail dataInstance={dataInstance}/>}
+                    render={()=> <Detail/>}
                 />
             </div>
         );
