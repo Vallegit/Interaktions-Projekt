@@ -19,7 +19,7 @@ class Data {
             .query({
                 "t": "loadvideo",
                 "q": "60029591",
-                "language":"en-US",
+                "language": "en-US",
                 "api_key": ApiConfig.API_KEY
             })
         );
@@ -29,14 +29,15 @@ class Data {
      * Get an array with the top rated movies
      * @returns { object[] }  
     */
-    getTopMovies(){
+    getTopMovies(page){
         req = unirest("GET", "https://" + ApiConfig.ENDPOINT + "movie/" +  "top_rated")
         return (req
 
             .query({
                 "t": "loadvideo",
                 "q": "60029591",
-                "language":"en-US",
+                "language": "en-US",
+                "page": page,
                 "api_key": ApiConfig.API_KEY
             })
         );
@@ -46,14 +47,15 @@ class Data {
      * Search for movies that are similar to a specific movie
      * @returns { object[] } 
     */
-    getSimilarMovies(id){
+    getSimilarMovies(id, page){
         req = unirest("GET", "https://" + ApiConfig.ENDPOINT + "movie/" + id + "/similar")
         return (req
 
             .query({
                 "t": "loadvideo",
                 "q": "60029591",
-                "language":"en-US",
+                "language": "en-US",
+                "page": page,
                 "api_key": ApiConfig.API_KEY
             })
         );
@@ -63,17 +65,18 @@ class Data {
      * Search for movies based on a query
      * @returns { object[] } 
     */
-    searchMovies(query, year, genre){
+    searchMovies(query, year, genre, page){
         req = unirest("GET", "https://" + ApiConfig.ENDPOINT + "search/movie")
         return (req
 
             .query({
                 "t": "loadvideo",
                 "q": "60029591",
-                "language":"en-US",
+                "language": "en-US",
                 "api_key": ApiConfig.API_KEY,
                 "query": query,
                 "year": year,
+                "page": page,
                 "with_genres": genre
             })
         );
