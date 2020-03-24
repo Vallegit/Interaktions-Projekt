@@ -30,6 +30,7 @@ class Swipe extends Component {
                 else this.setState({status: "LOADED", currentMovie: result.body})
                 if(this.state.index === 19){
                     this.setState({
+                        status: "LOADING MOVIES",
                         index: 0,
                         page: this.state.page + 1
                     });
@@ -93,14 +94,14 @@ class Swipe extends Component {
         return (
             <div style={backgroundImage} className="Swipe">
                 {MovieBox}
-                <button className="good" onClick={() => this.loadCurrentMovie()}>
+                <button className="good" onClick={() => this.setState({status: "LOADING CURRENT MOVIE"})}>
                     <span className="tooltip" id="tooltipGood">Like this movie</span>
                 </button>
-                <button className="bad" onClick={() => this.loadCurrentMovie()}>
+                <button className="bad" onClick={() => this.setState({status: "LOADING CURRENT MOVIE"})}>
                     <span className="tooltip" id="tooltipBad">Dislike this movie</span>
                 </button>
                 <div className="break"/>
-                <button className="remove" onClick={() => this.loadCurrentMovie()}>
+                <button className="remove" onClick={() => this.setState({status: "LOADING CURRENT MOVIE"})}>
                     <span className="tooltip" id="tooltipRemove">Don't vote</span>X</button>
             </div>
         )
