@@ -8,8 +8,6 @@ var req;
     User information including username and password is stored in 
     plaintext txt-files because encrypting is extra work.   */
 class Data {
-    constructor(){
-    }
     
     /** * Get a specific movie by movie-ID
         * @returns { object }  
