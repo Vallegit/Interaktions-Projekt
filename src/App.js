@@ -5,6 +5,7 @@ import "./App.css";
 import Swipe from "./Swipe/Swipe";
 import Match from "./Match/Match";
 import Detail from "./Match/Match";
+import Login from "./Login/Login";
 
 class App extends Component{
 
@@ -25,8 +26,13 @@ class App extends Component{
                         </div>
                     </div>
                 </div>
-             
-                <Route exact path="/" 
+
+                <Route exact 
+                    path="/"
+                    render={() => <Login/>}
+                />
+                <Route 
+                    path="/swipe" 
                     render ={()=> <Swipe/>}
                 />
                 <Route

@@ -15,7 +15,6 @@ class Data {
     getMovie(id){
         req = unirest("GET", "https://" + ApiConfig.ENDPOINT + "movie/" + id)
         return (req
-
             .query({
                 "t": "loadvideo",
                 "q": "60029591",
@@ -32,7 +31,6 @@ class Data {
     getTopMovies(page){
         req = unirest("GET", "https://" + ApiConfig.ENDPOINT + "movie/" +  "top_rated")
         return (req
-
             .query({
                 "t": "loadvideo",
                 "q": "60029591",
@@ -50,7 +48,6 @@ class Data {
     getSimilarMovies(id, page){
         req = unirest("GET", "https://" + ApiConfig.ENDPOINT + "movie/" + id + "/similar")
         return (req
-
             .query({
                 "t": "loadvideo",
                 "q": "60029591",
@@ -68,7 +65,6 @@ class Data {
     searchMovies(query, year, genre, page){
         req = unirest("GET", "https://" + ApiConfig.ENDPOINT + "search/movie")
         return (req
-
             .query({
                 "t": "loadvideo",
                 "q": "60029591",
@@ -76,8 +72,36 @@ class Data {
                 "api_key": ApiConfig.API_KEY,
                 "query": query,
                 "year": year,
+                "page": page
+            })
+        );
+    }
+
+    /**
+     * Discover movies based on all kinds of arguments
+     * @returns { object[] }
+    */
+    discoverMovies(sort, year, rating, cast, crew, with_genre, without_genre, with_keywords, without_keywords, language, page){
+        req = unirest("GET", "https://" + ApiConfig.ENDPOINT + "search/movie")
+        return (req
+            .query({
+                "t": "loadvideo",
+                "q": "60029591",
+                "language": "en-US",
+                "api_key": ApiConfig.API_KEY,
+                "sort_by": sort,
+                "year": year,
                 "page": page,
-                "with_genres": genre
+                "include_adult": "false",
+                "inlude_video": "false",
+                "vote_average.gte": rating,
+                "with_cast": cast,
+                "with_crew": crew,
+                "with_genres": with_genre,
+                "without_genre": without_genre,
+                "with_keywords": with_keywords,
+                "without_keywords": without_keywords,
+                "with_original_language": language
             })
         );
     }
