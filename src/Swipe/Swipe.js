@@ -14,7 +14,7 @@ class Swipe extends Component {
     }
     loadMovie = () => {
         dataInstance
-            .getMovie(1960)// 200 - star trek, 240 - godfather, 280 - terminator, 330 - jurassic park, 350 - Devil n prada 550 - fight club
+            .getMovie(350) // 200 - star trek, 240 - godfather, 280 - terminator, 330 - jurassic park, 350 - Devil n prada 550 - fight club
             .end(result => {
                 if(result.error)this.setState({status: "ERROR"})
                 else this.setState({status: "LOADED", movie: result.body})});
@@ -27,7 +27,7 @@ class Swipe extends Component {
         switch(this.state.status){
             case "LOADING":
                 MovieBox=<div className="Movie-box">
-                            <h1>Loading</h1>
+                            <div className="Loader"></div>
                         </div>
                 break;
             
@@ -53,7 +53,13 @@ class Swipe extends Component {
                 console.log(backgroundImage);        
                 break;
 
-            default:
+            default: 
+            MovieBox= 
+            <div className="Movie-box">
+                <span className="Error-box" >
+                    Big error, contact the helpdesk for more info.
+                </span>
+            </div>
                 break;
         }
 
