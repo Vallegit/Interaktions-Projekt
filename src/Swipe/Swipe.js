@@ -29,10 +29,13 @@ class Swipe extends Component {
             .end(result => {
                 if(result.error)this.setState({status: "ERROR"})
                 else this.setState({status: "LOADED", currentMovie: result.body})});
-        if(this.state.index == 19){
-            this.state.index = -1;
-            this.state.page++;
-        }
+        if(this.state.index === 19)this.setState({
+            index: 0,
+            page: this.state.page + 1
+        });
+        else this.setState({
+            index: this.state.index + 1 
+        })
     }
 
     render(){
@@ -53,7 +56,7 @@ class Swipe extends Component {
                     };
                 console.log(this.state.movies);
                 MovieBox= <div className="Movie-box">
-                                <img src={posterUrl+this.state.currentMovie.poster_path} id="movieImage"/>
+                                <img src={posterUrl+this.state.currentMovie.poster_path} id="movieImage" alt="movie poster"/>
 
                                 <p id="movieTitle">{this.state.currentMovie.original_title}</p>
 
@@ -64,8 +67,7 @@ class Swipe extends Component {
                                 <p id="description">{this.state.currentMovie.overview}</p>
 
                                 <p id="rating">Rating: {this.state.currentMovie.vote_average}</p>
-                        </div>
-                console.log(backgroundImage);        
+                        </div>       
                 break;
 
             default:
@@ -75,20 +77,14 @@ class Swipe extends Component {
         return (
             <div style={backgroundImage} className="Swipe">
                 {MovieBox}
-                <button className="good" onClick={() =>{
-                    this.state.index++, 
-                    this.loadCurrentMovie()}}>
+                <button className="good" onClick={() => this.loadCurrentMovie()}>
                     <span className="tooltip" id="tooltipGood">Like this movie</span>
                 </button>
-                <button className="bad" onClick={() =>{
-                    this.state.index++, 
-                    this.loadCurrentMovie()}}>
+                <button className="bad" onClick={() => this.loadCurrentMovie()}>
                     <span className="tooltip" id="tooltipBad">Dislike this movie</span>
                 </button>
                 <div className="break"/>
-                <button className="remove" onClick={() =>{
-                    this.state.index++, 
-                    this.loadCurrentMovie()}}>
+                <button className="remove" onClick={() => this.loadCurrentMovie()}>
                     <span className="tooltip" id="tooltipRemove">Don't vote</span>X</button>
             </div>
         )
