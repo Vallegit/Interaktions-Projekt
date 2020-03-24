@@ -5,23 +5,24 @@
     justify-content: center;
     flex: 1 0 auto;
     flex-flow:row wrap;
-    margin-top:5%;
 }
 .Movie-box{
     display:grid;
     grid-template-columns: 1.5fr 1fr;
-    grid-template-rows: 0.5fr 1fr 1fr 1fr 3fr;
+    grid-template-rows: 0.5fr 1fr 1fr 1fr 1fr;
     border-radius: 3%;
     order:2;
+    flex: 0 0 400px;
     align-items:center;
     background:white;
-    height: 400px;
+    height: 510px;
     width: 25%;
 }
 #movieTitle{
     grid-row:1;
     grid-column:1/3;
     text-align: center;
+    font-size:1.5em;
 }
 #year{
     grid-row:2;
@@ -33,15 +34,27 @@
     grid-column: 2;
 
 }
+#Rating{
+    grid-column: 2;
+    grid-row: 4;
+}
 #description{
     grid-row:5;
     grid-column:1/3;
     vertical-align: top;
+    margin: 5px;
 }
 #movieImage{
+    height:100%;
+    width:100%;
     grid-column: 1;
     grid-row:2/5
-
+}
+#movieBackDrop{
+    height:100%;
+    width: 100%;
+    grid-column: 1/3;
+    grid-row:1/6;
 }
 .good{
     order:3;
@@ -66,10 +79,10 @@
 #tooltipGood{
     width:8%;
     margin-left:2%;
-    top:59%;
+    top:57%;
 }
 .good:hover #tooltipGood{
-    -moz-transition-delay: 1s;
+    transition-delay: 1s;
     visibility: visible;
 }
 .good:hover {
@@ -87,11 +100,11 @@
     margin-top:7%;
 }
 #tooltipBad{
-    left:23%;
-    top:59%;
+    left:21%;
+    top:57%;
 }
 .bad:hover #tooltipBad{
-    -moz-transition-delay: 1s;
+    transition-delay: 1s;
     visibility:visible;
 }
 
@@ -108,16 +121,16 @@
     align-self:center;
     font-size:200%;
     color:black;
-    margin-top:2%;
+    margin-top:0.5%;
     
 }
 #tooltipRemove{
     font-size:50%;
-    top:86%;
+    top:89%;
 
 }
 .remove:hover #tooltipRemove{
-    -moz-transition-delay: 1s;
+    transition-delay: 1s;
     visibility:visible;
 }
 .remove:hover{
