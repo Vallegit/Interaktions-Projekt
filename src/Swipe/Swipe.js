@@ -6,18 +6,33 @@ class Swipe extends Component {
     constructor(props){
         super(props);
         this.state={
-            status:"LOADING"
+            status:"LOADING",
+            index: 0,
+            page: 1
         };
     }
     componentDidMount(){
-       this.loadMovie();
+       this.loadMovies();
     }
-    loadMovie = () => {
+    loadMovies = () => {
         dataInstance
-            .getMovie(1960)// 200 - star trek, 240 - godfather, 280 - terminator, 330 - jurassic park, 350 - Devil n prada 550 - fight club
+            .getTopMovies()// 200 - star trek, 240 - godfather, 280 - terminator, 330 - jurassic park, 350 - Devil n prada 550 - fight club
             .end(result => {
                 if(result.error)this.setState({status: "ERROR"})
-                else this.setState({status: "LOADED", movie: result.body})});
+                else this.setState({movies: result.body.results})
+                this.loadCurrentMovie()});
+    }
+
+    loadCurrentMovie = () => {
+        dataInstance
+            .getMovie(this.state.movies[this.state.index].id)
+            .end(result => {
+                if(result.error)this.setState({status: "ERROR"})
+                else this.setState({status: "LOADED", currentMovie: result.body})});
+        if(this.state.index == 19){
+            this.state.index = -1;
+            this.state.page++;
+        }
     }
 
     render(){
@@ -33,22 +48,22 @@ class Swipe extends Component {
             
             case "LOADED":
                 backgroundImage = {
-                    backgroundImage: `url(${posterUrl+this.state.movie.backdrop_path})`,
+                    backgroundImage: `url(${posterUrl+this.state.currentMovie.backdrop_path})`,
                     backgroundSize: '100%'
                     };
-                console.log(this.state.movie);
+                console.log(this.state.movies);
                 MovieBox= <div className="Movie-box">
-                                <img src={posterUrl+this.state.movie.poster_path} id="movieImage"/>
+                                <img src={posterUrl+this.state.currentMovie.poster_path} id="movieImage"/>
 
-                                <p id="movieTitle">{this.state.movie.original_title}</p>
+                                <p id="movieTitle">{this.state.currentMovie.original_title}</p>
 
-                                <p id="year">{this.state.movie.release_date}</p>
+                                <p id="year">{this.state.currentMovie.release_date}</p>
 
-                                <p id="director">{this.state.movie.genres.map(gen=>{return gen.name+" "})}</p>
+                                <p id="director">{this.state.currentMovie.genres.map(gen=>{return gen.name+" "})}</p>
 
-                                <p id="description">{this.state.movie.overview}</p>
+                                <p id="description">{this.state.currentMovie.overview}</p>
 
-                                <p id="rating">Rating: {this.state.movie.vote_average}</p>
+                                <p id="rating">Rating: {this.state.currentMovie.vote_average}</p>
                         </div>
                 console.log(backgroundImage);        
                 break;
@@ -60,14 +75,20 @@ class Swipe extends Component {
         return (
             <div style={backgroundImage} className="Swipe">
                 {MovieBox}
-                <button className="good">
+                <button className="good" onClick={() =>{
+                    this.state.index++, 
+                    this.loadCurrentMovie()}}>
                     <span className="tooltip" id="tooltipGood">Like this movie</span>
                 </button>
-                <button className="bad">
+                <button className="bad" onClick={() =>{
+                    this.state.index++, 
+                    this.loadCurrentMovie()}}>
                     <span className="tooltip" id="tooltipBad">Dislike this movie</span>
                 </button>
-                <div className="break"></div>
-                <button className="remove">
+                <div className="break"/>
+                <button className="remove" onClick={() =>{
+                    this.state.index++, 
+                    this.loadCurrentMovie()}}>
                     <span className="tooltip" id="tooltipRemove">Don't vote</span>X</button>
             </div>
         )
