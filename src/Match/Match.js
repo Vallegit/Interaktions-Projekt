@@ -34,7 +34,7 @@ class Match extends Component {
             
             case "LOADED":
                 movieList=null;
-
+                break;
             default: 
             movieList=
                     <h1 className="Error" >
