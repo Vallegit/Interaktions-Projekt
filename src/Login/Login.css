@@ -1,10 +1,17 @@
 .Login{
+    margin-top: 3em;
     display: flex;
     flex-direction: column;
+    align-content: center;
+    justify-content: center;
 }
 
-#break{
-    margin-top: 5em;
+.flex_Row{
+    margin-top: 1em;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
 }
 
 #Login_text{
@@ -13,7 +20,7 @@
     color: white;
 }
 
-.Username{
+.input_container{
     margin-top: 2em;
     display: flex;
     flex-direction: row;
@@ -21,27 +28,17 @@
     justify-content: center;
 }
 
-#Username_text{
+.input_text{
     color: white;
     font-size: 1.5em;
+    width: 104px;
+    margin-right: 10px;
 }
 
-#Username_input{
-    
-}
-.Password{
-    margin-top: 2em;
-    display: flex;
-    flex-direction: row;
-    align-content: center;
-    justify-content: center;
+.login_Link{
 }
 
-#Password_text{
-    color: white;
-    font-size: 1.5em;
-}
-
-#Password_input{
-    
+.button{
+    width: 100px;
+    height: 30px;
 }

@@ -5,6 +5,5 @@
 .vscode/
 
 node_modules/
-package-lock.json
 apiConfig.js
 build/

@@ -31,7 +31,6 @@ class App extends Component{
                         </div>
                     </div>
                 </div>
-
                 <Route exact 
                     path="/"
                     render={() => <Login/>}
