@@ -19,10 +19,15 @@ class App extends Component{
                     <div className="dropDown">
                         <button className="menuBtn">Menu</button>
                         <div className="menuContent">
-                            <Link to="/matches" className="matchesLink" >
+                            <Link to="/swipe" className="swipeLink">
+                                Swipe
+                            </Link>
+                            <Link to="/matches" className="matchesLink">
                                 Matches
                             </Link>
-                            <a>Logout</a>
+                            <Link to="/" className="loginLink">
+                                Log out
+                            </Link>
                         </div>
                     </div>
                 </div>
