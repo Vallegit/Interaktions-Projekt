@@ -20,20 +20,25 @@ class Match extends Component {
              .getTopMovies(this.state.page)// 200 - star trek, 240 - godfather, 280 - terminator, 330 - jurassic park, 350 - Devil n prada 550 - fight club
              .end(result => {
                  if(result.error)this.setState({status: "ERROR"})
-                 else this.setState({status: "LOADED", movies: result.body.results})});
+                 else this.setState({status: "LOADING MOVIES", movies: result.body.results})});
      }
  
     render(){
+        let posterUrl="https://image.tmdb.org/t/p/original";
         let movieList=null;
         switch(this.state.status){
 
             case "LOADING MOVIES":
                 movieList=
-                                <div className="Loader"></div>
+                                <div className="Loader2"></div>
                 break;
             
             case "LOADED":
-                movieList=null;
+                movieList=this.state.movies.map(movie=>(
+                    <div className="Movie-Container">
+                         <img src={posterUrl+this.state.currentMovie.poster_path} id="MovieImage" />
+                    </div>
+                ))
                 break;
             default: 
             movieList=
@@ -44,7 +49,7 @@ class Match extends Component {
         }
         return (
             <div className="Match">
-               <ul>{movieList}</ul>
+               <ul id="list">{movieList}</ul>
             </div>
             )
         }
