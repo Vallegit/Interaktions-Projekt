@@ -1,0 +1,19 @@
+.Premium{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
+
+.flex_row{
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+}
+#premium_text{
+    margin-top: 2em;
+    font-size: 4em;
+    color: gold;
+    font-style: italic;
+}

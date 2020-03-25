@@ -6,6 +6,7 @@ import Swipe from "./Swipe/Swipe";
 import Match from "./Match/Match";
 import Detail from "./Match/Match";
 import Login from "./Login/Login";
+import Premium from "./Premium/Premium";
 
 class App extends Component{
 
@@ -37,15 +38,19 @@ class App extends Component{
                 />
                 <Route 
                     path="/swipe" 
-                    render ={()=> <Swipe/>}
+                    render ={() => <Swipe/>}
                 />
                 <Route
                     path="/matches"
-                    render={()=> <Match/>}
+                    render={() => <Match/>}
                 />
-                 <Route
+                <Route
                     path="/details"
-                    render={()=> <Detail/>}
+                    render={() => <Detail/>}
+                />
+                <Route
+                    path="/premium"
+                    render={() => <Premium/>}
                 />
             </div>
         );
