@@ -30,13 +30,13 @@ class Match extends Component {
 
             case "LOADING MOVIES":
                 movieList=
-                                <div className="Loader2"></div>
+                    <div className="Loader2"></div>
                 break;
             
             case "LOADED":
                 movieList=this.state.movies.map(movie=>(
                     <div className="Movie-Container">
-                         <img src={posterUrl+this.state.currentMovie.poster_path} id="MovieImage" />
+                         <img src={posterUrl+movie.poster_path} id="MovieImage" alt="Movie Poster"/>
                     </div>
                 ))
                 break;
