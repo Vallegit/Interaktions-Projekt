@@ -1,5 +1,5 @@
 import * as ApiConfig from "./apiConfig";
-import userInstance from "./User"
+import User from "./User"
 
 var unirest = require("unirest");
 var req;
@@ -108,7 +108,8 @@ class Data {
     }
 
     createUser(username, password){
-
+        var currentUser = new User(username, password);
+        
     }
 }
 
