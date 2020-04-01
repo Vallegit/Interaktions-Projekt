@@ -6,4 +6,5 @@
 
 node_modules/
 apiConfig.js
+firebaseConfig.js
 build/
