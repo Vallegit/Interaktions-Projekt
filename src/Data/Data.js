@@ -1,5 +1,4 @@
 import * as ApiConfig from "./apiConfig";
-import User from "./User"
 
 var unirest = require("unirest");
 var req;
@@ -105,11 +104,6 @@ class Data {
                 "with_original_language": language
             })
         );
-    }
-
-    createUser(username, password){
-        var currentUser = new User(username, password);
-        
     }
 }
 
