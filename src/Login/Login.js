@@ -12,15 +12,29 @@ class Login extends Component {
         }
     }
 
-    logIn(){
-
+    logIn = (e) => {
+        e.preventDefault();
+        Firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+        .then((u) => {
+            console.log(u.user);
+        })
+        .catch((e) => { 
+            console.log(e.message)
+        });
     }
 
-    signUp(){
-
+    signUp = (e) => {
+        e.preventDefault();
+        Firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+        .then((u) => {
+            console.log(u.user)
+        })
+        .catch((e) => {
+            console.log(e.message)
+        });
     }
 
-    handleChange(e){
+    handleChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
     }
 
@@ -35,13 +49,13 @@ class Login extends Component {
                         <span className="input_text">
                             Email address
                         </span>
-                        <input type="email" name="email" className="input" placeholder="Enter email" onChange={this.handleChange}/>
+                        <input type="email" value={this.state.email} name="email" className="input" placeholder="Enter email" onChange={this.handleChange}/>
                     </div>
                     <div className="input_container">
                         <span className="input_text">
                             Password
                         </span>
-                        <input type="password" name="password" className="input" placeholder="Password" onChange={this.handleChange}/>
+                        <input type="password" value={this.state.password} name="password" className="input" placeholder="Password" onChange={this.handleChange}/>
                     </div>
                     <div className="flex_Row">
                         <Link to="/swipe" className="login_Link">
