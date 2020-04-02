@@ -10,6 +10,24 @@ import Premium from "./Premium/Premium";
 import Firebase from "./Firebase/Firebase"
 
 class App extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            user:{}
+        }
+        
+    }
+
+    authListener(){
+        Firebase.auth().onAuthStateChanged((user) => {
+            console.log("User: " + user + " logged in");
+            if(user){
+                this.setState({user});
+            }else{
+                this.setState({user: null});
+            }
+        })
+    }
 
     render(){
         return (
