@@ -1,9 +1,7 @@
-import app from "firebase/app";
-import "firebase/auth";
-import "firebase/firestore";
+import firebase from "firebase";
 import * as FirebaseConfig from "./firebaseConfig";
 
-const firebaseConfig = {
+const config = {
     apiKey: FirebaseConfig.apiKey,
     authDomain: FirebaseConfig.authDomain,
     databaseURL: FirebaseConfig.databaseURL,
@@ -15,9 +13,5 @@ const firebaseConfig = {
   };
 
 
-class Firebase {
-    constructor(){
-        app.initializeApp(config);
-    }
-}
+const Firebase = firebase.initializeApp(config);
 export default Firebase;
