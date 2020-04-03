@@ -21,7 +21,7 @@ class Match extends Component {
              .getTopMovies(this.state.page)// 200 - star trek, 240 - godfather, 280 - terminator, 330 - jurassic park, 350 - Devil n prada 550 - fight club
              .end(result => {
                  if(result.error)this.setState({status: "ERROR"})
-                 else this.setState({status: "LOADING MOVIES", movies: result.body.results})});
+                 else this.setState({status: "LOADED", movies: result.body.results})});
      }
  
     render(){
@@ -38,8 +38,9 @@ class Match extends Component {
             
             case "LOADED":
                 movieList=this.state.movies.map(movie=>(
-                    <div className="Movie-Container">
+                    <div className="MovieContainer">
                          <img src={posterUrl+movie.poster_path} id="MovieImage" alt="Movie Poster"/>
+                         <div id="MovieTitle">{movie.original_title}</div>
                     </div>
                 ))
                 break;

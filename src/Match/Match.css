@@ -1,20 +1,45 @@
 .Match{
     display:flex;
     height:500px;
-    overflow:auto;
     flex-direction: row;
-    background: white;
-    align-items: stretch;
-    justify-content: center;
+    background: rgb(153, 153, 255);
+    justify-content: space-around;
     flex-wrap: wrap;
+    overflow: auto;
 }
 .MovieContainer{
+    margin-bottom: 10px;
+    margin-top:10px;
+    padding: 20px;
+    display:grid;
+    grid-column: 1fr;
+    grid-template-rows: 3fr 1fr;
+    border: solid black 3px;
+}
+#MovieImage{
+    grid-row: 1;
+    height:200px;
+    width:150px;
+}
+#MovieTitle{
+    grid-row: 2;
+    margin-top:10px;
+    width:150px;
+    color:red;
 }
 #list{
-    align-self: center;
+    display:flex;
+    height:500px;
+    flex-direction: row;
+    background: rgb(153, 153, 255);
+    flex-wrap: wrap;
+    overflow: auto;
+    justify-content: space-around;
 }
+
 .Loader2{
     position:relative;
+    top:35%;
     left:0px;
     border:16px solid #f3f3f3;
     border-radius:50%;
@@ -22,7 +47,7 @@
     width:100px;
     border-top:16px solid #772953;
     animation: spin 1s linear infinite;
-    background: white;
+    background: rgb(153, 153, 255);
 }
 @keyframes spin{
     0%{transform: rotate(0deg);}
