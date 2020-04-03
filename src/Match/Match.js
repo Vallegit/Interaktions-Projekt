@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import "./Match.css";
 import dataInstance from "../Data/Data";
 
@@ -24,6 +25,8 @@ class Match extends Component {
      }
  
     render(){
+        if(this.props.user === null) return <Redirect to="/"/>;
+
         let posterUrl="https://image.tmdb.org/t/p/original";
         let movieList=null;
         switch(this.state.status){

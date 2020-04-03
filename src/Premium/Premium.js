@@ -1,8 +1,11 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import "./Premium.css";
 
 class Premium extends Component{
     render(){
+        if(this.props.user === null) return <Redirect to="/"/>;
+
         return(
         <div className="Premium">
             <div className="flex_row">

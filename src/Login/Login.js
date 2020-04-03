@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import "./Login.css";
 import Firebase from "../Firebase/Firebase";
 
@@ -16,7 +16,7 @@ class Login extends Component {
         e.preventDefault();
         Firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
         .then((u) => {
-            console.log(u.user);
+            this.props.authListener(u.user);
         })
         .catch((e) => { 
             console.log(e.message)
@@ -39,12 +39,13 @@ class Login extends Component {
     }
 
         render(){
+            if(this.props.user !== null) return <Redirect to="/swipe"/>;
+
             return (
                 <div className="Login">
                     <span id="Login_text">
                         Welcome to Movie Swiper, please log in or create an account to continue
                     </span>
-
                     <div className="input_container">
                         <span className="input_text">
                             Email address
@@ -65,9 +66,11 @@ class Login extends Component {
                         </Link>
                     </div>
                     <div className="flex_Row">
-                        <button className="button" onClick={this.signUp}>
-                            SIGN UP
-                        </button>
+                        <Link to="/swipe" className="login_Link">
+                            <button className="button" onClick={this.signUp}>
+                                SIGN UP
+                            </button>
+                        </Link>
                     </div>
                 </div>
             )

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./App.css";
 import Swipe from "./Swipe/Swipe";
@@ -13,17 +13,18 @@ class App extends Component{
     constructor(props){
         super(props);
         this.state = {
-            user:{}
+            user:null
         }
-        
     }
 
-    authListener(){
+    authListener = () => {
         Firebase.auth().onAuthStateChanged((user) => {
-            console.log("User: " + user + " logged in");
+            
             if(user){
+                console.log("User: " + user.displayName + " logged in");
                 this.setState({user});
             }else{
+                console.log("User logged out");
                 this.setState({user: null});
             }
         })
@@ -45,7 +46,10 @@ class App extends Component{
                             <Link to="/matches" className="matchesLink">
                                 Matches
                             </Link>
-                            <Link to="/" className="loginLink">
+                            <Link to="/" className="loginLink" onClick={() => {
+                                Firebase.auth().signOut();
+                                this.authListener();
+                                }}>
                                 Log out
                             </Link>
                         </div>
@@ -53,23 +57,23 @@ class App extends Component{
                 </div>
                 <Route exact 
                     path="/"
-                    render={() => <Login/>}
+                    render={() => <Login user={this.state.user} authListener={this.authListener}/>}
                 />
                 <Route 
                     path="/swipe" 
-                    render ={() => <Swipe/>}
+                    render ={() => <Swipe user={this.state.user}/>}
                 />
                 <Route
                     path="/matches"
-                    render={() => <Match/>}
+                    render={() => <Match user={this.state.user}/>}
                 />
                 <Route
                     path="/details"
-                    render={() => <Detail/>}
+                    render={() => <Detail user={this.state.user}/>}
                 />
                 <Route
                     path="/premium"
-                    render={() => <Premium/>}
+                    render={() => <Premium user={this.state.user}/>}
                 />
             </div>
         );
