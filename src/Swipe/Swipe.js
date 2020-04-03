@@ -7,40 +7,80 @@ class Swipe extends Component {
     constructor(props){
         super(props);
         this.state={
-            status:"LOADING MOVIES",
+            status:"LOADING",
             index: 0,
             page: 1
         };
     }
     componentDidMount(){
-       this.loadMovies();
-    }
-    loadMovies = () => {
-        dataInstance
-            .getTopMovies(this.state.page)// 200 - star trek, 240 - godfather, 280 - terminator, 330 - jurassic park, 350 - Devil n prada 550 - fight club
-            .end(result => {
-                if(result.error)this.setState({status: "ERROR"})
-                else this.setState({status: "LOADING CURRENT MOVIE", movies: result.body.results})});
+        if(this.props.user !== null)this.nextSwipe();
     }
 
-    loadCurrentMovie = () => {
-        dataInstance
-            .getMovie(this.state.movies[this.state.index].id)
-            .end(result => {
-                if(result.error)this.setState({status: "ERROR"})
-                else this.setState({status: "LOADED", currentMovie: result.body})
-                if(this.state.index === 19){
-                    this.setState({
-                        status: "LOADING MOVIES",
-                        index: 0,
-                        page: this.state.page + 1
-                    });
-                    this.loadMovies();
-                }
-                else this.setState({
-                    index: this.state.index + 1 
-                })
+    loadMovies = () => {
+        return dataInstance.getTopMovies(this.state.page)// 200 - star trek, 240 - godfather, 280 - terminator, 330 - jurassic park, 350 - Devil n prada 550 - fight club);
+    }
+
+    loadMovieById = (id) => {
+        this.setState({status: "LOADING"});
+        return dataInstance.getMovie(id);
+    }
+
+    handleError = () => {
+        this.setState({status: "ERROR"});
+    }
+
+    nextSwipe = () => {
+        if(this.state.index === 0){
+            this.loadMovies().end(result => {
+                if(result.error) this.handleError();
+                else this.setState({movies: result.body.results});
+                this.nextSwipe_util();
+            })
+        }
+        else{
+            this.nextSwipe_util();
+        }
+    }
+
+    nextSwipe_util = () =>{
+        let id = this.state.movies[this.state.index].id
+
+        /*if(database.includes(id)){ //If movie is blacklisted, increment index and load next movie instead
+            this.incrementIndex();
+            this.nextSwipe();
+        }*/
+
+        this.loadMovieById(id).end(result => {
+            if(result.error) this.handleError();
+            else this.setState({status: "LOADED", currentMovie: result.body})
+            this.incrementIndex();
+        })
+    }
+
+    incrementIndex = () => {
+        if(this.state.index === 19){
+            this.setState({
+                index: 0,
+                page: this.state.page + 1
             });
+        }
+        else {
+            this.setState({
+                index: this.state.index + 1 
+            })
+        }
+    }
+
+    handleLikeButton = () => {
+        this.nextSwipe();
+    }
+
+    handleDislikeButton = () => {
+        this.nextSwipe();
+    }
+
+    handleBlacklistButton = () => {
+        this.nextSwipe();
     }
 
     render(){
@@ -51,14 +91,7 @@ class Swipe extends Component {
         let backgroundImage=null;
         switch(this.state.status){
 
-            case "LOADING MOVIES":
-                MovieBox =  <div className="Movie-box">
-                                <div className="Loader"></div>
-                            </div>
-                break;
-
-            case "LOADING CURRENT MOVIE":
-                this.loadCurrentMovie();
+            case "LOADING":
                 MovieBox =  <div className="Movie-box">
                                 <div className="Loader"></div>
                             </div>
@@ -97,14 +130,14 @@ class Swipe extends Component {
         return (
             <div style={backgroundImage} className="Swipe">
                 {MovieBox}
-                <button className="good" onClick={() => this.setState({status: "LOADING CURRENT MOVIE"})}>
+                <button className="good" onClick={() => this.handleLikeButton()}>
                     <span className="tooltip" id="tooltipGood">Like this movie</span>
                 </button>
-                <button className="bad" onClick={() => this.setState({status: "LOADING CURRENT MOVIE"})}>
+                <button className="bad" onClick={() => this.handleDislikeButton()}>
                     <span className="tooltip" id="tooltipBad">Dislike this movie</span>
                 </button>
                 <div className="break"/>
-                <button className="remove" onClick={() => this.setState({status: "LOADING CURRENT MOVIE"})}>
+                <button className="remove" onClick={() => this.handleBlacklistButton()}>
                     <span className="tooltip" id="tooltipRemove">Don't vote</span>X</button>
             </div>
         )
