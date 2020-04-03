@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import dataInstance from "../Data/Data";
 import "./Swipe.css";
 
@@ -43,6 +44,8 @@ class Swipe extends Component {
     }
 
     render(){
+        if(this.props.user === null) return <Redirect to="/"/>;
+
         let posterUrl="https://image.tmdb.org/t/p/original";
         let MovieBox=null;
         let backgroundImage=null;
