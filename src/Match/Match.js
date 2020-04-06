@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import "./Match.css";
 import dataInstance from "../Data/Data";
+import { Link } from "react-router-dom";
 
 class Match extends Component {
     constructor(props){
@@ -25,7 +26,8 @@ class Match extends Component {
      }
  
     render(){
-        if(this.props.user === null) return <Redirect to="/"/>;
+
+        //if(this.props.user === null) return <Redirect to="/"/>;
 
         let posterUrl="https://image.tmdb.org/t/p/original";
         let movieList=null;
@@ -38,10 +40,12 @@ class Match extends Component {
             
             case "LOADED":
                 movieList=this.state.movies.map(movie=>(
-                    <div className="MovieContainer">
-                         <img src={posterUrl+movie.poster_path} id="MovieImage" alt="Movie Poster"/>
-                         <div id="MovieTitle">{movie.original_title}</div>
-                    </div>
+                    <Link to={"/details"}>
+                        <div className="MovieContainer">
+                            <img src={posterUrl+movie.poster_path} id="MovieImage" alt="Movie Poster"/>
+                            <div id="MovieTitle">{movie.original_title}</div>
+                        </div>
+                    </Link>
                 ))
                 break;
             default: 

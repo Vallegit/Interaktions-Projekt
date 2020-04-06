@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import "./App.css";
 import Swipe from "./Swipe/Swipe";
 import Match from "./Match/Match";
-import Detail from "./Match/Match";
+import Details from "./Detail/Detail";
 import Login from "./Login/Login";
 import Premium from "./Premium/Premium";
 import Firebase from "./Firebase/Firebase"
@@ -69,7 +69,7 @@ class App extends Component{
                 />
                 <Route
                     path="/details"
-                    render={() => <Detail firebase={Firebase} user={this.state.user}/>}
+                    render={() => <Details firebase={Firebase} user={this.state.user}/>}
                 />
                 <Route
                     path="/premium"
