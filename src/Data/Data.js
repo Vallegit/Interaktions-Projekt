@@ -29,7 +29,7 @@ class Data {
      * @returns { object[] }  
     */
     getTopMovies(page){
-        req = unirest("GET", "https://" + ApiConfig.ENDPOINT + "movie/" +  "top_rated")
+        req = unirest("GET", "https://" + ApiConfig.ENDPOINT + "movie/top_rated")
         return (req
             .query({
                 "t": "loadvideo",
