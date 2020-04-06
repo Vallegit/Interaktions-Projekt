@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./App.css";
 import Swipe from "./Swipe/Swipe";
@@ -8,6 +8,8 @@ import Detail from "./Match/Match";
 import Login from "./Login/Login";
 import Premium from "./Premium/Premium";
 import Firebase from "./Firebase/Firebase"
+
+var database = Firebase.database();
 
 class App extends Component{
     constructor(props){
@@ -61,19 +63,19 @@ class App extends Component{
                 />
                 <Route 
                     path="/swipe" 
-                    render ={() => <Swipe user={this.state.user}/>}
+                    render ={() => <Swipe firebase={Firebase} user={this.state.user}/>}
                 />
                 <Route
                     path="/matches"
-                    render={() => <Match user={this.state.user}/>}
+                    render={() => <Match firebase={Firebase} user={this.state.user}/>}
                 />
                 <Route
                     path="/details"
-                    render={() => <Detail user={this.state.user}/>}
+                    render={() => <Detail firebase={Firebase} user={this.state.user}/>}
                 />
                 <Route
                     path="/premium"
-                    render={() => <Premium user={this.state.user}/>}
+                    render={() => <Premium firebase={Firebase} user={this.state.user}/>}
                 />
             </div>
         );
