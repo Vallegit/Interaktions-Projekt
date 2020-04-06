@@ -9,11 +9,20 @@ class Swipe extends Component {
         this.state={
             status:"LOADING",
             index: 0,
-            page: 1
+            page: 1,
+            blacklist: []
         };
     }
     componentDidMount(){
-        if(this.props.user !== null)this.nextSwipe();
+        if(this.props.user !== null){
+            this.database = this.props.firebase.database().ref('blacklist').child(this.props.user.uid);
+            this.database.on('value', snap => {
+                this.setState((state) => ({blacklist: Object.values(snap.val())}), this.nextSwipe);
+                console.log(this.state.blacklist);
+            });
+
+        }
+        
     }
 
     loadMovies = () => {
@@ -44,31 +53,36 @@ class Swipe extends Component {
 
     nextSwipe_util = () =>{
         let id = this.state.movies[this.state.index].id;
-
-        /*if(database.includes(id)){ //If movie is blacklisted, increment index and load next movie instead
-            this.incrementIndex();
-            this.nextSwipe();
-        }*/
+        console.log(id);
+        if(this.state.blacklist.includes(id)){ //If movie is blacklisted, increment index and load next movie instead
+            this.incrementIndex(this.nextSwipe); //nextSwipe is passed to incrementIndex to be used in setState's callback, otherwise nextSwipe risks being called before the state has changed
+        }
 
         this.loadMovieById(id).end(result => {
             if(result.error) this.handleError();
-            else this.setState({status: "LOADED", currentMovie: result.body})
+            else this.setState({status: "LOADED", currentMovie: result.body});
             this.incrementIndex();
         })
     }
 
-    incrementIndex = () => {
+    incrementIndex = (func) => { //func is used to utilize setState's callback functionality
         if(this.state.index === 19){
-            this.setState({
+            this.setState((state) => ({
                 index: 0,
-                page: this.state.page + 1
-            });
+                page: state.page + 1
+            }), func);
         }
         else {
-            this.setState({
-                index: this.state.index + 1 
-            })
+            this.setState((state) => ({
+                index: state.index + 1 
+            }), func);
         }
+    }
+    blacklistCurrentMovie = () => {
+        let id = 0;
+        if(this.state.index === 0) id = this.state.movies[19].id;
+        else id = this.state.movies[this.state.index - 1].id;
+        this.database.push(id);
     }
 
     handleLikeButton = () => {
@@ -80,6 +94,7 @@ class Swipe extends Component {
     }
 
     handleBlacklistButton = () => {
+        this.blacklistCurrentMovie();
         this.nextSwipe();
     }
 

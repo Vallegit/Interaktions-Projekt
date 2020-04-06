@@ -9,8 +9,6 @@ import Login from "./Login/Login";
 import Premium from "./Premium/Premium";
 import Firebase from "./Firebase/Firebase"
 
-var database = Firebase.database();
-
 class App extends Component{
     constructor(props){
         super(props);
@@ -23,7 +21,7 @@ class App extends Component{
         Firebase.auth().onAuthStateChanged((user) => {
             
             if(user){
-                console.log("User: " + user.displayName + " logged in");
+                console.log("User: " + user.uid + " logged in");
                 this.setState({user});
             }else{
                 console.log("User logged out");
