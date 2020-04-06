@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import "./Detail.css";
+import { Redirect } from "react-router-dom";
+import "./Details.css";
+import dataInstance from "../Data/Data";
 
 class Detail extends Component {
     constructor(props){

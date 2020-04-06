@@ -1,11 +1,9 @@
 .Match{
     display:flex;
-    height:500px;
     flex-direction: row;
     background: rgb(153, 153, 255);
     justify-content: space-around;
     flex-wrap: wrap;
-    overflow: auto;
 }
 .MovieContainer{
     margin-bottom: 10px;
@@ -29,11 +27,11 @@
 }
 #list{
     display:flex;
-    height:500px;
+    max-height: 80vh;
+    overflow:auto;
     flex-direction: row;
     background: rgb(153, 153, 255);
     flex-wrap: wrap;
-    overflow: auto;
     justify-content: space-around;
 }
 
