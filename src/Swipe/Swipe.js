@@ -10,34 +10,59 @@ class Swipe extends Component {
             status:"LOADING",
             index: 0,
             page: 1,
-            blacklist: []
+            alreadyRated: []
         };
     }
+
     componentDidMount(){
         if(this.props.user !== null){
-            this.database = this.props.firebase.database().ref('blacklist').child(this.props.user.uid);
-            this.database.on('value', snap => {
-                this.setState((state) => ({blacklist: Object.values(snap.val())}), this.nextSwipe);
-                console.log(this.state.blacklist);
-            });
+            this.databaseRef = this.props.firebase.database().ref('users').child(this.props.user.uid);
+            this.blacklistRef = this.databaseRef.child('blacklist');
+            this.likedMoviesRef = this.databaseRef.child('liked-movies');
+            this.dislikedMoviesRef = this.databaseRef.child('disliked-movies');
+            this.alreadyRatedRef = this.databaseRef.child('already-rated');
 
+            this.alreadyRatedRef.on('value', snap => {
+                this.setState({alreadyRated: Object.values(snap.val())}, this.nextSwipe);
+                console.log(this.state.alreadyRated);
+            });
         }
         
     }
 
+    /**
+     * loadMovies 
+     * Use this function to fetch an array of 20 movies with minimum information
+     * @returns { Promise }
+    */
     loadMovies = () => {
         return dataInstance.getTopMovies(this.state.page)// 200 - star trek, 240 - godfather, 280 - terminator, 330 - jurassic park, 350 - Devil n prada 550 - fight club);
     }
 
+    /**
+     * loadMovieById 
+     * Use this function to fetch a single movie using the unique id of that movie
+     * @argument { Int } id
+     * @returns { Promise }
+    */
     loadMovieById = (id) => {
+        console.log("loading movie" + id);
         this.setState({status: "LOADING"});
         return dataInstance.getMovie(id);
     }
 
+    /**
+     * handleError
+     * Use this function to set the status state to "ERROR", this will make the render function display a error message on the site. 
+    */
     handleError = () => {
         this.setState({status: "ERROR"});
     }
 
+    /**
+     * nextSwipe, nextSwipe_util
+     * Use this function to fetch the next movie and reset the moviebox to display the new currentMovie 
+    */
     nextSwipe = () => {
         if(this.state.index === 0){
             this.loadMovies().end(result => {
@@ -54,18 +79,25 @@ class Swipe extends Component {
     nextSwipe_util = () =>{
         let id = this.state.movies[this.state.index].id;
         console.log(id);
-        if(this.state.blacklist.includes(id)){ //If movie is blacklisted, increment index and load next movie instead
-            this.incrementIndex(this.nextSwipe); //nextSwipe is passed to incrementIndex to be used in setState's callback, otherwise nextSwipe risks being called before the state has changed
+        if(this.state.alreadyRated.includes(id)){
+            this.incrementIndex(this.nextSwipe);
+        }else{
+            this.loadMovieById(id).end(result => {
+                if(result.error) this.handleError();
+                else this.setState({status: "LOADED", currentMovie: result.body});
+                this.incrementIndex();
+            })
         }
-
-        this.loadMovieById(id).end(result => {
-            if(result.error) this.handleError();
-            else this.setState({status: "LOADED", currentMovie: result.body});
-            this.incrementIndex();
-        })
     }
 
-    incrementIndex = (func) => { //func is used to utilize setState's callback functionality
+    /**
+     * incrementIndex
+     * Use this function to increment the index state which determines which movie in the movies array to display next
+     * Because of the size of the movies array ( 20 ), index will have a maximum value of 19, if incremented when at 19
+     * the index will return to 0 and instead the page will be incremented
+     * Accepts 1 @argument { function } func to pass as setState's callback function 
+    */
+    incrementIndex = (func) => {
         if(this.state.index === 19){
             this.setState((state) => ({
                 index: 0,
@@ -78,29 +110,82 @@ class Swipe extends Component {
             }), func);
         }
     }
-    blacklistCurrentMovie = () => {
+
+    /** 
+     * getCurrentMovieId
+     * Use this function to get the id of the displayed movie, this function is neccesary because when nextSwipe runs
+     * it calls incrementIndex making it so the index is always one step ahead of the displayed movie
+     * @returns { int }  
+    */
+    getCurrentMovieId = () => {
         let id = 0;
         if(this.state.index === 0) id = this.state.movies[19].id;
         else id = this.state.movies[this.state.index - 1].id;
-        this.database.push(id);
+        return id;
     }
 
+    /** 
+     * blacklistCurrentMovie
+     * Use this function to push the displayed movie to the firebase-Realtime-Database-reference thereby saving the 
+     * displayed movie in the blacklist for the current user
+    */
+    blacklistCurrentMovie = () => {
+        let id = this.getCurrentMovieId();
+        this.blacklistRef.push(id);
+        this.alreadyRatedRef.push(id);
+    }
+
+    /** 
+     * likeCurrentMovie
+     * Use this function to push the displayed movie to the firebase-Realtime-Database-reference thereby saving the 
+     * displayed movie in the liked-movies list for the current user
+    */
+    likeCurrentMovie = () => {
+        let id = this.getCurrentMovieId();
+        this.likedMoviesRef.push(id);
+        this.alreadyRatedRef.push(id);
+    }
+
+    /** 
+     * dislikeCurrentMovie
+     * Use this function to push the displayed movie to the firebase-Realtime-Database-reference thereby saving the 
+     * displayed movie in the disliked-movies list for the current user
+    */
+    dislikeCurrentMovie = () => {
+        let id = this.getCurrentMovieId();
+        this.dislikedMoviesRef.push(id);
+        this.alreadyRatedRef.push(id);
+    }
+
+    /** 
+     * handleLikeButton
+     * This function handles the OnClick event of the like button
+    */
     handleLikeButton = () => {
-        this.nextSwipe();
+        this.likeCurrentMovie();
+        //this.nextSwipe();
     }
 
+    /** 
+     * handleDislikeButton
+     * This function handles the OnClick event of the dislike button
+    */
     handleDislikeButton = () => {
-        this.nextSwipe();
+        this.dislikeCurrentMovie();
+        //this.nextSwipe();
     }
 
+    /** 
+     * handleBlacklistButton
+     * This function handles the OnClick event of the blacklist button
+    */
     handleBlacklistButton = () => {
         this.blacklistCurrentMovie();
-        this.nextSwipe();
+        //this.nextSwipe();
     }
 
     render(){
         if(this.props.user === null) return <Redirect to="/"/>;
-
         let posterUrl="https://image.tmdb.org/t/p/original";
         let MovieBox=null;
         let backgroundImage=null;

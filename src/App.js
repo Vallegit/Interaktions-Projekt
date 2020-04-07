@@ -8,6 +8,7 @@ import Detail from "./Match/Match";
 import Login from "./Login/Login";
 import Premium from "./Premium/Premium";
 import Firebase from "./Firebase/Firebase"
+import datainstance from "./Data/Data";
 
 class App extends Component{
     constructor(props){
@@ -46,7 +47,7 @@ class App extends Component{
                             <Link to="/matches" className="matchesLink">
                                 Matches
                             </Link>
-                            <Link to="/" className="loginLink" onClick={() => {
+                            <Link className="loginLink" onClick={() => {
                                 Firebase.auth().signOut();
                                 this.authListener();
                                 }}>
@@ -57,23 +58,23 @@ class App extends Component{
                 </div>
                 <Route exact 
                     path="/"
-                    render={() => <Login user={this.state.user} authListener={this.authListener}/>}
+                    render={() => <Login data={datainstance} firebase={Firebase} user={this.state.user} authListener={this.authListener}/>}
                 />
                 <Route 
                     path="/swipe" 
-                    render ={() => <Swipe firebase={Firebase} user={this.state.user}/>}
+                    render ={() => <Swipe data={datainstance} firebase={Firebase} user={this.state.user}/>}
                 />
                 <Route
                     path="/matches"
-                    render={() => <Match firebase={Firebase} user={this.state.user}/>}
+                    render={() => <Match data={datainstance} firebase={Firebase} user={this.state.user}/>}
                 />
                 <Route
                     path="/details"
-                    render={() => <Detail firebase={Firebase} user={this.state.user}/>}
+                    render={() => <Detail data={datainstance} firebase={Firebase} user={this.state.user}/>}
                 />
                 <Route
                     path="/premium"
-                    render={() => <Premium firebase={Firebase} user={this.state.user}/>}
+                    render={() => <Premium data={datainstance} firebase={Firebase} user={this.state.user}/>}
                 />
             </div>
         );
