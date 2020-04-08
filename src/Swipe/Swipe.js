@@ -35,7 +35,7 @@ class Swipe extends Component {
      * @returns { Promise }
     */
     loadMovies = () => {
-        return this.props.dataInstance.getTopMovies(this.state.page)// 200 - star trek, 240 - godfather, 280 - terminator, 330 - jurassic park, 350 - Devil n prada 550 - fight club);
+        return this.props.data.getTopMovies(this.state.page)// 200 - star trek, 240 - godfather, 280 - terminator, 330 - jurassic park, 350 - Devil n prada 550 - fight club);
     }
 
     /**
@@ -47,7 +47,7 @@ class Swipe extends Component {
     loadMovieById = (id) => {
         console.log("loading movie" + id);
         this.setState({status: "LOADING"});
-        return this.props.dataInstance.getMovie(id);
+        return this.props.data.getMovie(id);
     }
 
     /**
