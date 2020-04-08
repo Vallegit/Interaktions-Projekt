@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import dataInstance from "../Data/Data";
 import "./Swipe.css";
 
 class Swipe extends Component {
@@ -36,7 +35,7 @@ class Swipe extends Component {
      * @returns { Promise }
     */
     loadMovies = () => {
-        return dataInstance.getTopMovies(this.state.page)// 200 - star trek, 240 - godfather, 280 - terminator, 330 - jurassic park, 350 - Devil n prada 550 - fight club);
+        return this.props.dataInstance.getTopMovies(this.state.page)// 200 - star trek, 240 - godfather, 280 - terminator, 330 - jurassic park, 350 - Devil n prada 550 - fight club);
     }
 
     /**
@@ -48,7 +47,7 @@ class Swipe extends Component {
     loadMovieById = (id) => {
         console.log("loading movie" + id);
         this.setState({status: "LOADING"});
-        return dataInstance.getMovie(id);
+        return this.props.dataInstance.getMovie(id);
     }
 
     /**

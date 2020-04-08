@@ -3,8 +3,8 @@ import { Route } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./App.css";
 import Swipe from "./Swipe/Swipe";
-import Match from "./Match/Match";
-import Details from "./Detail/Detail";
+import Matches from "./Matches/Matches";
+import Details from "./Details/Details";
 import Login from "./Login/Login";
 import Premium from "./Premium/Premium";
 import Firebase from "./Firebase/Firebase"
@@ -66,11 +66,11 @@ class App extends Component{
                 />
                 <Route
                     path="/matches"
-                    render={() => <Match data={datainstance} firebase={Firebase} user={this.state.user}/>}
+                    render={() => <Matches data={datainstance} firebase={Firebase} user={this.state.user}/>}
                 />
                 <Route
                     path="/details"
-                    render={() => <Detail data={datainstance} firebase={Firebase} user={this.state.user}/>}
+                    render={() => <Details data={datainstance} firebase={Firebase} user={this.state.user}/>}
                 />
                 <Route
                     path="/premium"
