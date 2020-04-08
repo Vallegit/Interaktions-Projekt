@@ -25,7 +25,7 @@ class Match extends Component {
  
     render(){
 
-       // if(this.props.user === null) return <Redirect to="/"/>;
+        if(this.props.user === null) return <Redirect to="/"/>;
 
         let posterUrl="https://image.tmdb.org/t/p/original";
         let movieList=null;
