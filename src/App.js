@@ -69,7 +69,7 @@ class App extends Component{
                     render={() => <Matches data={datainstance} firebase={Firebase} user={this.state.user}/>}
                 />
                 <Route
-                    path="/details"
+                    path="/details/"
                     render={() => <Details data={datainstance} firebase={Firebase} user={this.state.user}/>}
                 />
                 <Route

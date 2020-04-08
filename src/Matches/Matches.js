@@ -25,10 +25,11 @@ class Match extends Component {
  
     render(){
 
-        if(this.props.user === null) return <Redirect to="/"/>;
+       // if(this.props.user === null) return <Redirect to="/"/>;
 
         let posterUrl="https://image.tmdb.org/t/p/original";
         let movieList=null;
+        let Loading=null
         switch(this.state.status){
 
             case "LOADING":
@@ -39,8 +40,9 @@ class Match extends Component {
                 break;
             
             case "LOADED":
+                Loading=null;
                 movieList=this.state.movies.map(movie=>(
-                    <Link to={"/details"}>
+                    <Link to={"/details/"+movie.id}>
                         <div className="MovieContainer">
                             <img src={posterUrl+movie.poster_path} id="MovieImage" alt="Movie Poster"/>
                             <div id="MovieTitle">{movie.original_title}</div>
@@ -49,7 +51,7 @@ class Match extends Component {
                 ))
                 break;
             default: 
-            movieList=
+                movieList=
                     <h1 className="Error" >
                         Big error, contact the helpdesk for more info.
                     </h1>
@@ -57,7 +59,7 @@ class Match extends Component {
         }
         return (
             <div className="Match">
-               <ul id="list">{movieList}</ul>
+                <ul id="list">{movieList}</ul>
             </div>
             )
         }

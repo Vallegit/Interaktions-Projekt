@@ -242,7 +242,7 @@ class Swipe extends Component {
                         <img src={posterUrl+this.state.currentMovie.poster_path} id="movieImage" alt="movie poster"/>
                         <p id="movieTitle">{this.state.currentMovie.original_title}</p>
                         <p id="year">{this.state.currentMovie.release_date}</p>
-                        <p id="director">{this.state.currentMovie.genres.map(gen=>{return gen.name+" "})}</p>
+                        <p id="genre">{this.state.currentMovie.genres.map(gen=>{return gen.name+" "})}</p>
                         <p id="description">{this.state.currentMovie.overview}</p>
                         <p id="rating">Rating: {this.state.currentMovie.vote_average}</p>
                     </div>       
