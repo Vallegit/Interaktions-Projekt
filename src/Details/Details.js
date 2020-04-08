@@ -22,8 +22,7 @@ class Details extends Component {
     }
 
     render(){
-        //if(this.props.user === null) return <Redirect to="/"/>;
-        this.props.data.getMovie(this.state.movieID).end(result=>console.log(result.body));
+        if(this.props.user === null) return <Redirect to="/"/>;
 
         let posterUrl="https://image.tmdb.org/t/p/original";
         let DetailsBox=null;
