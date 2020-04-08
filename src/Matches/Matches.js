@@ -1,14 +1,12 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
-import "./Match.css";
-import dataInstance from "../Data/Data";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import "./Matches.css";
 
 class Match extends Component {
     constructor(props){
         super(props);
         this.state={
-            status:"LOADING MOVIES",
+            status:"LOADING",
             index: 0,
             page: 1
         };
@@ -18,24 +16,26 @@ class Match extends Component {
      }
 
     loadMovies = () => {
-         dataInstance
-             .getTopMovies(this.state.page)// 200 - star trek, 240 - godfather, 280 - terminator, 330 - jurassic park, 350 - Devil n prada 550 - fight club
-             .end(result => {
-                 if(result.error)this.setState({status: "ERROR"})
-                 else this.setState({status: "LOADED", movies: result.body.results})});
+        this.props.dataInstance
+            .getTopMovies(this.state.page)// 200 - star trek, 240 - godfather, 280 - terminator, 330 - jurassic park, 350 - Devil n prada 550 - fight club
+            .end(result => {
+                if(result.error)this.setState({status: "ERROR"})
+                else this.setState({status: "LOADED", movies: result.body.results})});
      }
  
     render(){
 
-        //if(this.props.user === null) return <Redirect to="/"/>;
+        if(this.props.user === null) return <Redirect to="/"/>;
 
         let posterUrl="https://image.tmdb.org/t/p/original";
         let movieList=null;
         switch(this.state.status){
 
-            case "LOADING MOVIES":
+            case "LOADING":
                 movieList=
-                    <div className="Loader2"></div>
+                    <div className="Loader2">
+
+                    </div>
                 break;
             
             case "LOADED":
