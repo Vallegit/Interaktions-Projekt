@@ -135,16 +135,19 @@ class Swipe extends Component {
             this.preferencesRef.child('genres').child(gen.name).transaction(currentPref => {
                 return (currentPref || 0) + val;
             });
+            return 0;
         });
         this.state.currentMovie.production_companies.map(prodCom => {
             this.preferencesRef.child('porduction-companies').child(prodCom.name.replace(/[.#$[]]/g,'')).transaction(currentPref => {
                 return (currentPref || 0) + val;
             });
+            return 0;
         });
         this.state.currentMovie.production_countries.map(prodCon => {
             this.preferencesRef.child('porduction-countries').child(prodCon.name).transaction(currentPref => {
                 return (currentPref || 0) + val;
             });
+            return 0;
         });
         this.preferencesRef.child('language').child(this.state.currentMovie.original_language).transaction(currentPref => {
             return (currentPref || 0) + val;
