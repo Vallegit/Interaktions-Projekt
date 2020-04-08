@@ -16,14 +16,15 @@ class Swipe extends Component {
     componentDidMount(){
         if(this.props.user !== null){
             this.databaseRef = this.props.firebase.database().ref('users').child(this.props.user.uid);
-            this.blacklistRef = this.databaseRef.child('blacklist');
-            this.likedMoviesRef = this.databaseRef.child('liked-movies');
-            this.dislikedMoviesRef = this.databaseRef.child('disliked-movies');
-            this.alreadyRatedRef = this.databaseRef.child('already-rated');
+            this.movieRatingsRef = this.databaseRef.child('movie-ratings');
+            this.preferencesRef = this.databaseRef.child('preferences');
+            this.blacklistRef = this.movieRatingsRef.child('blacklist');
+            this.likedMoviesRef = this.movieRatingsRef.child('liked-movies');
+            this.dislikedMoviesRef = this.movieRatingsRef.child('disliked-movies');
+            this.alreadyRatedRef = this.movieRatingsRef.child('already-rated');
 
             this.alreadyRatedRef.on('value', snap => {
                 this.setState({alreadyRated: Object.values(snap.val())}, this.nextSwipe);
-                console.log(this.state.alreadyRated);
             });
         }
         
@@ -45,7 +46,6 @@ class Swipe extends Component {
      * @returns { Promise }
     */
     loadMovieById = (id) => {
-        console.log("loading movie" + id);
         this.setState({status: "LOADING"});
         return this.props.data.getMovie(id);
     }
@@ -77,7 +77,6 @@ class Swipe extends Component {
 
     nextSwipe_util = () =>{
         let id = this.state.movies[this.state.index].id;
-        console.log(id);
         if(this.state.alreadyRated.includes(id)){
             this.incrementIndex(this.nextSwipe);
         }else{
@@ -122,6 +121,38 @@ class Swipe extends Component {
         else id = this.state.movies[this.state.index - 1].id;
         return id;
     }
+    /** 
+     * updatePreferences
+     * Use this function to increment or decrement all relevant preferences in the firebase-realtime-database
+     * @argument { boolean } inc if inc is true => increment, false => decrement
+    */
+    updatePreferences = (inc) => {
+        let val = 0;
+        if(inc) val = 1;
+        else val = -1;
+
+        this.state.currentMovie.genres.map(gen => {
+            this.preferencesRef.child('genres').child(gen.name).transaction(currentPref => {
+                return (currentPref || 0) + val;
+            });
+        });
+        this.state.currentMovie.production_companies.map(prodCom => {
+            this.preferencesRef.child('porduction-companies').child(prodCom.name.replace(/[.#$[]]/g,'')).transaction(currentPref => {
+                return (currentPref || 0) + val;
+            });
+        });
+        this.state.currentMovie.production_countries.map(prodCon => {
+            this.preferencesRef.child('porduction-countries').child(prodCon.name).transaction(currentPref => {
+                return (currentPref || 0) + val;
+            });
+        });
+        this.preferencesRef.child('language').child(this.state.currentMovie.original_language).transaction(currentPref => {
+            return (currentPref || 0) + val;
+        });
+        this.preferencesRef.child('realease-year').child(this.state.currentMovie.release_date.substring(0,3) + '0').transaction(currentPref => {
+            return (currentPref || 0) + val;
+        });
+    }
 
     /** 
      * blacklistCurrentMovie
@@ -138,22 +169,26 @@ class Swipe extends Component {
      * likeCurrentMovie
      * Use this function to push the displayed movie to the firebase-Realtime-Database-reference thereby saving the 
      * displayed movie in the liked-movies list for the current user
+     * This function also updates the preferences in the database acordingly
     */
     likeCurrentMovie = () => {
         let id = this.getCurrentMovieId();
         this.likedMoviesRef.push(id);
         this.alreadyRatedRef.push(id);
+        this.updatePreferences(true);
     }
 
-    /** 
+    /**
      * dislikeCurrentMovie
      * Use this function to push the displayed movie to the firebase-Realtime-Database-reference thereby saving the 
      * displayed movie in the disliked-movies list for the current user
+     * This function also updates the preferences in the database acordingly
     */
     dislikeCurrentMovie = () => {
         let id = this.getCurrentMovieId();
         this.dislikedMoviesRef.push(id);
         this.alreadyRatedRef.push(id);
+        this.updatePreferences(false);
     }
 
     /** 
@@ -162,7 +197,6 @@ class Swipe extends Component {
     */
     handleLikeButton = () => {
         this.likeCurrentMovie();
-        //this.nextSwipe();
     }
 
     /** 
@@ -171,7 +205,6 @@ class Swipe extends Component {
     */
     handleDislikeButton = () => {
         this.dislikeCurrentMovie();
-        //this.nextSwipe();
     }
 
     /** 
@@ -180,7 +213,6 @@ class Swipe extends Component {
     */
     handleBlacklistButton = () => {
         this.blacklistCurrentMovie();
-        //this.nextSwipe();
     }
 
     render(){

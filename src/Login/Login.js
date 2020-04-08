@@ -69,10 +69,26 @@ class Login extends Component {
     */
     setupDatabase = (user) => {
         let databaseRef = this.props.firebase.database().ref('users').child(user.uid);
-        databaseRef.child('blacklist').push(0);
-        databaseRef.child('liked-movies').push(0);
-        databaseRef.child('disliked-movies').push(0);
-        databaseRef.child('already-rated').push(0);
+        let movieRatingsRef = databaseRef.child('movie-ratings');
+        let preferencesRef = databaseRef.child('preferences');
+
+        // Dummy values in ratings so it isn't empty
+        movieRatingsRef.child('blacklist').push(0);
+        movieRatingsRef.child('liked-movies').push(0);
+        movieRatingsRef.child('disliked-movies').push(0);
+        movieRatingsRef.child('already-rated').push(0);
+
+        // Initial values in preferences
+        preferencesRef.child('genres').set({
+            Action: 0,
+            Drama: 0,
+            Romance: 0,
+            Horror: 0,
+            Thriller: 0,
+            Adventure: 0,
+            Comedy: 0,
+            Crime: 0
+        });
     }
 
     /**
