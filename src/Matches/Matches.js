@@ -16,7 +16,7 @@ class Match extends Component {
      }
 
     loadMovies = () => {
-        this.props.dataInstance
+        this.props.data
             .getTopMovies(this.state.page)// 200 - star trek, 240 - godfather, 280 - terminator, 330 - jurassic park, 350 - Devil n prada 550 - fight club
             .end(result => {
                 if(result.error)this.setState({status: "ERROR"})
