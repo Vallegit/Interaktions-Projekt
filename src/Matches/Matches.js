@@ -13,7 +13,7 @@ class Match extends Component {
     }
     componentDidMount(){
         this.loadMovies();
-     }
+    }
 
     loadMovies = () => {
         this.props.data
@@ -21,37 +21,38 @@ class Match extends Component {
             .end(result => {
                 if(result.error)this.setState({status: "ERROR"})
                 else this.setState({status: "LOADED", movies: result.body.results})});
-     }
+    }
  
     render(){
 
         if(this.props.user === null) return <Redirect to="/"/>;
 
-        let posterUrl="https://image.tmdb.org/t/p/original";
-        let movieList=null;
-        let Loading=null
+        let posterUrl = "https://image.tmdb.org/t/p/original";
+        let movieList = null;
+        let Loading = null
         switch(this.state.status){
 
             case "LOADING":
-                movieList=
-                    <div className="Loader2">
+                movieList =
+                    <div className = "Loader2">
 
                     </div>
                 break;
             
             case "LOADED":
-                Loading=null;
-                movieList=this.state.movies.map(movie=>(
-                    <Link to={"/details/"+movie.id}>
+                Loading = null;
+                movieList = this.state.movies.map(movie=>(
+                    <Link to={"/details/" + movie.id}>
                         <div className="MovieContainer">
-                            <img src={posterUrl+movie.poster_path} id="MovieImage" alt="Movie Poster"/>
+                            <img src={posterUrl + movie.poster_path} id="MovieImage" alt="Movie Poster"/>
                             <div id="MovieTitle">{movie.original_title}</div>
                         </div>
                     </Link>
                 ))
                 break;
+
             default: 
-                movieList=
+                movieList =
                     <h1 className="Error" >
                         Big error, contact the helpdesk for more info.
                     </h1>
