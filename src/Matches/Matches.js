@@ -36,6 +36,7 @@ class Match extends Component {
                 movieList =
                     <div className = "Loader2">
 
+
                     </div>
                 break;
             
