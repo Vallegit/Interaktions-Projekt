@@ -128,7 +128,7 @@ class Swipe extends Component {
     */
     updatePreferences = (inc) => {
         let val = 0;
-        if(inc) val = 1;
+        if(inc) val = 3;
         else val = -1;
 
         this.state.currentMovie.genres.map(gen => {
@@ -138,13 +138,13 @@ class Swipe extends Component {
             return 0;
         });
         this.state.currentMovie.production_companies.map(prodCom => {
-            this.preferencesRef.child('porduction-companies').child(prodCom.name.replace(/[.#$[]]/g,'')).transaction(currentPref => {
+            this.preferencesRef.child('production-companies').child(prodCom.name.replace(/[.#$\[\]]/g,'')).transaction(currentPref => {
                 return (currentPref || 0) + val;
             });
             return 0;
         });
         this.state.currentMovie.production_countries.map(prodCon => {
-            this.preferencesRef.child('porduction-countries').child(prodCon.name).transaction(currentPref => {
+            this.preferencesRef.child('production-countries').child(prodCon.name).transaction(currentPref => {
                 return (currentPref || 0) + val;
             });
             return 0;
@@ -240,7 +240,7 @@ class Swipe extends Component {
                 MovieBox =
                     <div className="Movie-box">
                         <img src={posterUrl+this.state.currentMovie.poster_path} id="movieImage" alt="movie poster"/>
-                        <p id="movieTitle">{this.state.currentMovie.original_title}</p>
+                        <p id="movieTitle">{this.state.currentMovie.title}</p>
                         <p id="year">{this.state.currentMovie.release_date}</p>
                         <p id="genre">{this.state.currentMovie.genres.map(gen=>{return gen.name+" "})}</p>
                         <p id="description">{this.state.currentMovie.overview}</p>
