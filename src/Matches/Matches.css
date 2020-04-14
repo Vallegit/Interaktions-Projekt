@@ -34,21 +34,11 @@
     justify-content: space-around;
     width:100%;
 }
-.Loader2{
-    position:relative;
+#Loader2{
     align-self: center;
-    border:16px solid #f3f3f3;
-    border-radius:50%;
-    height:100px;
-    width:100px;
-    border-top:16px solid #772953;
-    animation: spin 1s linear infinite;
     background: rgb(153, 153, 255);
 }
-@keyframes spin{
-    0%{transform: rotate(0deg);}
-    100%{transform:rotate(360deg);}
-}
+
 .Error{
 
 }

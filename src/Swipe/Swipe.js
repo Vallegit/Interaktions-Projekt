@@ -245,10 +245,7 @@ class Swipe extends Component {
         switch(this.state.status){
 
             case "LOADING":
-                MovieBox =  
-                    <div className="Movie-box">
-                        <div className="Loader"></div>
-                    </div>
+                MovieBox = <div className="Movie-box"> <div className="Loader" id="Loader1"></div></div>
                 break;
             
             case "LOADED":
@@ -280,15 +277,10 @@ class Swipe extends Component {
         return (
             <div style={backgroundImage} className="Swipe">
                 {MovieBox}
-                <button className="good" onClick={() => this.handleLikeButton()}>
-                    <span className="tooltip" id="tooltipGood">Like this movie</span>
-                </button>
-                <button className="bad" onClick={() => this.handleDislikeButton()}>
-                    <span className="tooltip" id="tooltipBad">Dislike this movie</span>
-                </button>
+                <button className="good" title="Like this movie" onClick={() => this.handleLikeButton()}/>
+                <button className="bad" title="Dislike this movie" onClick={() => this.handleDislikeButton()}/>
                 <div className="break"/>
-                <button className="remove" onClick={() => this.handleBlacklistButton()}>
-                    <span className="tooltip" id="tooltipRemove">Don't vote</span>X</button>
+                <button className="remove" title="Don't vote" onClick={() => this.handleBlacklistButton()}/>
             </div>
         )
     }

@@ -26,13 +26,11 @@ class Details extends Component {
 
         let posterUrl="https://image.tmdb.org/t/p/original";
         let DetailsBox=null;
-        let Loader=null
         let BackDrop=null;
         switch(this.state.status){
 
             case "LOADING":
-                DetailsBox=
-                    <div className="LoaderIII"></div>
+                DetailsBox= <div className="Loader" id="Loader3"/>
                 break;
             
             case "LOADED":

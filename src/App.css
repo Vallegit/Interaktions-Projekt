@@ -35,6 +35,18 @@
 .dropDown:hover .menuBtn{
     color:grey;
 }
+.Loader{
+    border:16px solid #f3f3f3;
+    border-radius:50%;
+    height:100px;
+    width:100px;
+    border-top:16px solid #772953;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin{
+    0%{transform: rotate(0deg);}
+    100%{transform:rotate(360deg);}
+}
 #Title{
     order:2;
     text-align:center;
