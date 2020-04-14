@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import { Route } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./App.css";
-import Swipe from "./Swipe/Swipe";
-import Matches from "./Matches/Matches";
-import Details from "./Details/Details";
-import Login from "./Login/Login";
-import Premium from "./Premium/Premium";
+import Swipe from "./Components/Swipe/Swipe";
+import Matches from "./Components/Matches/Matches";
+import Details from "./Components/Details/Details";
+import Login from "./Components/Login/Login";
+import Premium from "./Components/Premium/Premium";
 import Firebase from "./Firebase/Firebase"
 import datainstance from "./Data/Data";
 
