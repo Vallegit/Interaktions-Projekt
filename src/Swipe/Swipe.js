@@ -128,32 +128,51 @@ class Swipe extends Component {
     */
     updatePreferences = (inc) => {
         let val = 0;
-        if(inc) val = 3;
-        else val = -1;
+        if(inc) val = 1;
 
         this.state.currentMovie.genres.map(gen => {
             this.preferencesRef.child('genres').child(gen.name).transaction(currentPref => {
-                return (currentPref || 0) + val;
+                if(currentPref != null){
+                    return {count: (currentPref.count || 0) + 1, rating: ((currentPref.rating * currentPref.count || 0) + val)/((currentPref.count || 0) + 1)};
+                } else {
+                    return 0;
+                }
             });
             return 0;
         });
         this.state.currentMovie.production_companies.map(prodCom => {
             this.preferencesRef.child('production-companies').child(prodCom.name.replace(/[.#$\[\]]/g,'')).transaction(currentPref => {
-                return (currentPref || 0) + val;
+                if(currentPref != null){
+                    return {count: (currentPref.count || 0) + 1, rating: ((currentPref.rating * currentPref.count || 0) + val)/((currentPref.count || 0) + 1)};
+                } else {
+                    return 0;
+                }
             });
             return 0;
         });
         this.state.currentMovie.production_countries.map(prodCon => {
             this.preferencesRef.child('production-countries').child(prodCon.name).transaction(currentPref => {
-                return (currentPref || 0) + val;
+                if(currentPref != null){
+                    return {count: (currentPref.count || 0) + 1, rating: ((currentPref.rating * currentPref.count || 0) + val)/((currentPref.count || 0) + 1)};
+                } else {
+                    return 0;
+                }
             });
             return 0;
         });
         this.preferencesRef.child('language').child(this.state.currentMovie.original_language).transaction(currentPref => {
-            return (currentPref || 0) + val;
+            if(currentPref != null){
+                return {count: (currentPref.count || 0) + 1, rating: ((currentPref.rating * currentPref.count || 0) + val)/((currentPref.count || 0) + 1)};
+            } else {
+                return 0;
+            }
         });
         this.preferencesRef.child('realease-year').child(this.state.currentMovie.release_date.substring(0,3) + '0').transaction(currentPref => {
-            return (currentPref || 0) + val;
+            if(currentPref != null){
+                return {count: (currentPref.count || 0) + 1, rating: ((currentPref.rating * currentPref.count || 0) + val)/((currentPref.count || 0) + 1)};
+            } else {
+                return 0;
+            }
         });
     }
 
@@ -220,9 +239,9 @@ class Swipe extends Component {
 
     render(){
         if(this.props.user === null) return <Redirect to="/"/>;
-        let posterUrl="https://image.tmdb.org/t/p/original";
-        let MovieBox=null;
-        let backgroundImage=null;
+        let posterUrl = "https://image.tmdb.org/t/p/original";
+        let MovieBox = null;
+        let backgroundImage = null;
         switch(this.state.status){
 
             case "LOADING":
@@ -245,7 +264,7 @@ class Swipe extends Component {
                         <p id="genre">{this.state.currentMovie.genres.map(gen=>{return gen.name+" "})}</p>
                         <p id="description">{this.state.currentMovie.overview}</p>
                         <p id="rating">Rating: {this.state.currentMovie.vote_average}</p>
-                    </div>       
+                    </div>;                
                 break;
 
             default: 
