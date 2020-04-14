@@ -33,11 +33,7 @@ class Match extends Component {
         switch(this.state.status){
 
             case "LOADING":
-                movieList =
-                    <div className = "Loader2">
-
-
-                    </div>
+                movieList = <div className = "Loader" id="Loader2"/>;
                 break;
             
             case "LOADED":
