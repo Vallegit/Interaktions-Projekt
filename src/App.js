@@ -7,6 +7,7 @@ import Matches from "./Components/Matches/Matches";
 import Details from "./Components/Details/Details";
 import Login from "./Components/Login/Login";
 import Premium from "./Components/Premium/Premium";
+import Landing from "./Components/Landing/Landing";
 import Firebase from "./Firebase/Firebase"
 import datainstance from "./Data/Data";
 
@@ -56,9 +57,17 @@ class App extends Component{
                         </div>
                     </div>
                 </div>
-                <Route exact 
+                <Route exact
                     path="/"
-                    render={() => <Login data={datainstance} firebase={Firebase} user={this.state.user} authListener={this.authListener}/>}
+                    render={() => <Landing/>}
+                />
+                <Route  
+                    path="/login"
+                    render={() => <Login data={datainstance} signup="0" firebase={Firebase} user={this.state.user} authListener={this.authListener}/>}
+                />
+                <Route  
+                    path="/signup"
+                    render={() => <Login data={datainstance} signup="1" firebase={Firebase} user={this.state.user} authListener={this.authListener}/>}
                 />
                 <Route 
                     path="/swipe" 

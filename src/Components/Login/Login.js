@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
+import { faEnvelope, faUser } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import "./Login.css";
 
 class Login extends Component {
@@ -7,7 +9,8 @@ class Login extends Component {
         super(props);
         this.state = {
             email: "",
-            password: ""
+            password: "",
+            signup: this.props.signup
         }
     }
 
@@ -90,33 +93,43 @@ class Login extends Component {
         render(){
             if(this.props.user !== null) return <Redirect to="/swipe"/>;
 
+            switch(this.state.signup){
+                case "0":
+
+                break;
+
+                case "1":
+
+                break;
+            }
+
             return (
                 <div className="Login">
                     <span id="Login_text">
-                        Welcome to Movie Swiper, please log in or create an account to continue
+                        LOGIN
                     </span>
-                    <div className="input_container">
-                        <span className="input_text">
-                            Email address
-                        </span>
-                        <input type="email" value={this.state.email} name="email" className="input" placeholder="Enter email" onChange={this.handleChange}/>
+                    <div className="flex_row">
+                        <div className="input_container">
+                            <FontAwesomeIcon icon={faEnvelope} size="2x" className="icon"/>
+                            <input type="email" value={this.state.email} name="email" className="input" placeholder="Email" onChange={this.handleChange}/>
+                        </div>
                     </div>
-                    <div className="input_container">
-                        <span className="input_text">
-                            Password
-                        </span>
-                        <input type="password" value={this.state.password} name="password" className="input" placeholder="Password" onChange={this.handleChange}/>
+                    <div className="flex_row">
+                        <div className="input_container">
+                            <FontAwesomeIcon icon={faUser} size="2x" className="icon"/>
+                            <input type="password" value={this.state.password} name="password" className="input" placeholder="Password" onChange={this.handleChange}/>
+                        </div>
                     </div>
-                    <div className="flex_Row">
+                    <div className="flex_row">
                         <Link to="/swipe" className="login_Link">
                             <button className="button"  onClick={this.logIn}>
-                                LOG IN
+                                LOGIN
                             </button>
                         </Link>
                     </div>
-                    <div className="flex_Row">
-                        <Link to="/swipe" className="login_Link">
-                            <button className="button" onClick={this.signUp}>
+                    <div className="flex_row">
+                        <Link to="/signup" className="login_Link">
+                            <button className="button" >
                                 SIGN UP
                             </button>
                         </Link>
