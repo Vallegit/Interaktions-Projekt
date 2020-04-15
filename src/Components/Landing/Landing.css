@@ -1,0 +1,26 @@
+.landingContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#landingText{
+    margin-top: 6%;
+    margin-bottom: 3%;
+    font-size: 3em;
+    color: white;
+    text-align: center;
+}
+#landingButton{
+    height: 3em;
+    width: 8em;
+    align-self: center;
+    font-size: 2em;
+    border-radius: 15px;
+    background: #22ccca;
+    transition: .2s;
+}
+#landingButton:hover{
+    background: #11bbb9;
+    box-shadow: 0 0 5px 3px white;
+}
