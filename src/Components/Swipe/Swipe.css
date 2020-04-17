@@ -34,6 +34,7 @@
     background:white;
     height: 510px;
     width: 25%;
+    box-shadow: 0 0 5px 3px black;
 }
 #movieTitle{
     grid-row:1;

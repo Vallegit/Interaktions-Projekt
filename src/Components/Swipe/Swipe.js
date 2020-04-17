@@ -177,6 +177,25 @@ class Swipe extends Component {
     }
 
     /** 
+     * addToMovieCount
+     * Use this function to increment the total movie count in the database.
+     * @argument { boolean } inc true => increments liked movies, false => increments disliked movies
+    */
+
+    addToMovieCount = (inc) => {
+        let val = 0;
+        if(inc) val = 1;
+
+        this.movieRatingsRef.child('total').transaction(currentTotal => {
+            if(currentTotal != null){
+                return {count: (currentTotal.count || 0) + 1, rating: ((currentTotal.rating * currentTotal.count || 0) + val)/((currentTotal.count || 0) + 1)};
+            } else {
+                return 0;
+            }
+        });
+    }
+
+    /** 
      * blacklistCurrentMovie
      * Use this function to push the displayed movie to the firebase-Realtime-Database-reference thereby saving the 
      * displayed movie in the blacklist for the current user
@@ -198,6 +217,7 @@ class Swipe extends Component {
         this.likedMoviesRef.push(id);
         this.alreadyRatedRef.push(id);
         this.updatePreferences(true);
+        this.addToMovieCount(true);
     }
 
     /**
@@ -211,6 +231,7 @@ class Swipe extends Component {
         this.dislikedMoviesRef.push(id);
         this.alreadyRatedRef.push(id);
         this.updatePreferences(false);
+        this.addToMovieCount(false);
     }
 
     /** 

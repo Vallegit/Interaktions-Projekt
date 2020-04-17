@@ -129,7 +129,7 @@ class Login extends Component {
                     </div>
                     <div className="flex_row">
                         <Link to="/signup" className="login_Link">
-                            <button className="button" >
+                            <button className="button" onClick={this.signUp}>
                                 SIGN UP
                             </button>
                         </Link>
