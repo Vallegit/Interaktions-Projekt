@@ -58,3 +58,56 @@
     margin-right:100px;
     color:#22ccca;
 }
+.auth_button{
+    background-color: #22ccca;
+    font-size: 1.5em;
+    border: none;
+    width: 70%;
+    height: 2.2em;
+    border-radius: 8px;
+    box-shadow: 0 0 3px 1px grey;
+    transition: all .4s;
+}
+.auth_button:hover{
+    box-shadow: 0 0 10px 2px grey;
+}
+.auth_button:focus{
+    outline: none;
+}
+.input_container{
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    background: lightgray;
+    border-radius: 8px;
+    width: 65%;
+    padding: 2%;
+    box-shadow: 0 0 3px 1px grey;
+    transition: all .4s;
+}
+.input_container:hover{
+    box-shadow: 0 0 10px 2px grey;
+    cursor: text;
+}
+
+.icon{
+    margin-right: 4%;
+}
+.input{
+    width: 80%;
+    border: none;
+    background: lightgray;
+    font-size: 1.5em;
+}
+.input:focus{
+    outline: none;
+}
+.flex_row{
+    margin-top: 2em;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    background-color: white;
+}
