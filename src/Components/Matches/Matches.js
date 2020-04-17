@@ -39,10 +39,10 @@ class Match extends Component {
             case "LOADED":
                 Loading = null;
                 movieList = this.state.movies.map(movie=>(
-                    <Link to={"/details/" + movie.id}>
+                    <Link to={"/details/" + movie.id} className="MovieLink">
                         <div className="MovieContainer">
                             <img src={posterUrl + movie.poster_path} id="MovieImage" alt="Movie Poster"/>
-                            <div id="MovieTitle">{movie.original_title}</div>
+                            <p id="MovieTitle">{movie.title}</p>
                         </div>
                     </Link>
                 ))
