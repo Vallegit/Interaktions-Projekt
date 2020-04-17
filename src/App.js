@@ -9,8 +9,10 @@ import Login from "./Components/Login/Login";
 import Premium from "./Components/Premium/Premium";
 import Landing from "./Components/Landing/Landing";
 import SignUp from "./Components/SignUp/SignUp";
-import Firebase from "./Firebase/Firebase"
+import Topbar from "./Components/Topbar/Topbar";
+import Firebase from "./Firebase/Firebase";
 import datainstance from "./Data/Data";
+
 
 class App extends Component{
     constructor(props){
@@ -36,28 +38,8 @@ class App extends Component{
     render(){
         return (
             <div className="App">
-                <div className="Top-Bar">
-                    <h1 id="Title">
-                        Movie Swipe
-                    </h1>
-                    <div className="dropDown">
-                        <button className="menuBtn">Menu</button>
-                        <div className="menuContent">
-                            <Link to="/swipe" className="swipeLink">
-                                Swipe
-                            </Link>
-                            <Link to="/matches" className="matchesLink">
-                                Matches
-                            </Link>
-                            <Link className="loginLink" onClick={() => {
-                                Firebase.auth().signOut();
-                                this.authListener();
-                                }}>
-                                Log out
-                            </Link>
-                        </div>
-                    </div>
-                </div>
+                <Topbar></Topbar>
+                
                 <Route exact
                     path="/"
                     render={() => <Landing/>}

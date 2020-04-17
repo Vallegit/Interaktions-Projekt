@@ -1,42 +1,54 @@
 .Match{
     display:flex;
     flex-direction: row;
-    background: rgb(153, 153, 255);
     min-height: 83.5vh;
 }
+
+.MovieLink{
+    margin:10px;
+}
 .MovieContainer{
-    margin-bottom: 10px;
-    margin-top:10px;
-    padding: 20px;
+    background: white;
+    padding:20px;
     display:grid;
     grid-column: 1fr;
     grid-template-rows: 3fr 1fr;
-    border: solid black 3px;
+    border-radius:15px;
+    box-shadow: 0 0 3px 1px black;
+    transition:all .1s;
+}
+.MovieContainer:hover{
+    box-shadow: 0 0 5px 3px #22ccca;
 }
 #MovieImage{
     grid-row: 1;
     height:200px;
     width:150px;
 }
+a{
+    text-decoration: none;
+}
 #MovieTitle{
     grid-row: 2;
     margin-top:10px;
     width:150px;
-    color:red;
+    color:black;
+    background: white;
+    text-decoration: none;
 }
 #list{
     display:flex;
     max-height: 83.5vh;
     overflow:auto;
     flex-direction: row;
-    background: rgb(153, 153, 255);
+    background: #121426;
     flex-wrap: wrap;
     justify-content: space-around;
     width:100%;
 }
 #Loader2{
     align-self: center;
-    background: rgb(153, 153, 255);
+    background: #121426;
 }
 
 .Error{
