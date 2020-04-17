@@ -1,0 +1,20 @@
+.SignUp{
+    margin-top: 3em;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    background: white;
+    border-radius: 20px;
+    width: 30%;
+    align-self: center;
+    margin: 4em;
+    padding: 3%;
+    box-shadow: 0 0 5px 2px black;
+}
+
+#SignUp_text{
+    font-size: 3em;
+    text-align: center;
+    margin-bottom: 10%;
+}

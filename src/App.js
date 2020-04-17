@@ -8,6 +8,7 @@ import Details from "./Components/Details/Details";
 import Login from "./Components/Login/Login";
 import Premium from "./Components/Premium/Premium";
 import Landing from "./Components/Landing/Landing";
+import SignUp from "./Components/SignUp/SignUp";
 import Firebase from "./Firebase/Firebase"
 import datainstance from "./Data/Data";
 
@@ -63,11 +64,11 @@ class App extends Component{
                 />
                 <Route  
                     path="/login"
-                    render={() => <Login data={datainstance} signup="0" firebase={Firebase} user={this.state.user} authListener={this.authListener}/>}
+                    render={() => <Login data={datainstance} firebase={Firebase} user={this.state.user} authListener={this.authListener}/>}
                 />
                 <Route  
                     path="/signup"
-                    render={() => <Login data={datainstance} signup="1" firebase={Firebase} user={this.state.user} authListener={this.authListener}/>}
+                    render={() => <SignUp data={datainstance} firebase={Firebase} user={this.state.user} />}
                 />
                 <Route 
                     path="/swipe" 
