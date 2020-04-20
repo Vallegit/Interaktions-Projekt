@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Route } from "react-router-dom";
-import { Link } from "react-router-dom";
 import "./App.css";
 import Swipe from "./Components/Swipe/Swipe";
 import Matches from "./Components/Matches/Matches";
@@ -38,7 +37,7 @@ class App extends Component{
     render(){
         return (
             <div className="App">
-                <Topbar></Topbar>
+                <Topbar firebase={Firebase} authListener={this.authListener}></Topbar>
                 
                 <Route exact
                     path="/"

@@ -11,7 +11,8 @@ class Login extends Component {
             email: "",
             password: "",
             loginDisabled: true,
-            error: false
+            error: false,
+            errorMsg: ""
         }
     }
 
@@ -27,8 +28,7 @@ class Login extends Component {
                 this.props.authListener(u.user);
             })
             .catch((e) => {
-                this.setState({error: true});
-                console.log(e.message);
+                this.setState({error: true, errorMsg: e.message});
             });
     }
 
@@ -59,6 +59,7 @@ class Login extends Component {
                 <span id="Login_text">
                     LOGIN
                 </span>
+                <p id="errorMsg" style={(this.state.error) ? {"display":"block"} : {"dispaly":"none"}}>{this.state.errorMsg}</p>
                 <div className="flex_row">
                     <div className={(this.state.email.length === 0 && this.state.error) ? "input_container input_error" : "input_container"}>
                         <FontAwesomeIcon icon={faEnvelope} size="2x" className="icon"/>

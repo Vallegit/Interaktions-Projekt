@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import { faHeart, faHeartBroken, faTimes, faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Swipe.css";
 
 class Swipe extends Component {
@@ -9,7 +11,8 @@ class Swipe extends Component {
             status:"LOADING",
             index: 0,
             page: 1,
-            alreadyRated: []
+            alreadyRated: [],
+            description: false
         };
     }
 
@@ -82,7 +85,7 @@ class Swipe extends Component {
         }else{
             this.loadMovieById(id).end(result => {
                 if(result.error) this.handleError();
-                else this.setState({status: "LOADED", currentMovie: result.body});
+                else this.setState({status: "LOADED", currentMovie: result.body, description: false});
                 this.incrementIndex();
             })
         }
@@ -258,6 +261,14 @@ class Swipe extends Component {
         this.blacklistCurrentMovie();
     }
 
+    /**
+     * toggleDescription
+     * This function toggles the visibility of the movie description 
+    */
+    toggleDescription = () => {
+        (this.state.description) ? this.setState({description: false}) : this.setState({description: true});
+    }
+
     render(){
         if(this.props.user === null) return <Redirect to="/"/>;
         let posterUrl = "https://image.tmdb.org/t/p/original";
@@ -270,18 +281,39 @@ class Swipe extends Component {
                 break;
             
             case "LOADED":
+                let backgroundURL = "";
+                (window.matchMedia(`(max-width: 600px)`).matches) ? (backgroundURL = posterUrl+this.state.currentMovie.poster_path) : (backgroundURL = posterUrl+this.state.currentMovie.backdrop_path);
                 backgroundImage = {
-                    backgroundImage: `url(${posterUrl+this.state.currentMovie.backdrop_path})`,
-                    backgroundSize: '100%'
+                    backgroundImage: `url(${backgroundURL})`,
+                    backgroundSize: '100%',
+                    backgroundRepeat: 'no-repeat'
                     };
                 MovieBox =
                     <div className="Movie-box">
                         <img src={posterUrl+this.state.currentMovie.poster_path} id="movieImage" alt="movie poster"/>
                         <p id="movieTitle">{this.state.currentMovie.title}</p>
-                        <p id="year">{this.state.currentMovie.release_date}</p>
-                        <p id="genre">{this.state.currentMovie.genres.map(gen=>{return gen.name+" "})}</p>
-                        <p id="description">{this.state.currentMovie.overview}</p>
-                        <p id="rating">Rating: {this.state.currentMovie.vote_average}</p>
+                        <div className="flex-row2">
+                            <p id="year">{this.state.currentMovie.release_date}</p>
+                            <p id="genre">{this.state.currentMovie.genres.map(gen=>{return gen.name+" "})}</p>
+                            <p id="rating">Rating: {this.state.currentMovie.vote_average}</p>
+                        </div>
+                        <div className="description-box" style={(this.state.description) ? {"height": "150px"} : {"height": "0px"}}>
+                            <p id="description">{this.state.currentMovie.overview}</p>
+                        </div>
+                        <button className="showDescriptionBtn" title={(this.state.description) ? "Read less" : "Read more"} onClick={this.toggleDescription}>
+                            <FontAwesomeIcon icon={faAngleDown} size="4x" transform={(this.state.description) ? {rotate: 180} : {rotate: 0}}/>
+                        </button>
+                        <div className="flex-row3">
+                            <button className="rateBtn good" title="LIKE this movie" onClick={() => this.handleLikeButton()}>
+                            <FontAwesomeIcon icon={faHeart} size="2x"/>
+                            </button>
+                            <button className="rateBtn bad" title="DISLIKE this movie" onClick={() => this.handleDislikeButton()}>
+                            <FontAwesomeIcon icon={faHeartBroken} size="2x"/>
+                            </button>
+                            <button className="rateBtn remove" title="Don't vote" onClick={() => this.handleBlacklistButton()}>
+                            <FontAwesomeIcon icon={faTimes} size="2x"/>
+                            </button>
+                        </div>
                     </div>;                
                 break;
 
@@ -298,10 +330,7 @@ class Swipe extends Component {
         return (
             <div style={backgroundImage} className="Swipe">
                 {MovieBox}
-                <button className="good" title="Like this movie" onClick={() => this.handleLikeButton()}/>
-                <button className="bad" title="Dislike this movie" onClick={() => this.handleDislikeButton()}/>
-                <div className="break"/>
-                <button className="remove" title="Don't vote" onClick={() => this.handleBlacklistButton()}/>
+
             </div>
         )
     }
