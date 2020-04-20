@@ -1,0 +1,11 @@
+.MobileMenu{
+    display: flex;
+    flex-direction: row;
+    margin-top: auto;
+    justify-content: center;
+    width: 100%;
+}
+
+.mobMenuLink{
+
+}

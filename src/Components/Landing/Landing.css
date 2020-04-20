@@ -24,3 +24,12 @@
     background: #11bbb9;
     box-shadow: 0 0 5px 3px #22ccca;
 }
+@media screen and (max-width: 450px){
+    #landingText{
+        margin-top: 30%;
+        font-size: 2em;
+    }
+    #landingButton{
+        margin-top: 20%;
+    }
+}

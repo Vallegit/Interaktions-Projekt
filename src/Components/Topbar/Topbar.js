@@ -9,23 +9,24 @@ class Topbar extends Component{
     render(){
         return(
             <div className="Topbar">
-                <FontAwesomeIcon icon={faFilm} size="5x" className="TitleIcon"/>
+                <FontAwesomeIcon icon={faFilm} size={(window.matchMedia(`(max-width: 450px)`).matches) ? "3x" : "5x"} className="TitleIcon"/>
                 <div className="Topbar-Title"> Movie Swiper</div>
-                    <Link className="MenuLink" to={"/swipe"}>
-                        <button className="MenuBtn" title="Go to Swipe screen"> 
-                            <FontAwesomeIcon icon={faExchangeAlt} size="2x" className="TitleIcon"/>
-                            <p className="MenuText">Swipe</p>
-                        </button>
-                    </Link>
-                    <Link className="MenuLink" to={"/matches"}>
-                        <button className="MenuBtn" title="Check your matches"> 
-                            <FontAwesomeIcon icon={faPercent} size="2x" className="TitleIcon"/>
-                            <p className="MenuText">Matches</p></button>
-                    </Link>
-                        <button className="MenuBtn" id="trrd_btn" title="Logout User">
-                            <FontAwesomeIcon icon={faSignOutAlt} size="2x" className="TitleIcon"/>
-                            <p className="MenuText" onClick={() => this.props.firebase.auth().signOut()}>Sign Out</p>
-                        </button>
+                <Link className="MenuLink" to={"/swipe"}>
+                    <button className="MenuBtn" title="Go to Swipe screen"> 
+                        <FontAwesomeIcon icon={faExchangeAlt} size="2x" className="TitleIcon"/>
+                        <p className="MenuText">Swipe</p>
+                    </button>
+                </Link>
+                <Link className="MenuLink" to={"/matches"}>
+                    <button className="MenuBtn" title="Check your matches"> 
+                        <FontAwesomeIcon icon={faPercent} size="2x" className="TitleIcon"/>
+                        <p className="MenuText">Matches</p>
+                    </button>
+                </Link>
+                <button className="MenuBtn" id="trrd_btn" title="Logout User">
+                    <FontAwesomeIcon icon={faSignOutAlt} size="2x" className="TitleIcon"/>
+                    <p className="MenuText" onClick={() => this.props.firebase.auth().signOut()}>Sign Out</p>
+                </button>
             </div>
         );
         

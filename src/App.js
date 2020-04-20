@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Route } from "react-router-dom";
-import "./App.css";
 import Swipe from "./Components/Swipe/Swipe";
 import Matches from "./Components/Matches/Matches";
 import Details from "./Components/Details/Details";
@@ -9,9 +8,10 @@ import Premium from "./Components/Premium/Premium";
 import Landing from "./Components/Landing/Landing";
 import SignUp from "./Components/SignUp/SignUp";
 import Topbar from "./Components/Topbar/Topbar";
+import MobileMenu from "./Components/MobileMenu/MobileMenu";
 import Firebase from "./Firebase/Firebase";
 import datainstance from "./Data/Data";
-
+import "./App.css";
 
 class App extends Component{
     constructor(props){
@@ -35,10 +35,10 @@ class App extends Component{
     }
 
     render(){
+        console.log(window.matchMedia(`max-width:450px`).matches);
         return (
             <div className="App">
-                <Topbar firebase={Firebase} authListener={this.authListener}></Topbar>
-                
+                <Topbar firebase={Firebase}></Topbar>
                 <Route exact
                     path="/"
                     render={() => <Landing/>}
@@ -67,6 +67,7 @@ class App extends Component{
                     path="/premium"
                     render={() => <Premium data={datainstance} firebase={Firebase} user={this.state.user}/>}
                 />
+                {(window.matchMedia(`max-width:450px`).matches) ? <MobileMenu firebase={Firebase}/> : <div/>}
             </div>
         );
     }
