@@ -20,7 +20,7 @@ class MobileMenu extends Component{
                         <p className="MenuText">Matches</p>
                     </button>
                 </Link>
-                <button className="mobMenuBtn" id="trrd_btn" title="Logout User">
+                <button className="mobMenuBtn" id="third_btn" title="Logout User">
                     <FontAwesomeIcon icon={faSignOutAlt} size="2x" className="TitleIcon"/>
                     <p className="MenuText" onClick={() => this.props.firebase.auth().signOut()}>Sign Out</p>
                 </button>

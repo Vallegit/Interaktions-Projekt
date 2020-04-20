@@ -35,7 +35,6 @@ class App extends Component{
     }
 
     render(){
-        console.log(window.matchMedia(`max-width:450px`).matches);
         return (
             <div className="App">
                 <Topbar firebase={Firebase}></Topbar>
@@ -67,7 +66,7 @@ class App extends Component{
                     path="/premium"
                     render={() => <Premium data={datainstance} firebase={Firebase} user={this.state.user}/>}
                 />
-                {(window.matchMedia(`max-width:450px`).matches) ? <MobileMenu firebase={Firebase}/> : <div/>}
+                {(window.matchMedia(`(max-width: 450px)`).matches) ? <MobileMenu firebase={Firebase}/> : <div/>}
             </div>
         );
     }
