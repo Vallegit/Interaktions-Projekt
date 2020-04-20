@@ -29,7 +29,6 @@ class Match extends Component {
 
         let posterUrl = "https://image.tmdb.org/t/p/original";
         let movieList = null;
-        let Loading = null
         switch(this.state.status){
 
             case "LOADING":
@@ -37,7 +36,6 @@ class Match extends Component {
                 break;
             
             case "LOADED":
-                Loading = null;
                 movieList = this.state.movies.map(movie=>(
                     <Link to={"/details/" + movie.id} className="MovieLink">
                         <div className="MovieContainer">
