@@ -1,0 +1,23 @@
+.MobileMenu{
+    display: flex;
+    flex-direction: row;
+    margin-top: auto;
+    justify-content: center;
+    width: 100%;
+    border-top: 1px solid white;
+}
+
+.mobMenuLink{
+    width: 33.333333%;
+}
+.mobMenuBtn{
+    background: none;
+    width: 100%;
+    border: 1px solid white;
+}
+.mobMenuBtn:focus{
+    outline:none;
+}
+#third_btn{
+    width: 33.333333%;
+}

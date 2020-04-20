@@ -2,7 +2,6 @@
     display:flex;
     flex-direction: row;
     align-items:center;
-
 }
 .Topbar-Title{
     font-size: 5em;
@@ -54,4 +53,22 @@
 }
 .fa-sign-out-alt *{
     color:white;
+}
+@media screen and (max-width: 450px){
+    .Topbar{
+        justify-content: center;
+    }
+    .Topbar-Title{
+        font-size: 2em;
+        margin-right: 0;
+    }
+    .TitleIcon{
+        margin-left: 0;
+    }
+    .MenuLink{
+        display: none;
+    }
+    .MenuBtn{
+        display: none;
+    }
 }
