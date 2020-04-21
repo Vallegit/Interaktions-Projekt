@@ -10,8 +10,8 @@
 
 }
 .MenuLink{
-    width:5%;
-    height:10vh;
+    width: 5%;
+    height: 55%;
     margin-top:2%;
 }
 .MenuBtn{
@@ -23,15 +23,19 @@
     width: 100%;
     height: 100%;
     cursor: pointer;
+    transition: all .2s;
 }
 #trrd_btn{
     width:5%;
-    height: 10vh;
+    height: 55%;
     margin-top: 2%;
 }
 .MenuBtn:focus{
     outline:none;
     border: none;
+}
+.MenuBtn:hover{
+    box-shadow: 0 0 5px 3px white;
 }
 .MenuText{
     color:white;
