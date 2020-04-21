@@ -7,8 +7,8 @@ class Match extends Component {
         super(props);
         this.state={
             status:"LOADING",
-            index: 0,
-            page: 1
+            page: 1,
+            movies: []
         };
     }
     componentDidMount(){
