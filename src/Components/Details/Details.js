@@ -8,17 +8,37 @@ class Details extends Component {
         super(props);
         this.state={
             status:"LOADING",
-            movieID:this.props.location.pathname.substr(9)
+            movieID:this.props.location.pathname.substr(9),
+            movie: {},
+            preferences: {}
         };
     }
 
 
     //Nu kan jag skriva this.state.movie
     componentDidMount(){
-        this.props.data.getMovie(this.state.movieID).end(result=>
-            {this.setState({movie:result.body, status: "LOADED"})
-            
+        this.props.data.getMovie(this.state.movieID).end(result => {
+            this.setState({movie:result.body, status: "LOADED"}, () => this.loadPreference());
+            console.log(result.body);
         });
+
+    }
+
+    loadPreference = () => {
+        this.props.firebase.database().ref('users').child(this.props.user.uid).child('preferences').on('value', snap  => {
+            this.setState({preferences: snap.val()}, () => this.rateMovie(this.state.movie));
+        });
+    }
+
+    rateMovie = movie => {
+        let rating = 1000;
+        let index = this.state.movie.original_language;
+        rating = rating * this.state.preferences.language[index].rating;
+        index = this.state.movie.release_date.substring(0,3) + '0';
+        rating = rating * this.state.preferences.child('release-year')[index].rating;
+
+        console.log(rating);
+        return rating;
     }
 
     render(){
