@@ -8,11 +8,19 @@ class Match extends Component {
         this.state={
             status:"LOADING",
             page: 1,
-            movies: []
+            movies: [],
+            preferences: {}
         };
     }
+
     componentDidMount(){
         this.loadMovies();
+        this.preferencesRef = this.props.firebase.database().ref('users').child(this.props.user.uid).child('preferences');
+
+        this.preferencesRef.on('value',snap =>{
+            console.log(snap.val());
+            this.setState({preferences: snap.val()});
+        });
     }
 
     loadMovies = () => {
@@ -22,9 +30,12 @@ class Match extends Component {
                 if(result.error)this.setState({status: "ERROR"})
                 else this.setState({status: "LOADED", movies: result.body.results})});
     }
+
+    rateMovie = (movie) => {
+        
+    }
  
     render(){
-
         if(this.props.user === null) return <Redirect to="/"/>;
 
         let posterUrl = "https://image.tmdb.org/t/p/original";

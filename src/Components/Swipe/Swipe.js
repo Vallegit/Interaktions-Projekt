@@ -170,7 +170,7 @@ class Swipe extends Component {
                 return 0;
             }
         });
-        this.preferencesRef.child('realease-year').child(this.state.currentMovie.release_date.substring(0,3) + '0').transaction(currentPref => {
+        this.preferencesRef.child('release-year').child(this.state.currentMovie.release_date.substring(0,3) + '0').transaction(currentPref => {
             if(currentPref != null){
                 return {count: (currentPref.count || 0) + 1, rating: ((currentPref.rating * currentPref.count || 0) + val)/((currentPref.count || 0) + 1)};
             } else {
