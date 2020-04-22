@@ -8,9 +8,9 @@ class Landing extends Component{
     render(){
         return(
             <div className="landingContainer">
-                <text id="landingText">
+                <p id="landingText">
                     Welcome to Movie Swiper!
-                </text>
+                </p>
                 <Link to="/login">
                     <button id="landingButton"> Get started </button>
                 </Link>

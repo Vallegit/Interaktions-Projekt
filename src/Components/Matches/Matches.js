@@ -18,7 +18,6 @@ class Match extends Component {
         this.preferencesRef = this.props.firebase.database().ref('users').child(this.props.user.uid).child('preferences');
 
         this.preferencesRef.on('value',snap =>{
-            console.log(snap.val());
             this.setState({preferences: snap.val()});
         });
     }
