@@ -144,7 +144,7 @@ class Swipe extends Component {
             return 0;
         });
         this.state.currentMovie.production_companies.map(prodCom => {
-            this.preferencesRef.child('production-companies').child(prodCom.name.replace(/[.#$\[\]]/g,'')).transaction(currentPref => {
+            this.preferencesRef.child('productionCompanies').child(prodCom.name.replace(/[.#$\]\[]/g,'')).transaction(currentPref => { //eslint-disable-line
                 if(currentPref != null){
                     return {count: (currentPref.count || 0) + 1, rating: ((currentPref.rating * currentPref.count || 0) + val)/((currentPref.count || 0) + 1)};
                 } else {
@@ -154,7 +154,7 @@ class Swipe extends Component {
             return 0;
         });
         this.state.currentMovie.production_countries.map(prodCon => {
-            this.preferencesRef.child('production-countries').child(prodCon.name).transaction(currentPref => {
+            this.preferencesRef.child('productionCountries').child(prodCon.name).transaction(currentPref => {
                 if(currentPref != null){
                     return {count: (currentPref.count || 0) + 1, rating: ((currentPref.rating * currentPref.count || 0) + val)/((currentPref.count || 0) + 1)};
                 } else {
@@ -170,7 +170,7 @@ class Swipe extends Component {
                 return 0;
             }
         });
-        this.preferencesRef.child('release-year').child(this.state.currentMovie.release_date.substring(0,3) + '0').transaction(currentPref => {
+        this.preferencesRef.child('releaseYear').child(this.state.currentMovie.release_date.substring(0,3) + '0').transaction(currentPref => {
             if(currentPref != null){
                 return {count: (currentPref.count || 0) + 1, rating: ((currentPref.rating * currentPref.count || 0) + val)/((currentPref.count || 0) + 1)};
             } else {

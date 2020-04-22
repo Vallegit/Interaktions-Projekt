@@ -26,18 +26,51 @@ class Details extends Component {
 
     loadPreference = () => {
         this.props.firebase.database().ref('users').child(this.props.user.uid).child('preferences').on('value', snap  => {
-            this.setState({preferences: snap.val()}, () => this.rateMovie(this.state.movie));
+            let prefs = this.updatePreference(snap.val());
+            this.setState({preferences: prefs}, () => this.rateMovie(this.state.movie));
+        });
+    }
+
+    updatePreference = pref => {
+        Object.keys(pref).map(subPref => {
+            this.adjustToMax(pref[subPref]);
+            return 0;
+        });
+        return pref;
+    }
+
+    adjustToMax = subPref => {
+        let maxGen = 0;
+        Object.keys(subPref).map(key => {
+            if(subPref[key] === 0) return 0;
+            if(subPref[key].count < 10) return 0;
+            if(subPref[key].rating > maxGen) maxGen = subPref[key].rating;
+            return 0;
+        });
+        Object.keys(subPref).map(key => {
+            if(subPref[key] === 0) return 0;
+            if(subPref[key].rating === 1 || subPref[key].count < 10) return 0;
+            subPref[key].rating /= maxGen;
+            return 0;
         });
     }
 
     rateMovie = movie => {
-        let rating = 1000;
-        let index = this.state.movie.original_language;
-        rating = rating * this.state.preferences.language[index].rating;
-        index = this.state.movie.release_date.substring(0,3) + '0';
-        rating = rating * this.state.preferences.child('release-year')[index].rating;
+        let rating = 0;
+        let genreFactor = 0;
+        movie.genres.map(gen => {
+            genreFactor += this.state.preferences.genres[gen.name].rating;
+        });
+        genreFactor /= movie.genres.length;
 
-        console.log(rating);
+        rating = 80 * genreFactor + 20 * movie.vote_average/10;
+
+        let index = movie.original_language;
+        rating = rating * this.state.preferences.language[index].rating;
+        index = movie.release_date.substring(0,3) + '0';
+        rating = rating * this.state.preferences.releaseYear[index].rating;
+        rating = rating.toFixed(1);
+        console.log("your match: " + rating + "%");
         return rating;
     }
 
