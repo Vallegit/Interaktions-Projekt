@@ -17,7 +17,8 @@ class App extends Component{
     constructor(props){
         super(props);
         this.state = {
-            user:null
+            user:null,
+            rating: 0
         }
     }
 
@@ -31,7 +32,10 @@ class App extends Component{
                 console.log("User logged out");
                 this.setState({user: null});
             }
-        })
+        });
+    }
+    setRating = rating => {
+        this.setState({rating: rating});
     }
 
     render(){
@@ -56,11 +60,11 @@ class App extends Component{
                 />
                 <Route
                     path="/matches"
-                    render={() => <Matches data={datainstance} firebase={Firebase} user={this.state.user}/>}
+                    render={() => <Matches data={datainstance} setRating={this.setRating} firebase={Firebase} user={this.state.user}/>}
                 />
                 <Route
                     path="/details/"
-                    render={() => <Details data={datainstance} firebase={Firebase} user={this.state.user}/>}
+                    render={() => <Details data={datainstance} rating={this.state.rating} firebase={Firebase} user={this.state.user}/>}
                 />
                 <Route
                     path="/premium"

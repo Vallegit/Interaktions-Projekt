@@ -30,8 +30,54 @@ class Match extends Component {
                 else this.setState({status: "LOADED", movies: result.body.results})});
     }
 
-    rateMovie = (movie) => {
-        
+    loadPreference = () => {
+        this.props.firebase.database().ref('users').child(this.props.user.uid).child('preferences').on('value', snap  => {
+            let prefs = this.updatePreference(snap.val());
+            this.setState({preferences: prefs}, () => this.rateMovie(this.state.movie));
+        });
+    }
+
+    updatePreference = pref => {
+        Object.keys(pref).map(subPref => {
+            this.adjustToMax(pref[subPref]);
+            return 0;
+        });
+        return pref;
+    }
+
+    adjustToMax = subPref => {
+        let max = 0;
+        Object.keys(subPref).map(key => {
+            if(subPref[key] === 0) return 0;
+            if(subPref[key].count < 10) return 0;
+            if(subPref[key].rating > max) max = subPref[key].rating;
+            return 0;
+        });
+        Object.keys(subPref).map(key => {
+            if(subPref[key] === 0) return 0;
+            if(subPref[key].rating === 1 || subPref[key].count < 10) return 0;
+            subPref[key].rating /= max;
+            return 0;
+        });
+    }
+
+    rateMovie = movie => {
+        let rating = 0;
+        let genreFactor = 0;
+        movie.genres.map(gen => {
+            genreFactor += this.state.preferences.genres[gen.name].rating;
+        });
+        genreFactor /= movie.genres.length;
+
+        rating = 80 * genreFactor + 20 * movie.vote_average/10;
+
+        let index = movie.original_language;
+        rating = rating * this.state.preferences.language[index].rating;
+        index = movie.release_date.substring(0,3) + '0';
+        rating = rating * this.state.preferences.releaseYear[index].rating;
+        rating = rating.toFixed(1);
+        console.log("your match: " + rating + "%");
+        this.props.setRating(rating);
     }
  
     render(){
@@ -46,8 +92,11 @@ class Match extends Component {
                 break;
             
             case "LOADED":
-                movieList = this.state.movies.map(movie=>(
-                    <Link to={"/details/" + movie.id} className="MovieLink">
+                movieList = this.state.movies.map(movie =>(
+                    <Link to={"/details/" + movie.id} className="MovieLink" onClick={() => {
+                        console.log(movie);
+                        this.rateMovie(movie);
+                        }}>
                         <div className="MovieContainer">
                             <img src={posterUrl + movie.poster_path} id="MovieImage" alt="Movie Poster"/>
                             <p id="MovieTitle">{movie.title}</p>
