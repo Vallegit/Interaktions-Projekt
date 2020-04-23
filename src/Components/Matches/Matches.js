@@ -9,25 +9,40 @@ class Match extends Component {
             status:"LOADING",
             page: 1,
             movies: [],
+            genreIDs: [],
             preferences: {}
         };
     }
 
     componentDidMount(){
-        this.loadMovies();
-        this.preferencesRef = this.props.firebase.database().ref('users').child(this.props.user.uid).child('preferences');
+        if(this.props.user !== null){
+            this.loadMovies();
+            this.loadGenres();
+            this.preferencesRef = this.props.firebase.database().ref('users').child(this.props.user.uid).child('preferences');
 
-        this.preferencesRef.on('value',snap =>{
-            this.setState({preferences: snap.val()});
-        });
+            this.preferencesRef.on('value',snap =>{
+                this.setState({preferences: snap.val()});
+            }); 
+        }
     }
 
     loadMovies = () => {
         this.props.data
             .getTopMovies(this.state.page)// 200 - star trek, 240 - godfather, 280 - terminator, 330 - jurassic park, 350 - Devil n prada 550 - fight club
             .end(result => {
-                if(result.error)this.setState({status: "ERROR"})
-                else this.setState({status: "LOADED", movies: result.body.results})});
+                if(result.error)this.setState({status: "ERROR"});
+                else this.setState({status: "LOADED", movies: result.body.results});
+            });
+    }
+
+    loadGenres = () => {
+        this.props.data
+            .getGenres()
+            .end(result => {
+                console.log(result);
+                if(result.error)this.setState({status: "ERROR"});
+                else this.setState({genreIDs: result.body.genres});
+            });
     }
 
     loadPreference = () => {
@@ -64,10 +79,13 @@ class Match extends Component {
     rateMovie = movie => {
         let rating = 0;
         let genreFactor = 0;
-        movie.genres.map(gen => {
-            genreFactor += this.state.preferences.genres[gen.name].rating;
+        console.log(movie);
+        console.log(this.state.genreIDs);
+        movie.genre_ids.map(genID => {
+            genreFactor += this.state.preferences.genres[this.state.genreIDs.find(o => o.id === genID).name].rating;
+            return 0;
         });
-        genreFactor /= movie.genres.length;
+        genreFactor /= movie.genre_ids.length;
 
         rating = 80 * genreFactor + 20 * movie.vote_average/10;
 
@@ -93,10 +111,7 @@ class Match extends Component {
             
             case "LOADED":
                 movieList = this.state.movies.map(movie =>(
-                    <Link to={"/details/" + movie.id} className="MovieLink" onClick={() => {
-                        console.log(movie);
-                        this.rateMovie(movie);
-                        }}>
+                    <Link to={"/details/" + movie.id} key={movie.id} className="MovieLink" onClick={() => {this.rateMovie(movie)}}>
                         <div className="MovieContainer">
                             <img src={posterUrl + movie.poster_path} id="MovieImage" alt="Movie Poster"/>
                             <p id="MovieTitle">{movie.title}</p>
