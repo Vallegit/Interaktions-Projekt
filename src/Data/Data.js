@@ -9,8 +9,10 @@ var req;
     plaintext txt-files because encrypting is extra work.   */
 class Data {
     
-    /** * Get a specific movie by movie-ID
-        * @returns { object }  
+    /** 
+     * getMovie
+     * Get a specific movie by movie-ID
+     * @returns { object }  
     */
     getMovie(id){
         req = unirest("GET", "https://" + ApiConfig.ENDPOINT + "movie/" + id)
@@ -25,6 +27,7 @@ class Data {
     }
 
     /** 
+     * getTopMovies
      * Get an array with the top rated movies
      * @returns { object[] }  
     */
@@ -42,6 +45,7 @@ class Data {
     }
 
     /** 
+     * getSimilarMovies
      * Search for movies that are similar to a specific movie
      * @returns { object[] } 
     */
@@ -59,6 +63,7 @@ class Data {
     }
 
     /** 
+     * searchMovies
      * Search for movies based on a query
      * @returns { object[] } 
     */
@@ -78,6 +83,7 @@ class Data {
     }
 
     /**
+     * discoverMovies
      * Discover movies based on all kinds of arguments
      * @returns { object[] }
     */
@@ -102,6 +108,20 @@ class Data {
                 "with_keywords": with_keywords,
                 "without_keywords": without_keywords,
                 "with_original_language": language
+            })
+        );
+    }
+
+    /** 
+     * getGenres
+     * Get an array with all genres and corresponding IDs
+     * @returns { object[] }
+    */
+    getGenres(){
+        req = unirest("GET", "https://" + ApiConfig.ENDPOINT + "genre/movie/list")
+        return (req
+            .query({
+                "api_key": ApiConfig.API_KEY
             })
         );
     }
