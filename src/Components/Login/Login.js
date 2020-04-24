@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import { Link, Redirect } from "react-router-dom";
-import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Redirect } from "react-router-dom";
 import "./Login.css";
 
 class Login extends Component {
@@ -53,40 +51,7 @@ class Login extends Component {
 
     render(){
         if(this.props.user !== null) return <Redirect to="/swipe"/>;
-
-        return (
-            <div className="Login">
-                <span id="Login_text">
-                    LOGIN
-                </span>
-                <p id="errorMsg" style={(this.state.error) ? {"display":"block"} : {"dispaly":"none"}}>{this.state.errorMsg}</p>
-                <div className="flex_row">
-                    <div className={(this.state.email.length === 0 && this.state.error) ? "input_container input_error" : "input_container"}>
-                        <FontAwesomeIcon icon={faEnvelope} size="2x" className="icon"/>
-                        <input type="email" value={this.state.email} name="email" className="input" placeholder="Email" onChange={this.handleChange}/>
-                    </div>
-                </div>
-                <div className="flex_row">
-                    <div className={(this.state.password.length < 6 && this.state.error) ? "input_container input_error" : "input_container"}>
-                        <FontAwesomeIcon icon={faLock} size="2x" className="icon"/>
-                        <input type="password" value={this.state.password} name="password" className="input" placeholder="Password" onChange={this.handleChange}/>
-                    </div>
-                </div>
-                <div className="flex_row">
-                    <button className="auth_button" type="submit" disabled={this.state.loginDisabled} onClick={this.logIn}>
-                        LOGIN
-                    </button>
-                </div>
-                <div className="flex_row">
-                    <p>
-                        Not a member?
-                    </p>
-                    <Link to="/signup">
-                        Sign up now
-                    </Link>
-                </div>
-            </div>
-        )
+        else return <LoginDisplay email={this.state.email} password={this.state.password} loginDisabled={this.state.loginDisabled} error={this.state.error} errorMsg={this.state.errorMsg}/>
     }
 }
 
