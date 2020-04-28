@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import SwipeDisplay from "./SwipeDisplay";
 import "./Swipe.css";
 
 class Swipe extends Component {

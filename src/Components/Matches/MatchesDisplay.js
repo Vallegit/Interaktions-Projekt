@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./Matches.css";
 
-class MatchDisplay extends Component {
+class MatchesDisplay extends Component {
     constructor(props){
         super(props);
         this.state={

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Redirect, withRouter } from "react-router-dom";
+import DetailsDisplay from "./DetailsDisplay";
 import "./Details.css";
 
 class Details extends Component {

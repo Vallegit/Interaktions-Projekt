@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import MatchesDisplay from "./MatchesDisplay";
 import "./Matches.css";
 
 class Match extends Component {

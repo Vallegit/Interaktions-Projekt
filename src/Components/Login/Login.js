@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import LoginDisplay from "./LoginDisplay";
 import "./Login.css";
 
 class Login extends Component {
