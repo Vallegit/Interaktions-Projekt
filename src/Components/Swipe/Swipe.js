@@ -19,12 +19,12 @@ class Swipe extends Component {
     componentDidMount(){
         if(this.props.user !== null){
             this.databaseRef = this.props.firebase.database().ref('users').child(this.props.user.uid);
-            this.movieRatingsRef = this.databaseRef.child('movie-ratings');
+            this.movieRatingsRef = this.databaseRef.child('movieRatings');
             this.preferencesRef = this.databaseRef.child('preferences');
             this.blacklistRef = this.movieRatingsRef.child('blacklist');
-            this.likedMoviesRef = this.movieRatingsRef.child('liked-movies');
-            this.dislikedMoviesRef = this.movieRatingsRef.child('disliked-movies');
-            this.alreadyRatedRef = this.movieRatingsRef.child('already-rated');
+            this.likedMoviesRef = this.movieRatingsRef.child('likedMovies');
+            this.dislikedMoviesRef = this.movieRatingsRef.child('dislikedMovies');
+            this.alreadyRatedRef = this.movieRatingsRef.child('alreadyRated');
 
             this.alreadyRatedRef.on('value', snap => {
                 this.setState({alreadyRated: Object.values(snap.val())}, this.nextSwipe);
