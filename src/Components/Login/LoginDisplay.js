@@ -1,60 +1,21 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
-import LoginDisplay from "./LoginDisplay";
+import { Link} from "react-router-dom";
+import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import "./Login.css";
 
-class Login extends Component {
+class LoginDisplay extends Component {
     constructor(props){
         super(props);
         this.state = {
-            email: "",
-            password: "",
-            loginDisabled: true,
-            error: false,
-            errorMsg: "",
-            user: null
+            email: this.props.email,
+            password: this.props.password,
+            loginDisabled: this.props.loginDisabled,
+            error: this.props.error,
+            errorMsg: this.props.errorMsg
         }
     }
-
-    componentDidMount(){
-        this.props.data.addObserver(this);
-    }
-    componentWillUnmount(){
-        this.props.data.removeObserver(this);
-    }
-    update(){
-        this.setState({user: this.props.data.getUser()});
-    }
-
-    /**
-     * logIn
-     * Use this function to log in a user
-     * @argument { event } e button click
-    */
-    logIn = (e) => {
-        e.preventDefault();
-        this.props.data.loginAccount(this.state.email, this.state.password)
-            .then((u) => {
-                this.props.data.authListener(u.user);
-            })
-            .catch((e) => {
-                this.setState({error: true, errorMsg: e.message});
-            });
-    }
-
-    /**
-     * handleChange
-     * Use this function to handle change in an input field
-     * @argument { event } e input field value
-    */
-    handleChange = (e) => {
-        this.setState({ [e.target.name]: e.target.value });
-        (this.state.password.length >= 5 && this.state.email.length > 0) ? this.setState({loginDisabled: false}) : this.setState({loginDisabled: true});
-    }
-
     render(){
-        if(this.state.user !== null) return <Redirect to="/swipe"/>;
-
         return (
             <div className="Login">
                 <span id="Login_text">
@@ -88,8 +49,6 @@ class Login extends Component {
                 </div>
             </div>
         )
-
     }
 }
-
-export default Login;
+export default LoginDisplay;
