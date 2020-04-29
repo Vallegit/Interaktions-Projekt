@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import SwipeDisplay from "./SwipeDisplay";
-import "./Swipe.css";
+import SwipePres from "./SwipePres";
 
 class Swipe extends Component {
     constructor(props){
@@ -10,14 +9,17 @@ class Swipe extends Component {
             status:"LOADING",
             index: 0,
             page: 1,
+            movies: [],
+            currentMovie: {},
             alreadyRated: [],
-            description: false
+            user: this.props.data.user
         };
     }
 
     componentDidMount(){
-        if(this.props.user !== null){
-            this.databaseRef = this.props.firebase.database().ref('users').child(this.props.user.uid);
+        this.props.data.addObserver(this);
+        if(this.state.user !== null){
+            this.databaseRef = this.props.firebase.database().ref('users').child(this.state.user.uid);
             this.movieRatingsRef = this.databaseRef.child('movieRatings');
             this.preferencesRef = this.databaseRef.child('preferences');
             this.blacklistRef = this.movieRatingsRef.child('blacklist');
@@ -29,7 +31,14 @@ class Swipe extends Component {
                 this.setState({alreadyRated: Object.values(snap.val())}, this.nextSwipe);
             });
         }
-        
+    }    
+    
+    componentWillUnmount(){
+        this.props.data.removeObserver(this);
+    }
+
+    update(){
+        this.setState({user: this.props.data.getUser()});
     }
 
     /**
@@ -236,41 +245,8 @@ class Swipe extends Component {
         this.addToMovieCount(false);
     }
 
-    /** 
-     * handleLikeButton
-     * This function handles the OnClick event of the like button
-    */
-    handleLikeButton = () => {
-        this.likeCurrentMovie();
-    }
-
-    /** 
-     * handleDislikeButton
-     * This function handles the OnClick event of the dislike button
-    */
-    handleDislikeButton = () => {
-        this.dislikeCurrentMovie();
-    }
-
-    /** 
-     * handleBlacklistButton
-     * This function handles the OnClick event of the blacklist button
-    */
-    handleBlacklistButton = () => {
-        this.blacklistCurrentMovie();
-    }
-
-    /**
-     * toggleDescription
-     * This function toggles the visibility of the movie description 
-    */
-    toggleDescription = () => {
-        (this.state.description) ? this.setState({description: false}) : this.setState({description: true});
-    }
-
     render(){
-        if(this.props.user === null) return <Redirect to="/"/>;
-        else return <SwipeDisplay status={this.state.status} description={this.state.description} currentMovie={this.state.currentMovie}/>
+        return (this.state.user === null) ? <Redirect to="/"/> : <SwipePres status={this.state.status} currentMovie={this.state.currentMovie} dislikeCurrentMovie={this.dislikeCurrentMovie} likeCurrentMovie={this.likeCurrentMovie} blacklistCurrentMovie={this.blacklistCurrentMovie}/>
     }
 }
 

@@ -52,13 +52,13 @@ class SignUp extends Component{
     */
     setupDatabase = (user) => {
         let databaseRef = this.props.firebase.database().ref('users').child(user.uid);
-        let movieRatingsRef = databaseRef.child('movie-ratings');
+        let movieRatingsRef = databaseRef.child('movieRatings');
 
         // Dummy values in ratings so it isn't empty
         movieRatingsRef.child('blacklist').push(0);
-        movieRatingsRef.child('liked-movies').push(0);
-        movieRatingsRef.child('disliked-movies').push(0);
-        movieRatingsRef.child('already-rated').push(0);
+        movieRatingsRef.child('likedMovies').push(0);
+        movieRatingsRef.child('dislikedMovies').push(0);
+        movieRatingsRef.child('alreadyRated').push(0);
     }
 
     /**
