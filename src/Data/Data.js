@@ -1,4 +1,6 @@
 import * as ApiConfig from "./apiConfig";
+import ObservableModel from "./ObservableModel";
+import Firebase from "../Firebase/Firebase";
 
 var unirest = require("unirest");
 var req;
@@ -7,7 +9,35 @@ var req;
     the API used is "themovieDB" at https://www.themoviedb.org/.
     User information including username and password is stored in 
     plaintext txt-files because encrypting is extra work.   */
-class Data {
+class Data extends ObservableModel{
+    constructor(){
+        super();
+        this.user = null;
+    }
+
+    /** 
+     * getUser
+     * @returns { Object } user
+    */
+    getUser(){
+        return this.user;
+    }
+
+
+    /** 
+     * loginAccount
+     * Use this function to authenticate a user with the firebase-auth-database and log in the user
+     * @returns { promise }
+    */
+    loginAccount(email, password){
+        return Firebase.auth().signInWithEmailAndPassword(email, password);
+    }
+
+    authListener(){
+        Firebase.auth().onAuthStateChanged((user) => { (user !== null) ? this.user = user : this.user = null;
+            this.notifyObservers();
+        });
+    }
     
     /** 
      * getMovie

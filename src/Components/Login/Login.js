@@ -12,8 +12,19 @@ class Login extends Component {
             password: "",
             loginDisabled: true,
             error: false,
-            errorMsg: ""
+            errorMsg: "",
+            user: null
         }
+    }
+
+    componentDidMount(){
+        this.props.data.addObserver(this);
+    }
+    componentWillUnmount(){
+        this.props.data.removeObserver(this);
+    }
+    update(){
+        this.setState({user: this.props.data.getUser()});
     }
 
     /**
@@ -23,22 +34,13 @@ class Login extends Component {
     */
     logIn = (e) => {
         e.preventDefault();
-        this.loginAccount()
+        this.props.data.loginAccount(this.state.email, this.state.password)
             .then((u) => {
-                this.props.authListener(u.user);
+                this.props.data.authListener(u.user);
             })
             .catch((e) => {
                 this.setState({error: true, errorMsg: e.message});
             });
-    }
-
-    /** 
-     * loginAccount
-     * Use this function to authenticate a user with the firebase-auth-database and log in the user
-     * @returns { promise }
-    */
-    loginAccount = () => {
-        return this.props.firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
     }
 
     /**
@@ -52,7 +54,7 @@ class Login extends Component {
     }
 
     render(){
-        if(this.props.user !== null) return <Redirect to="/swipe"/>;
+        if(this.state.user !== null) return <Redirect to="/swipe"/>;
 
         return (
             <div className="Login">
