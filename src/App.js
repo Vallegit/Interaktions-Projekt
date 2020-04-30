@@ -14,13 +14,6 @@ import datainstance from "./Data/Data";
 import "./App.css";
 
 class App extends Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            rating: 0
-        }
-    }
-
     render(){
         return (
             <div className="App">
@@ -43,17 +36,17 @@ class App extends Component{
                 />
                 <Route
                     path="/matches"
-                    render={() => <Matches data={datainstance} setRating={this.setRating} firebase={Firebase}/>}
+                    render={() => <Matches data={datainstance}firebase={Firebase}/>}
                 />
                 <Route
                     path="/details/"
-                    render={() => <Details data={datainstance} rating={this.state.rating} firebase={Firebase}/>}
+                    render={() => <Details data={datainstance}/>}
                 />
                 <Route
                     path="/premium"
-                    render={() => <Premium data={datainstance} firebase={Firebase}/>}
+                    render={() => <Premium data={datainstance}/>}
                 />
-                {(window.matchMedia(`(max-width: 450px)`).matches) ? <MobileMenu firebase={Firebase}/> : <div/>}
+                {(window.matchMedia(`(max-width: 450px)`).matches) ? <MobileMenu data={datainstance}/> : <div/>}
             </div>
         );
     }
