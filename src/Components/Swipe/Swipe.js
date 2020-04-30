@@ -12,7 +12,7 @@ class Swipe extends Component {
             movies: [],
             currentMovie: {},
             alreadyRated: [],
-            user: this.props.data.user
+            user: this.props.data.getUser()
         };
     }
 

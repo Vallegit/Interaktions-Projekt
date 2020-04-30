@@ -17,19 +17,14 @@ class App extends Component{
     constructor(props){
         super(props);
         this.state = {
-            user:null,
             rating: 0
         }
-    }
-
-    setRating = rating => {
-        this.setState({rating: rating});
     }
 
     render(){
         return (
             <div className="App">
-                <Topbar firebase={Firebase}></Topbar>
+                <Topbar data={datainstance}></Topbar>
                 <Route exact
                     path="/"
                     render={() => <Landing/>}
