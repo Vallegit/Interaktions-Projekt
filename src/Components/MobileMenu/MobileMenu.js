@@ -22,7 +22,7 @@ class MobileMenu extends Component{
                 </Link>
                 <button className="mobMenuBtn" id="third_btn" title="Logout User">
                     <FontAwesomeIcon icon={faSignOutAlt} size="2x" className="TitleIcon"/>
-                    <p className="MenuText" onClick={() => this.props.firebase.auth().signOut()}>Sign Out</p>
+                    <p className="MenuText" onClick={() => this.props.data.logoutAccount()}>{(this.state.user === null) ? 'Sign In' : 'Sign Out'}</p>
                 </button>
             </div>
         );
