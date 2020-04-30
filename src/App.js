@@ -22,18 +22,6 @@ class App extends Component{
         }
     }
 
-    authListener = () => {
-        Firebase.auth().onAuthStateChanged((user) => {
-            
-            if(user){
-                console.log("User: " + user.uid + " logged in");
-                this.setState({user});
-            }else{
-                console.log("User logged out");
-                this.setState({user: null});
-            }
-        });
-    }
     setRating = rating => {
         this.setState({rating: rating});
     }
@@ -48,27 +36,27 @@ class App extends Component{
                 />
                 <Route  
                     path="/login"
-                    render={() => <Login data={datainstance} firebase={Firebase} user={this.state.user} authListener={this.authListener}/>}
+                    render={() => <Login data={datainstance}/>}
                 />
                 <Route  
                     path="/signup"
-                    render={() => <SignUp data={datainstance} firebase={Firebase} user={this.state.user} />}
+                    render={() => <SignUp data={datainstance} firebase={Firebase}/>}
                 />
                 <Route 
                     path="/swipe" 
-                    render ={() => <Swipe data={datainstance} firebase={Firebase} user={this.state.user}/>}
+                    render ={() => <Swipe data={datainstance} firebase={Firebase}/>}
                 />
                 <Route
                     path="/matches"
-                    render={() => <Matches data={datainstance} setRating={this.setRating} firebase={Firebase} user={this.state.user}/>}
+                    render={() => <Matches data={datainstance} setRating={this.setRating} firebase={Firebase}/>}
                 />
                 <Route
                     path="/details/"
-                    render={() => <Details data={datainstance} rating={this.state.rating} firebase={Firebase} user={this.state.user}/>}
+                    render={() => <Details data={datainstance} rating={this.state.rating} firebase={Firebase}/>}
                 />
                 <Route
                     path="/premium"
-                    render={() => <Premium data={datainstance} firebase={Firebase} user={this.state.user}/>}
+                    render={() => <Premium data={datainstance} firebase={Firebase}/>}
                 />
                 {(window.matchMedia(`(max-width: 450px)`).matches) ? <MobileMenu firebase={Firebase}/> : <div/>}
             </div>

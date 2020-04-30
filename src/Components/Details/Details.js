@@ -15,7 +15,6 @@ class Details extends Component {
         };
     }
 
-    //Nu kan jag skriva this.state.movie
     componentDidMount(){
         if(this.props.user !== null){
             this.props.data.getMovie(this.state.movieID).end(result => {
