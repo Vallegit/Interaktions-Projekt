@@ -3,10 +3,6 @@ import { Link } from "react-router-dom";
 import "./Matches.css";
 
 export default class MatchesPres extends Component {
-    constructor(props){
-        super(props);
-    }
-
     render() {
     let posterUrl = "https://image.tmdb.org/t/p/original";
     let movieList = null;

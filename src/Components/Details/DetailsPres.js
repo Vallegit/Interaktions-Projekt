@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import "./Details.css";
 
 export default class DetailsPres extends Component {
-    constructor(props){
-        super(props);
-    }
     render(){
         let backgroundImage = {
             backgroundImage: `url(${"https://image.tmdb.org/t/p/original"+this.props.movie.backdrop_path})`,

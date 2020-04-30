@@ -66,6 +66,15 @@ class Data extends ObservableModel{
         return Firebase.auth().signInWithEmailAndPassword(email, password);
     }
 
+    /** 
+     * logoutAccount
+     * Use this function to log out the current user
+    */
+   logoutAccount(){
+       Firebase.auth().signOut();
+       this.authListener();
+   }
+
     authListener(){
         Firebase.auth().onAuthStateChanged((user) => { (user !== null) ? this.user = user : this.user = null;
             this.notifyObservers();

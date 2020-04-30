@@ -24,7 +24,7 @@ class App extends Component{
     render(){
         return (
             <div className="App">
-                <Topbar firebase={Firebase}></Topbar>
+                <Topbar data={datainstance}></Topbar>
                 <Route exact
                     path="/"
                     render={() => <Landing/>}
