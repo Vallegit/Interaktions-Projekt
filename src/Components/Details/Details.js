@@ -1,33 +1,30 @@
 import React, { Component } from "react";
-import { Redirect, withRouter } from "react-router-dom";
-import DetailsDisplay from "./DetailsDisplay";
-import "./Details.css";
+import { Redirect } from "react-router-dom";
+import DetailsPres from "./DetailsPres";
 
-class Details extends Component {
+export default class Details extends Component {
     constructor(props){
         super(props);
         this.state={
-            status:"LOADING",
-            movieID:this.props.location.pathname.substr(9),
-            movie: {},
-            preferences: {},
-            rating:this.props.rating
+            movie: this.props.data.getCurrentMovie(),
+            rating:this.props.data.getCurrentRating(),
+            user: this.props.data.getUser()
         };
     }
 
     componentDidMount(){
-        if(this.props.user !== null){
-            this.props.data.getMovie(this.state.movieID).end(result => {
-                this.setState({movie:result.body, status: "LOADED"});
-                console.log(result.body);
-            });
-        }
+        this.props.data.addObserver(this);
+    }
+
+    componentWillUnmount(){
+        this.props.data.removeObserver(this);
+    }
+
+    update(){
+        this.setState({user: this.props.data.getUser()});
     }
 
     render(){
-        if(this.props.user === null) return <Redirect to="/"/>;
-        else return <DetailsDisplay status={this.state.status} movie={this.state.movie} rating={this.state.rating}/>;
+        return (this.state.user === null) ? <Redirect to="/"/> : <DetailsPres movie={this.state.movie} rating={this.state.rating}/>;
     }
 }
-
-export default withRouter(Details);

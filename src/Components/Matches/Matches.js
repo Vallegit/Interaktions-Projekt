@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import MatchesDisplay from "./MatchesDisplay";
-import "./Matches.css";
+import MatchesPres from "./MatchesPres";
 
-class Match extends Component {
+export default class Match extends Component {
     constructor(props){
         super(props);
         this.state={
@@ -11,20 +10,30 @@ class Match extends Component {
             page: 1,
             movies: [],
             genreIDs: [],
-            preferences: {}
+            preferences: {},
+            user: this.props.data.getUser()
         };
     }
 
     componentDidMount(){
-        if(this.props.user !== null){
+        this.props.data.addObserver(this);
+        if(this.state.user !== null){
             this.loadMovies();
             this.loadGenres();
-            this.preferencesRef = this.props.firebase.database().ref('users').child(this.props.user.uid).child('preferences');
+            this.preferencesRef = this.props.firebase.database().ref('users').child(this.state.user.uid).child('preferences');
 
             this.preferencesRef.on('value',snap =>{
                 this.setState({preferences: snap.val()});
             }); 
         }
+    }
+
+    componentWillUnmount(){
+        this.props.data.removeObserver(this);
+    }
+
+    update(){
+        this.setState({user: this.props.data.getUser()});
     }
 
     loadMovies = () => {
@@ -40,7 +49,6 @@ class Match extends Component {
         this.props.data
             .getGenres()
             .end(result => {
-                console.log(result);
                 if(result.error)this.setState({status: "ERROR"});
                 else this.setState({genreIDs: result.body.genres});
             });
@@ -53,7 +61,7 @@ class Match extends Component {
         });
     }
 
-    updatePreference = pref => {
+    updatePreference = (pref) => {
         Object.keys(pref).map(subPref => {
             this.adjustToMax(pref[subPref]);
             return 0;
@@ -61,7 +69,7 @@ class Match extends Component {
         return pref;
     }
 
-    adjustToMax = subPref => {
+    adjustToMax = (subPref) => {
         let max = 0;
         Object.keys(subPref).map(key => {
             if(subPref[key] === 0) return 0;
@@ -77,11 +85,9 @@ class Match extends Component {
         });
     }
 
-    rateMovie = movie => {
+    rateMovie = (movie) => {
         let rating = 0;
         let genreFactor = 0;
-        console.log(movie);
-        console.log(this.state.genreIDs);
         movie.genre_ids.map(genID => {
             genreFactor += this.state.preferences.genres[this.state.genreIDs.find(o => o.id === genID).name].rating;
             return 0;
@@ -95,15 +101,11 @@ class Match extends Component {
         index = movie.release_date.substring(0,3) + '0';
         rating = rating * this.state.preferences.releaseYear[index].rating;
         rating = rating.toFixed(1);
-        console.log("your match: " + rating + "%");
-        this.props.setRating(rating);
+        this.props.data.setCurrentRating(rating);
+        this.props.data.setCurrentMovie(movie);
     }
  
     render(){
-        if(this.props.user === null) return <Redirect to="/"/>;
-        else return <MatchesDisplay status={this.state.status} movies={this.state.movies}/>
+        return (this.state.user === null) ? <Redirect to="/"/> : <MatchesPres status={this.state.status} movies={this.state.movies} rateMovie={this.rateMovie}/>;
     }
 }
-
-
-export default Match;

@@ -17,13 +17,8 @@ class App extends Component{
     constructor(props){
         super(props);
         this.state = {
-            user:null,
             rating: 0
         }
-    }
-
-    setRating = rating => {
-        this.setState({rating: rating});
     }
 
     render(){

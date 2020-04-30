@@ -29,7 +29,6 @@ class Topbar extends Component{
                 </button>
             </div>
         );
-        
     }
 }
 

@@ -13,6 +13,8 @@ class Data extends ObservableModel{
     constructor(){
         super();
         this.user = null;
+        this.currentMovie = {};
+        this.currentRating = 0;
     }
 
     /** 
@@ -23,6 +25,37 @@ class Data extends ObservableModel{
         return this.user;
     }
 
+    /** 
+     * getCurrentMovie
+     * @returns { Object } currentMovie
+    */
+    getCurrentMovie(){
+        return this.currentMovie;
+    }
+
+    /** 
+     * setCurrentMovie
+     * @argument { Object } movie
+    */
+    setCurrentMovie(movie){
+        this.currentMovie = movie;
+    }
+
+    /** 
+     * getCurrentRating
+     *  @returns { Number } currentRating
+    */
+    getCurrentRating(){
+        return this.currentRating;
+    }
+
+    /** 
+     * setCurrentRating
+     * @argument { Number } rating
+    */
+    setCurrentRating(rating){
+        this.currentRating = rating;
+    }
 
     /** 
      * loginAccount
