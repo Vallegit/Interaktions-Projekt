@@ -3,16 +3,25 @@ import { faEnvelope, faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./SignUp.css";
 
-class SignUpDisplay extends Component{
+class SignUpPres extends Component{
     constructor(props){
         super(props);
         this.state = {
-            email: this.props.email,
-            password: this.props.password,
-            confirmPassword: this.props.confirmPassword,
-            username:this.props.username
+            email:"",
+            password:"",
+            confirmPassword:"",
+            username:""
         }
     }
+    /**
+     * handleChange
+     * Use this function to handle change in an input field
+     * @argument { event } e input field value
+    */
+    handleChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value });
+    }
+
     render(){
 
         return(
@@ -20,6 +29,7 @@ class SignUpDisplay extends Component{
                 <span id="SignUp_text">
                     SIGN UP
                 </span>
+                <p id="errorMsg" style={(this.state.error) ? {"display":"block"} : {"dispaly":"none"}}>{this.state.errorMsg}</p>
                 <div className="flex_row">
                     <div className="input_container">
                         <FontAwesomeIcon icon={faEnvelope} size="2x" className="icon"/>
@@ -45,7 +55,7 @@ class SignUpDisplay extends Component{
                     </div>
                 </div>
                 <div className="flex_row">
-                    <button className="auth_button" id="SignUp_button" onClick={this.signUp}>
+                    <button className="auth_button" id="SignUp_button" onClick={()=> this.props.signUp(this.state.password, this.state.confirmPassword, this.state.email, this.state.username).catch((e)=>this.setState({error:true,errorMsg:e.message}))}>
                         SIGN UP
                     </button>
                 </div>
@@ -54,4 +64,4 @@ class SignUpDisplay extends Component{
     }
     
 }
-export default SignUpDisplay;
+export default SignUpPres;

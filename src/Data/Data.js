@@ -58,15 +58,6 @@ class Data extends ObservableModel{
     }
 
     /** 
-     * loginAccount
-     * Use this function to authenticate a user with the firebase-auth-database and log in the user
-     * @returns { promise }
-    */
-    loginAccount(email, password){
-        return Firebase.auth().signInWithEmailAndPassword(email, password);
-    }
-
-    /** 
      * logoutAccount
      * Use this function to log out the current user
     */
@@ -74,6 +65,44 @@ class Data extends ObservableModel{
        Firebase.auth().signOut();
        this.authListener();
    }
+
+
+    /**
+     * logIn
+     * Use this function to log in a user
+     * @argument { event } e button click
+    */
+    logIn = (email, password) => {
+        return Firebase.auth().signInWithEmailAndPassword(email, password)
+            .then((u) => {
+                this.authListener(u.user);
+            });
+    }
+
+    /** 
+     * signUp
+     * Use this function to set up a new user
+     * @argument { event } e button click
+    */
+    signUp = (password, confirmPassword, email, username) => {
+        if(password !== confirmPassword || email === "" || username === "" || password === "") return Promise.reject(new Error("Please fill all fields"));
+        else{
+            return Firebase.auth().createUserWithEmailAndPassword(email, password)
+                .then((u) => {
+                    let databaseRef = Firebase.database().ref('users').child(u.user.uid);
+                    let movieRatingsRef = databaseRef.child('movieRatings');
+            
+                    // Dummy values in ratings so it isn't empty
+                    movieRatingsRef.child('blacklist').push(0);
+                    movieRatingsRef.child('likedMovies').push(0);
+                    movieRatingsRef.child('dislikedMovies').push(0);
+                    movieRatingsRef.child('alreadyRated').push(0);
+                    u.user.updateProfile({displayName: username});
+                    this.logIn(email, password);
+                });
+        }
+    }
+
 
     authListener(){
         Firebase.auth().onAuthStateChanged((user) => { (user !== null) ? this.user = user : this.user = null;
