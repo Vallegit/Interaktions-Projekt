@@ -6,8 +6,6 @@ class Login extends Component {
     constructor(props){
         super(props);
         this.state = {
-            error: false,
-            errorMsg: "",
             user: null
         }
     }
@@ -22,23 +20,8 @@ class Login extends Component {
         this.setState({user: this.props.data.getUser()});
     }
 
-    /**
-     * logIn
-     * Use this function to log in a user
-     * @argument { event } e button click
-    */
-    logIn = (email, password) => {
-        this.props.data.loginAccount(email, password)
-            .then((u) => {
-                this.props.data.authListener(u.user);
-            })
-            .catch((e) => {
-                this.setState({error: true, errorMsg: e.message});
-            });
-    }
-
     render(){
-        return (this.state.user !== null) ? <Redirect to="/swipe"/> : <LoginPres error={this.state.error} errorMsg={this.state.errorMsg} login={this.logIn}/>;
+        return (this.state.user !== null) ? <Redirect to="/swipe"/> : <LoginPres login={this.props.data.logIn}/>;
     }
 }
 

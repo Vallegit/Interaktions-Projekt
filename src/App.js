@@ -28,7 +28,7 @@ class App extends Component{
                 />
                 <Route  
                     path="/signup"
-                    render={() => <SignUp data={datainstance} firebase={Firebase}/>}
+                    render={() => <SignUp data={datainstance}/>}
                 />
                 <Route 
                     path="/swipe" 
@@ -36,7 +36,7 @@ class App extends Component{
                 />
                 <Route
                     path="/matches"
-                    render={() => <Matches data={datainstance}firebase={Firebase}/>}
+                    render={() => <Matches data={datainstance} firebase={Firebase}/>}
                 />
                 <Route
                     path="/details/"

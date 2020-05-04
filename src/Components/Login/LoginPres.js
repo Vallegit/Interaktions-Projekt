@@ -10,7 +10,9 @@ export default class LoginPres extends Component{
         this.state = {
             email: "",
             password: "",
-            loginDisabled: true
+            loginDisabled: true,
+            error: false,
+            errorMsg: ""
         }
     }
 
@@ -30,7 +32,7 @@ export default class LoginPres extends Component{
                 <span id="Login_text">
                     LOGIN
                 </span>
-                <p id="errorMsg" style={(this.props.error) ? {"display":"block"} : {"dispaly":"none"}}>{this.props.errorMsg}</p>
+                <p id="errorMsg" style={(this.state.error) ? {"display":"block"} : {"dispaly":"none"}}>{this.state.errorMsg}</p>
                 <div className="flex_row">
                     <div className={(this.state.email.length === 0 && this.props.error) ? "input_container input_error" : "input_container"}>
                         <FontAwesomeIcon icon={faEnvelope} size="2x" className="icon"/>
@@ -44,7 +46,7 @@ export default class LoginPres extends Component{
                     </div>
                 </div>
                 <div className="flex_row">
-                    <button className="auth_button" type="submit" disabled={this.state.loginDisabled} onClick={() => this.props.login(this.state.email, this.state.password)}>
+                    <button className="auth_button" type="submit" disabled={this.state.loginDisabled} onClick={() => this.props.login(this.state.email, this.state.password).catch((e) => this.setState({error:true, errorMsg: e.message}))}>
                         LOGIN
                     </button>
                 </div>
