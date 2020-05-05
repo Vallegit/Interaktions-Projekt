@@ -188,8 +188,8 @@ class Data extends ObservableModel{
      * Discover movies based on all kinds of arguments
      * @returns { object[] }
     */
-    discoverMovies(sort, year, rating, cast, crew, with_genre, without_genre, with_keywords, without_keywords, language, page){
-        req = unirest("GET", "https://" + ApiConfig.ENDPOINT + "search/movie")
+    discoverMovies(sort, year, rating, with_genre, without_genre, language, page){
+        req = unirest("GET", "https://" + ApiConfig.ENDPOINT + "discover/movie")
         return (req
             .query({
                 "t": "loadvideo",
@@ -197,17 +197,13 @@ class Data extends ObservableModel{
                 "language": "en-US",
                 "api_key": ApiConfig.API_KEY,
                 "sort_by": sort,
-                "year": year,
+                "release_date.gte": year,
                 "page": page,
                 "include_adult": "false",
                 "inlude_video": "false",
                 "vote_average.gte": rating,
-                "with_cast": cast,
-                "with_crew": crew,
                 "with_genres": with_genre,
                 "without_genre": without_genre,
-                "with_keywords": with_keywords,
-                "without_keywords": without_keywords,
                 "with_original_language": language
             })
         );

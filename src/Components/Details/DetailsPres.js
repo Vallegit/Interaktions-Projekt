@@ -20,7 +20,7 @@ export default class DetailsPres extends Component {
                     <div id="Budget">Budget: {/*this.props.movie.budget*/}</div>
                     <div id="ProductionCompany">Production Company: {/*this.state.props.production_companies.map(com=>{return com.name+" "})*/}</div>
                     <div id="Description">{this.props.movie.overview}</div>
-                    <p>{this.props.rating}</p>
+                    <p id="matchRating">{this.props.rating}</p>
                 </div>
             </div>
         )

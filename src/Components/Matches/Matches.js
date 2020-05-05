@@ -18,13 +18,8 @@ export default class Match extends Component {
     componentDidMount(){
         this.props.data.addObserver(this);
         if(this.state.user !== null){
-            this.loadMovies();
+            //this.loadMovies();
             this.loadGenres();
-            this.preferencesRef = this.props.firebase.database().ref('users').child(this.state.user.uid).child('preferences');
-
-            this.preferencesRef.on('value',snap =>{
-                this.setState({preferences: snap.val()});
-            }); 
         }
     }
 
@@ -37,8 +32,16 @@ export default class Match extends Component {
     }
 
     loadMovies = () => {
+        let pref = this.state.preferences;
         this.props.data
-            .getTopMovies(this.state.page)// 200 - star trek, 240 - godfather, 280 - terminator, 330 - jurassic park, 350 - Devil n prada 550 - fight club
+            .discoverMovies(
+                "popularity.desc",
+                Object.keys(pref.releaseYear).find((y)=>pref.releaseYear[y].rating>0.8),
+                7,
+                Object.keys(pref.genres).filter((g)=>pref.genres[g].rating>0.9).map((gen)=>{return this.state.genreIDs.find((o)=> o.name === gen).id}).toString(),
+                Object.keys(pref.genres).filter((g)=>pref.genres[g].rating<0.5).map((gen)=>{return this.state.genreIDs.find((o)=> o.name === gen).id}).toString(),
+                Object.keys(pref.language).find((l)=>pref.language[l].rating===1),
+                this.state.page)
             .end(result => {
                 if(result.error)this.setState({status: "ERROR"});
                 else this.setState({status: "LOADED", movies: result.body.results});
@@ -50,14 +53,14 @@ export default class Match extends Component {
             .getGenres()
             .end(result => {
                 if(result.error)this.setState({status: "ERROR"});
-                else this.setState({genreIDs: result.body.genres});
+                else this.setState({genreIDs: result.body.genres}, this.loadPreference);
             });
     }
 
     loadPreference = () => {
-        this.props.firebase.database().ref('users').child(this.props.user.uid).child('preferences').on('value', snap  => {
+        this.props.firebase.database().ref('users').child(this.state.user.uid).child('preferences').on('value', snap  => {
             let prefs = this.updatePreference(snap.val());
-            this.setState({preferences: prefs}, () => this.rateMovie(this.state.movie));
+            this.setState({preferences: prefs}, this.loadMovies);
         });
     }
 
