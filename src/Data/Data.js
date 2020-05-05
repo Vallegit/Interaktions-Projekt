@@ -15,6 +15,18 @@ class Data extends ObservableModel{
         this.user = null;
         this.currentMovie = {};
         this.currentRating = 0;
+        this.alreadyRated = [];
+    }
+
+    getAlreadyRated(){
+        return this.alreadyRated;
+    }
+
+    setAlreadyRated(){
+        Firebase.database().ref('users').child(this.user.uid).child('movieRatings/alreadyRated').on(snap =>{
+            this.alreadyRated = snap.val();
+            this.notifyObservers();
+        })
     }
 
     /** 
