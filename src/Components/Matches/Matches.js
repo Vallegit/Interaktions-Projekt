@@ -11,15 +11,16 @@ export default class Match extends Component {
             movies: [],
             genreIDs: [],
             preferences: {},
-            user: this.props.data.getUser()
+            user: this.props.data.getUser(),
+            alreadyRated: []
         };
     }
 
     componentDidMount(){
         this.props.data.addObserver(this);
         if(this.state.user !== null){
-            //this.loadMovies();
             this.loadGenres();
+            this.setState({alreadyRated: this.props.data.getAlreadyRated()});
         }
     }
 
@@ -59,6 +60,10 @@ export default class Match extends Component {
 
     loadPreference = () => {
         this.props.firebase.database().ref('users').child(this.state.user.uid).child('preferences').on('value', snap  => {
+            if(snap.val() === null){
+                this.setState({status: "NO_PREF"});
+                return;
+            }
             let prefs = this.updatePreference(snap.val());
             this.setState({preferences: prefs}, this.loadMovies);
         });

@@ -21,7 +21,13 @@ export default class MatchesPres extends Component {
                 </Link>
             ))
             break;
-
+        
+        case "NO_PREF":
+            movieList = 
+                <h1 className="Error" >
+                    You need to swipe more to get matches
+                </h1>
+            break;
         default: 
             movieList =
                 <h1 className="Error" >
