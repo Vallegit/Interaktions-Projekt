@@ -64,6 +64,13 @@
     vertical-align: top;
     margin: 5px;
 }
+#matchRating{
+    grid-row: 1;
+    grid-column: 2;
+    margin-left:auto;
+    margin-right:0;
+    font-size: 2em;
+}
 #Loader3{
     align-self: center;
     background:#121426;
