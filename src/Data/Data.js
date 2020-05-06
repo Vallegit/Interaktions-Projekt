@@ -6,9 +6,8 @@ var unirest = require("unirest");
 var req;
 
 /*  This is where API-calls and user info is handled,
-    the API used is "themovieDB" at https://www.themoviedb.org/.
-    User information including username and password is stored in 
-    plaintext txt-files because encrypting is extra work.   */
+    the API used is "themovieDB" at https://www.themoviedb.org/.   
+*/
 class Data extends ObservableModel{
     constructor(){
         super();
@@ -16,17 +15,35 @@ class Data extends ObservableModel{
         this.currentMovie = {};
         this.currentRating = 0;
         this.alreadyRated = [];
+        this.preferences = {};
     }
 
+    /** 
+     * getAlreadyRated
+     * @returns { Object[] } alreadyRated
+    */
     getAlreadyRated(){
-        return this.alreadyRated;
+        return Object.values(this.alreadyRated);
     }
 
+    /** 
+     * setAlreadyRated
+     * This is a Firebase callback that updates this.preferences
+     * when the Firebase preferences is updated.
+    */
     setAlreadyRated(){
-        Firebase.database().ref('users').child(this.user.uid).child('movieRatings/alreadyRated').on(snap =>{
+        Firebase.database().ref('users').child(this.user.uid).child('movieRatings/alreadyRated').on('value',snap =>{
             this.alreadyRated = snap.val();
-            this.notifyObservers();
+            this.notifyObservers('ALREADY_RATED');
         })
+    }
+
+    /** 
+     * getPreferences
+     * @returns { Object } preferences
+    */
+    getPreferences(){
+        return this.preferences;
     }
 
     /** 
@@ -73,10 +90,10 @@ class Data extends ObservableModel{
      * logoutAccount
      * Use this function to log out the current user
     */
-   logoutAccount(){
-       Firebase.auth().signOut();
-       this.authListener();
-   }
+    logoutAccount(){
+        Firebase.auth().signOut();
+        this.authListener();
+    }
 
 
     /**
@@ -116,9 +133,20 @@ class Data extends ObservableModel{
     }
 
 
+    /** 
+     * authListener
+     * Updates this.user according to the Firebase.auth() function
+     * and notifies all observers
+    */
     authListener(){
-        Firebase.auth().onAuthStateChanged((user) => { (user !== null) ? this.user = user : this.user = null;
-            this.notifyObservers();
+        Firebase.auth().onAuthStateChanged((user) => { if(user !== null){
+            this.user = user; 
+            this.setAlreadyRated();
+        }else {
+            this.user = null;
+            this.alreadyRated = null;
+        }
+            this.notifyObservers('USER');
         });
     }
     

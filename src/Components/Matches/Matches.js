@@ -28,25 +28,38 @@ export default class Match extends Component {
         this.props.data.removeObserver(this);
     }
 
-    update(){
-        this.setState({user: this.props.data.getUser()});
+    update(change){
+        switch(change){
+            case 'USER':
+                this.setState({user: this.props.data.getUser()});
+                return;
+            case 'ALREADY_RATED':
+                this.setState({alreadyRated: this.props.data.getAlreadyRated()});
+                return;
+            default:
+                return;
+        }
+    }
+
+    filterMovies = () => {
+        let finalMovies = [];
+        this.loadMovies().end(movies => {
+            if(movies.error) this.setState({status: 'ERROR'});
+            finalMovies = movies.body.results.filter(movie => {return !this.state.alreadyRated.includes(movie.id)});
+            this.setState({status: 'LOADED', movies: finalMovies, page: this.state.page+1});
+        });
     }
 
     loadMovies = () => {
         let pref = this.state.preferences;
-        this.props.data
-            .discoverMovies(
-                "popularity.desc",
-                Object.keys(pref.releaseYear).find((y)=>pref.releaseYear[y].rating>0.8),
-                7,
-                Object.keys(pref.genres).filter((g)=>pref.genres[g].rating>0.9).map((gen)=>{return this.state.genreIDs.find((o)=> o.name === gen).id}).toString(),
-                Object.keys(pref.genres).filter((g)=>pref.genres[g].rating<0.5).map((gen)=>{return this.state.genreIDs.find((o)=> o.name === gen).id}).toString(),
-                Object.keys(pref.language).find((l)=>pref.language[l].rating===1),
-                this.state.page)
-            .end(result => {
-                if(result.error)this.setState({status: "ERROR"});
-                else this.setState({status: "LOADED", movies: result.body.results});
-            });
+        return this.props.data.discoverMovies(
+            "popularity.desc",
+            Object.keys(pref.releaseYear).find((y)=>pref.releaseYear[y].rating>0.8),
+            7,
+            Object.keys(pref.genres).filter((g)=>pref.genres[g].rating>0.9).map((gen)=>{return this.state.genreIDs.find((o)=> o.name === gen).id}).toString(),
+            Object.keys(pref.genres).filter((g)=>pref.genres[g].rating<0.5).map((gen)=>{return this.state.genreIDs.find((o)=> o.name === gen).id}).toString(),
+            Object.keys(pref.language).find((l)=>pref.language[l].rating===1),
+            this.state.page);
     }
 
     loadGenres = () => {
@@ -65,7 +78,7 @@ export default class Match extends Component {
                 return;
             }
             let prefs = this.updatePreference(snap.val());
-            this.setState({preferences: prefs}, this.loadMovies);
+            this.setState({preferences: prefs}, this.filterMovies);
         });
     }
 
