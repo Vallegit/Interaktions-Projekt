@@ -6,9 +6,15 @@
 }
 #landingText{
     margin-top: 6%;
-    margin-bottom: 3%;
     font-size: 3em;
     color: white;
+    text-align: center;
+}
+#expText{
+    margin-top:0.5%;
+    margin-bottom: 3%;
+    font-size: 1.5em;
+    color:white;
     text-align: center;
 }
 #landingButton{

@@ -27,6 +27,8 @@
     background-color: white;
     text-align: center;
     font-size:3vh;
+    margin-bottom: 2vh;
+    margin-top: 1vh;
 }
 .detailsRow{
     display: flex;
@@ -53,23 +55,16 @@
 }
 #Description{
     vertical-align: top;
-    margin: 5px;
+    margin: 15px;
     font-size: 2vh;
 }
-#starContainer{
-}
-#matchRating{
-    font-size:1.25em;
-    position:relative;
-    margin-left:35%;
-    margin-top: -50%;
-}
-#starIcon{
 
+#matchRating{
+    font-size:1.5em;
+    font-weight: bold;
+    margin:5px;
 }
-.fa-star *{
-    color:gold;
-}
+
 
 #Loader3{
     align-self: center;
