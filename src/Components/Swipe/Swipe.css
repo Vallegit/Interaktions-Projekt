@@ -121,7 +121,7 @@
 .rateBtn{
     width: 40%;
     border: none;
-    transition: all .4s;
+    transition: all .2s;
 }
 
 .rateBtn:hover{
