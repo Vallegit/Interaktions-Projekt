@@ -42,11 +42,13 @@ export default class Match extends Component {
     }
 
     filterMovies = () => {
-        let finalMovies = [];
+        let finalMovies = this.state.movies;
         this.loadMovies().end(movies => {
             if(movies.error) this.setState({status: 'ERROR'});
-            finalMovies = movies.body.results.filter(movie => {return !this.state.alreadyRated.includes(movie.id)});
-            this.setState({status: 'LOADED', movies: finalMovies, page: this.state.page+1});
+            let newMovies = movies.body.results.filter(movie => {return !this.state.alreadyRated.includes(movie.id)});
+            finalMovies=finalMovies.concat(newMovies);
+            this.setState({status: 'LOADED', movies: finalMovies, page: this.state.page+1},
+            ()=>{if(finalMovies.length<30)this.filterMovies()});
         });
     }
 
