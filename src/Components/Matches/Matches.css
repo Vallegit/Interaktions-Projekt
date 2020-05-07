@@ -25,6 +25,10 @@
     height:200px;
     width:150px;
 }
+.NoPref{
+    color: white;
+    font-size: 3em;
+}
 a{
     text-decoration: none;
 }

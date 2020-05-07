@@ -4,7 +4,7 @@ import { faFilm, faExchangeAlt, faPercent, faSignOutAlt } from '@fortawesome/fre
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import "./Topbar.css"
 
-class Topbar extends Component{
+export default class Topbar extends Component{
     constructor(props){
         super(props);
         this.state = {
@@ -50,5 +50,3 @@ class Topbar extends Component{
         );
     }
 }
-
-export default Topbar;

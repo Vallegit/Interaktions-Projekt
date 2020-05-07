@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import "./Premium.css";
 
-class Premium extends Component{
+export default class Premium extends Component{
     render(){
         if(this.props.user === null) return <Redirect to="/"/>;
 
@@ -17,4 +17,3 @@ class Premium extends Component{
         )
     }
 }
-export default Premium;

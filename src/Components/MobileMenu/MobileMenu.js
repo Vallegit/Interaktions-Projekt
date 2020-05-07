@@ -4,7 +4,7 @@ import { faExchangeAlt, faPercent, faSignOutAlt } from "@fortawesome/free-solid-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./MobileMenu.css";
 
-class MobileMenu extends Component{
+export default class MobileMenu extends Component{
     constructor(props){
         super(props);
         this.state={
@@ -34,4 +34,3 @@ class MobileMenu extends Component{
         );
     }
 }
-export default MobileMenu

@@ -29,16 +29,7 @@ export default class Match extends Component {
     }
 
     update(change){
-        switch(change){
-            case 'USER':
-                this.setState({user: this.props.data.getUser()});
-                return;
-            case 'ALREADY_RATED':
-                this.setState({alreadyRated: this.props.data.getAlreadyRated()});
-                return;
-            default:
-                return;
-        }
+        this.setState({user: change.user});
     }
 
     filterMovies = () => {
@@ -58,8 +49,8 @@ export default class Match extends Component {
             "popularity.desc",
             Object.keys(pref.releaseYear).find((y)=>pref.releaseYear[y].rating>0.8),
             7,
-            Object.keys(pref.genres).filter((g)=>pref.genres[g].rating>0.9).map((gen)=>{return this.state.genreIDs.find((o)=> o.name === gen).id}).toString(),
-            Object.keys(pref.genres).filter((g)=>pref.genres[g].rating<0.5).map((gen)=>{return this.state.genreIDs.find((o)=> o.name === gen).id}).toString(),
+            Object.keys(pref.genres).filter((g)=>pref.genres[g].rating >= 0.90).map((gen)=>{return this.state.genreIDs.find((o)=> o.name === gen).id}).toString(),
+            Object.keys(pref.genres).filter((g)=>pref.genres[g].rating <= 0.5).map((gen)=>{return this.state.genreIDs.find((o)=> o.name === gen).id}).toString(),
             Object.keys(pref.language).find((l)=>pref.language[l].rating===1),
             this.state.page);
     }
@@ -117,7 +108,7 @@ export default class Match extends Component {
         });
         genreFactor /= movie.genre_ids.length;
 
-        rating = 80 * genreFactor + 20 * movie.vote_average/10;
+        rating = 100 * genreFactor + 20 * movie.vote_average/10;
 
         let index = movie.original_language;
         rating = rating * this.state.preferences.language[index].rating;
@@ -129,6 +120,6 @@ export default class Match extends Component {
     }
  
     render(){
-        return (this.state.user === null) ? <Redirect to="/"/> : <MatchesPres status={this.state.status} movies={this.state.movies} rateMovie={this.rateMovie}/>;
+        return (this.state.user === null) ? <Redirect to="/login"/> : <MatchesPres status={this.state.status} movies={this.state.movies} rateMovie={this.rateMovie}/>;
     }
 }
