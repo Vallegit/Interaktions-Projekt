@@ -11,7 +11,12 @@ var req;
 class Data extends ObservableModel{
     constructor(){
         super();
-        this.user = JSON.parse(localStorage.getItem('user'));
+        this.user; 
+            try {
+                this.user = JSON.parse(localStorage.getItem('user'));
+            }catch(e) {
+                this.user = null;
+            }
         this.currentMovie = {};
         this.currentRating = 0;
         this.alreadyRated = [];
