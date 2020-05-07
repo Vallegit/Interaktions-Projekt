@@ -1,56 +1,53 @@
 import React, { Component } from "react";
 import { Route } from "react-router-dom";
-import { Link } from "react-router-dom";
+import Swipe from "./Components/Swipe/Swipe";
+import Matches from "./Components/Matches/Matches";
+import Details from "./Components/Details/Details";
+import Login from "./Components/Login/Login";
+import Premium from "./Components/Premium/Premium";
+import Landing from "./Components/Landing/Landing";
+import SignUp from "./Components/SignUp/SignUp";
+import Topbar from "./Components/Topbar/Topbar";
+import MobileMenu from "./Components/MobileMenu/MobileMenu";
+import Firebase from "./Firebase/Firebase";
+import datainstance from "./Data/Data";
 import "./App.css";
-import Swipe from "./Swipe/Swipe";
-import Match from "./Match/Match";
-import Detail from "./Match/Match";
-import Login from "./Login/Login";
 
-class App extends Component{
-
+export default class App extends Component{
     render(){
         return (
             <div className="App">
-                <div className="Top-Bar">
-                    <h1 id="Title">
-                        Movie Swipe
-                    </h1>
-                    <div className="dropDown">
-                        <button className="menuBtn">Menu</button>
-                        <div className="menuContent">
-                            <Link to="/swipe" className="swipeLink">
-                                Swipe
-                            </Link>
-                            <Link to="/matches" className="matchesLink">
-                                Matches
-                            </Link>
-                            <Link to="/" className="loginLink">
-                                Log out
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-
-                <Route exact 
+                <Topbar data={datainstance}></Topbar>
+                <Route exact
                     path="/"
-                    render={() => <Login/>}
+                    render={() => <Landing data={datainstance}/>}
+                />
+                <Route  
+                    path="/login"
+                    render={() => <Login data={datainstance}/>}
+                />
+                <Route  
+                    path="/signup"
+                    render={() => <SignUp data={datainstance}/>}
                 />
                 <Route 
                     path="/swipe" 
-                    render ={()=> <Swipe/>}
+                    render ={() => <Swipe data={datainstance} firebase={Firebase}/>}
                 />
                 <Route
                     path="/matches"
-                    render={()=> <Match/>}
+                    render={() => <Matches data={datainstance} firebase={Firebase}/>}
                 />
-                 <Route
-                    path="/details"
-                    render={()=> <Detail/>}
+                <Route
+                    path="/details/"
+                    render={() => <Details data={datainstance}/>}
                 />
+                <Route
+                    path="/premium"
+                    render={() => <Premium data={datainstance}/>}
+                />
+                {(window.matchMedia(`(max-width: 450px)`).matches) ? <MobileMenu data={datainstance}/> : <div/>}
             </div>
         );
     }
 }
-
-export default App;

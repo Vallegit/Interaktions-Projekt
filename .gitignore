@@ -3,8 +3,9 @@
 !*/
 !.gitignore
 .vscode/
+.firebase/
 
 node_modules/
-package-lock.json
 apiConfig.js
+firebaseConfig.js
 build/

@@ -1,12 +1,16 @@
 {
-  "name": "dinnerplanner-html-react",
+  "name": "movie-swiper-react",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "react": "^16.8.1",
-    "react-dom": "^16.8.1",
-    "react-router-dom": "^4.2.2",
-    "react-scripts": "2.1.8",
+    "@fortawesome/fontawesome-svg-core": "^1.2.28",
+    "@fortawesome/free-solid-svg-icons": "^5.13.0",
+    "@fortawesome/react-fontawesome": "^0.1.9",
+    "firebase": "^7.14.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.4.1",
     "unirest": "^0.6.0"
   },
   "scripts": {

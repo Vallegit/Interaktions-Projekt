@@ -1,5 +1,8 @@
 .App{
-
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
 }
 .Top-Bar{
     display:flex;
@@ -36,6 +39,18 @@
 .dropDown:hover .menuBtn{
     color:grey;
 }
+.Loader{
+    border:16px solid #f3f3f3;
+    border-radius:50%;
+    height:100px;
+    width:100px;
+    border-top:16px solid #772953;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin{
+    0%{transform: rotate(0deg);}
+    100%{transform:rotate(360deg);}
+}
 #Title{
     order:2;
     text-align:center;
@@ -44,4 +59,65 @@
     flex:1 0 auto;
     margin-right:100px;
     color:#22ccca;
+}
+.auth_button{
+    background-color: #22ccca;
+    font-size: 1.5em;
+    border: none;
+    width: 70%;
+    height: 2.2em;
+    border-radius: 8px;
+    box-shadow: 0 0 3px 1px grey;
+    transition: all .4s;
+}
+.auth_button:hover{
+    box-shadow: 0 0 10px 2px grey;
+}
+.auth_button:focus{
+    outline: none;
+}
+.auth_button:disabled{
+    box-shadow: none;
+    background-color: grey;
+}
+.input_container{
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    background: lightgray;
+    border-radius: 8px;
+    width: 65%;
+    padding: 2%;
+    box-shadow: 0 0 3px 1px grey;
+    transition: all .4s;
+}
+.input_container:hover{
+    box-shadow: 0 0 10px 2px grey;
+    cursor: text;
+}
+.input_error{
+    background: red;
+
+}
+
+.icon{
+    margin-right: 4%;
+}
+.input{
+    width: 80%;
+    border: none;
+    background: transparent;
+    font-size: 1.5em;
+}
+.input:focus{
+    outline: none;
+}
+.flex_row{
+    margin-top: 2em;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    background-color: white;
 }
