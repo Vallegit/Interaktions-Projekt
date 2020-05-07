@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import "./Landing.css"
 
-class Landing extends Component{
+export default class Landing extends Component{
 
 
     render(){
-        return(
+        if(this.props.data.getUser !== null) return <Redirect to="/"/>;
+        else return(
             <div className="landingContainer">
                 <p id="landingText">
                     Welcome to Movie Swiper, your movie match maker!
@@ -21,5 +22,3 @@ class Landing extends Component{
         );
     }
 }
-
-export default Landing;
