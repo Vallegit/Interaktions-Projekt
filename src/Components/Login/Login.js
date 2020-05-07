@@ -6,7 +6,7 @@ class Login extends Component {
     constructor(props){
         super(props);
         this.state = {
-            user: null
+            user: this.props.data.getUser()
         }
     }
 
