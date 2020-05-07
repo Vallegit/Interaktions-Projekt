@@ -3,7 +3,7 @@ import { faEnvelope, faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./SignUp.css";
 
-class SignUpPres extends Component{
+export default class SignUpPres extends Component{
     constructor(props){
         super(props);
         this.state = {
@@ -64,4 +64,3 @@ class SignUpPres extends Component{
     }
     
 }
-export default SignUpPres;

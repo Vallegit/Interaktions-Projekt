@@ -1,4 +1,4 @@
-class ObservableModel {
+export default class ObservableModel {
     constructor() {
       this._observers = [];
     }
@@ -17,5 +17,3 @@ class ObservableModel {
       this._observers = this._observers.filter(o => o !== observer);
     }
   }
-  
-  export default ObservableModel;

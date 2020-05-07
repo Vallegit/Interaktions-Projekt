@@ -24,7 +24,7 @@ export default class MatchesPres extends Component {
         
         case "NO_PREF":
             movieList = 
-                <h1 className="Error" >
+                <h1 className="NoPref" >
                     You need to swipe more to get matches
                 </h1>
             break;

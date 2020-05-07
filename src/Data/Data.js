@@ -14,9 +14,7 @@ class Data extends ObservableModel{
         this.user = null; 
             try {
                 this.user = JSON.parse(localStorage.getItem('user'));
-            }catch(e) {
-                this.user = null;
-            }
+            }catch(e) {}
         this.currentMovie = {};
         this.currentRating = 0;
         this.alreadyRated = [];
@@ -33,14 +31,26 @@ class Data extends ObservableModel{
     }
 
     /** 
-     * setAlreadyRated
+     * listenAlreadyRated
+     * This is a Firebase callback that updates this.alreadyRated
+     * when firebase notices new values.
+    */
+    listenAlreadyRated(){
+        Firebase.database().ref('users').child(this.user.uid).child('movieRatings/alreadyRated').on('value',snap =>{
+            this.alreadyRated = snap.val();
+            this.notifyObservers();
+        })
+    }
+
+    /** 
+     * listenAlreadyRated
      * This is a Firebase callback that updates this.preferences
      * when the Firebase preferences is updated.
     */
-    setAlreadyRated(){
-        Firebase.database().ref('users').child(this.user.uid).child('movieRatings/alreadyRated').on('value',snap =>{
-            this.alreadyRated = snap.val();
-            this.notifyObservers('ALREADY_RATED');
+    listenPreferences(){
+        Firebase.database().ref('users').child(this.user.uid).child('preferences').on('value',snap =>{
+            this.preferences = snap.val();
+            this.notifyObservers();
         })
     }
 
@@ -147,7 +157,8 @@ class Data extends ObservableModel{
     authListener(){
         Firebase.auth().onAuthStateChanged((user) => { if(user !== null){
             this.user = user; 
-            this.setAlreadyRated();
+            this.listenAlreadyRated();
+            this.listenPreferences();
             Firebase.auth().setPersistence('local');
             localStorage.setItem('user', JSON.stringify(user));
         }else {
@@ -155,7 +166,7 @@ class Data extends ObservableModel{
             this.alreadyRated = null;
             localStorage.setItem('user', JSON.stringify(null));
         }
-            this.notifyObservers('USER');
+            this.notifyObservers();
         });
     }
     

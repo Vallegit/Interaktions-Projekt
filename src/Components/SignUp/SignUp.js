@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 import SignUpPres from "./SignUpPres";
 import "./SignUp.css";
 
-class SignUp extends Component{
+export default class SignUp extends Component{
     constructor(props){
         super(props);
         this.state={
@@ -26,4 +26,3 @@ class SignUp extends Component{
         return (this.state.user !== null) ? <Redirect to="/swipe"/> : <SignUpPres signUp={this.props.data.signUp}/>
     }
 }
-export default SignUp;

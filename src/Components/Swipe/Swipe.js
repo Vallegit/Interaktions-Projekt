@@ -246,6 +246,6 @@ export default class Swipe extends Component {
     }
 
     render(){
-        return (this.state.user === null) ? <Redirect to="/"/> : <SwipePres status={this.state.status} currentMovie={this.state.currentMovie} dislikeCurrentMovie={this.dislikeCurrentMovie} likeCurrentMovie={this.likeCurrentMovie} blacklistCurrentMovie={this.blacklistCurrentMovie}/>
+        return (this.state.user === null) ? <Redirect to="/login"/> : <SwipePres status={this.state.status} currentMovie={this.state.currentMovie} dislikeCurrentMovie={this.dislikeCurrentMovie} likeCurrentMovie={this.likeCurrentMovie} blacklistCurrentMovie={this.blacklistCurrentMovie}/>
     }
 }
