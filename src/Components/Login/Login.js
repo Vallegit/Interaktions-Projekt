@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import LoginPres from "./LoginPres";
 
-class Login extends Component {
+export default class Login extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -24,5 +24,3 @@ class Login extends Component {
         return (this.state.user !== null) ? <Redirect to="/swipe"/> : <LoginPres login={this.props.data.logIn}/>;
     }
 }
-
-export default Login;
