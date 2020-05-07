@@ -148,7 +148,7 @@ class Data extends ObservableModel{
         }else {
             this.user = null;
             this.alreadyRated = null;
-            localStorage.setItem('user', '');
+            localStorage.setItem('user', JSON.stringify("null"));
         }
             this.notifyObservers('USER');
         });
