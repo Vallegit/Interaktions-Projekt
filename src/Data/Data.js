@@ -11,11 +11,12 @@ var req;
 class Data extends ObservableModel{
     constructor(){
         super();
-        this.user = null;
+        this.user = JSON.parse(localStorage.getItem('user'));
         this.currentMovie = {};
         this.currentRating = 0;
         this.alreadyRated = [];
         this.preferences = {};
+        this.authListener();
     }
 
     /** 
@@ -142,9 +143,12 @@ class Data extends ObservableModel{
         Firebase.auth().onAuthStateChanged((user) => { if(user !== null){
             this.user = user; 
             this.setAlreadyRated();
+            Firebase.auth().setPersistence('local');
+            localStorage.setItem('user', JSON.stringify(user));
         }else {
             this.user = null;
             this.alreadyRated = null;
+            localStorage.setItem('user', '');
         }
             this.notifyObservers('USER');
         });

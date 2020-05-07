@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { faFilm, faExchangeAlt, faPercent, faSignOutAlt, faBoxTissue } from '@fortawesome/free-solid-svg-icons';
+import { faFilm, faExchangeAlt, faPercent, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import "./Topbar.css"
 

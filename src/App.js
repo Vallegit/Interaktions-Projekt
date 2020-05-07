@@ -20,7 +20,7 @@ export default class App extends Component{
                 <Topbar data={datainstance}></Topbar>
                 <Route exact
                     path="/"
-                    render={() => <Landing/>}
+                    render={() => <Landing data={datainstance}/>}
                 />
                 <Route  
                     path="/login"
