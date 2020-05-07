@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import SwipePres from "./SwipePres";
 
-class Swipe extends Component {
+export default class Swipe extends Component {
     constructor(props){
         super(props);
         this.state={
@@ -249,5 +249,3 @@ class Swipe extends Component {
         return (this.state.user === null) ? <Redirect to="/"/> : <SwipePres status={this.state.status} currentMovie={this.state.currentMovie} dislikeCurrentMovie={this.dislikeCurrentMovie} likeCurrentMovie={this.likeCurrentMovie} blacklistCurrentMovie={this.blacklistCurrentMovie}/>
     }
 }
-
-export default Swipe;
