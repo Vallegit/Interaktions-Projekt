@@ -11,7 +11,7 @@ var req;
 class Data extends ObservableModel{
     constructor(){
         super();
-        this.user; 
+        this.user = null; 
             try {
                 this.user = JSON.parse(localStorage.getItem('user'));
             }catch(e) {
