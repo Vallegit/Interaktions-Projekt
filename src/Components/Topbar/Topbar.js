@@ -9,7 +9,8 @@ export default class Topbar extends Component{
         super(props);
         this.state = {
             user: this.props.data.getUser(),
-            smallMenu: (window.matchMedia(`(max-width: 1000px)`).matches)
+            smallMenu: (window.matchMedia(`(max-width: 1000px)`).matches),
+            totalSwiped: {count: 0, rating: 0}
         }
     }
 
@@ -22,7 +23,7 @@ export default class Topbar extends Component{
     }
 
     update(){
-        this.setState({user: this.props.data.getUser()});
+        this.setState({user: this.props.data.getUser(), totalSwiped: this.props.data.getTotalSwiped()});
     }
 
     render(){
@@ -46,6 +47,7 @@ export default class Topbar extends Component{
                     <FontAwesomeIcon icon={faSignOutAlt} size={(this.state.smallMenu) ? "1x" : "2x"} className="TitleIcon"/>
                     <p className="MenuText" >{(this.state.user === null) ? 'Sign In' : 'Sign Out'}</p>
                 </button>
+                <p className="TotalCounter"> Total swipes: {this.state.totalSwiped.count}</p>
             </div>
         );
     }
