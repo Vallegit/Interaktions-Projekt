@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Route } from "react-router-dom";
 import Swipe from "./Components/Swipe/Swipe";
 import Matches from "./Components/Matches/Matches";
-import Details from "./Components/Details/Details";
 import Login from "./Components/Login/Login";
 import Premium from "./Components/Premium/Premium";
 import Landing from "./Components/Landing/Landing";
@@ -35,12 +34,8 @@ export default class App extends Component{
                     render ={() => <Swipe data={datainstance} firebase={Firebase}/>}
                 />
                 <Route
-                    path="/matches"
+                    path="/(matches|details)"
                     render={() => <Matches data={datainstance} firebase={Firebase}/>}
-                />
-                <Route
-                    path="/details/"
-                    render={() => <Details data={datainstance}/>}
                 />
                 <Route
                     path="/premium"

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 import MatchesPres from "./MatchesPres";
+import DetailsPres from "./DetailsPres";
 
 export default class Match extends Component {
     constructor(props){
@@ -12,7 +13,10 @@ export default class Match extends Component {
             genreIDs: [],
             preferences: {},
             user: this.props.data.getUser(),
-            alreadyRated: []
+            alreadyRated: [],
+            currentMovie: null,
+            currentRating: null,
+            currentGenres: null
         };
     }
 
@@ -102,7 +106,9 @@ export default class Match extends Component {
     rateMovie = (movie) => {
         let rating = 0;
         let genreFactor = 0;
+        let genres = [];
         movie.genre_ids.map(genID => {
+            genres.push(this.state.genreIDs.find(o => o.id === genID).name);
             genreFactor += this.state.preferences.genres[this.state.genreIDs.find(o => o.id === genID).name].rating;
             return 0;
         });
@@ -115,11 +121,18 @@ export default class Match extends Component {
         index = movie.release_date.substring(0,3) + '0';
         rating = rating * this.state.preferences.releaseYear[index].rating;
         rating = rating.toFixed(1);
-        this.props.data.setCurrentRating(rating);
-        this.props.data.setCurrentMovie(movie);
+        this.setState({currentMovie: movie, currentRating: rating, currentGenres: genres});
     }
  
     render(){
-        return (this.state.user === null) ? <Redirect to="/login"/> : <MatchesPres status={this.state.status} movies={this.state.movies} rateMovie={this.rateMovie}/>;
+        if(this.state.user === null) return <Redirect to="/login"/>;
+        else{
+            return(
+                <div>
+                    <Route path='/details/' render={() => <DetailsPres movie={this.state.currentMovie} rating={this.state.currentRating} genres={this.state.currentGenres}/>}/>
+                    <Route path='/matches'  render={() => <MatchesPres status={this.state.status} movies={this.state.movies} rateMovie={this.rateMovie}/>}/>
+                </div>
+            );
+        }
     }
 }
