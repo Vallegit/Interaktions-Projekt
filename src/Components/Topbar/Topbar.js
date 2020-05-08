@@ -47,7 +47,7 @@ export default class Topbar extends Component{
                     <FontAwesomeIcon icon={faSignOutAlt} size={(this.state.smallMenu) ? "1x" : "2x"} className="TitleIcon"/>
                     <p className="MenuText" >{(this.state.user === null) ? 'Sign In' : 'Sign Out'}</p>
                 </button>
-                <p className="TotalCounter"> Total swipes: {this.state.totalSwiped.count}</p>
+                <p className="TotalCounter">{(this.state.totalSwiped === null) ? '' : 'Total swipes: ' + this.state.totalSwiped.count}</p>
             </div>
         );
     }
