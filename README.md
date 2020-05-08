@@ -1,4 +1,6 @@
 # Interaktions-Projekt
+//Daniel Gustafsson & Valerio Akman
+2020-05-08
 
 This is a web-development projekt in the course Interaction Design and the Dynamic web
 
