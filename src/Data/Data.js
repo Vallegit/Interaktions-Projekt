@@ -19,6 +19,7 @@ class Data extends ObservableModel{
         this.currentRating = 0;
         this.alreadyRated = [];
         this.preferences = {};
+        this.totalSwiped = {};
         this.authListener();
     }
 
@@ -52,6 +53,26 @@ class Data extends ObservableModel{
             this.preferences = snap.val();
             this.notifyObservers();
         })
+    }
+
+    /** 
+     * listenTotalSwiped
+     * This is a Firebase callback that updates this.totalSwiped
+     * when the Firebase total is updated.
+    */
+    listenTotalSwiped(){
+        Firebase.database().ref('users').child(this.user.uid).child('movieRatings/total').on('value',snap =>{
+            this.totalSwiped = snap.val();
+            this.notifyObservers();
+        })
+    }
+
+    /** 
+     * getTotalSwiped
+     * @returns { Object } totalSwiped
+    */
+    getTotalSwiped(){
+        return this.totalSwiped;
     }
 
     /** 
@@ -159,6 +180,7 @@ class Data extends ObservableModel{
             this.user = user; 
             this.listenAlreadyRated();
             this.listenPreferences();
+            this.listenTotalSwiped();
             Firebase.auth().setPersistence('local');
             localStorage.setItem('user', JSON.stringify(user));
         }else {
